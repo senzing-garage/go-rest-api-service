@@ -7,9 +7,6 @@ PROGRAM_NAME := $(shell basename `git rev-parse --show-toplevel`)
 MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 MAKEFILE_DIRECTORY := $(dir $(MAKEFILE_PATH))
 TARGET_DIRECTORY := $(MAKEFILE_DIRECTORY)/target
-DOCKER_CONTAINER_NAME := $(PROGRAM_NAME)
-DOCKER_IMAGE_NAME := senzing/$(PROGRAM_NAME)
-DOCKER_BUILD_IMAGE_NAME := $(DOCKER_IMAGE_NAME)-build
 BUILD_VERSION := $(shell git describe --always --tags --abbrev=0 --dirty  | sed 's/v//')
 BUILD_TAG := $(shell git describe --always --tags --abbrev=0  | sed 's/v//')
 BUILD_ITERATION := $(shell git log $(BUILD_TAG)..HEAD --oneline | wc -l | sed 's/^ *//')
@@ -25,6 +22,7 @@ CC = gcc
 # Example: "export LD_LIBRARY_PATH=/path/to/my/senzing/g2/lib"
 
 LD_LIBRARY_PATH ?= /opt/senzing/g2/lib
+SENZING_TOOLS_DATABASE_URL ?= sqlite3://na:na@/tmp/sqlite/G2C.db
 
 # Export environment variables.
 
@@ -47,44 +45,6 @@ dependencies:
 	@go get -t -u ./...
 	@go mod tidy
 
-
-.PHONY: build
-build: build-linux
-
-
-.PHONY: build-linux
-build-linux:
-	@GOOS=linux \
-	GOARCH=amd64 \
-	go build \
-		-ldflags \
-			"-X 'main.buildIteration=${BUILD_ITERATION}' \
-			-X 'main.buildVersion=${BUILD_VERSION}' \
-			-X 'main.programName=${PROGRAM_NAME}' \
-			" \
-		-o $(GO_PACKAGE_NAME)
-	@mkdir -p $(TARGET_DIRECTORY)/linux || true
-	@mv $(GO_PACKAGE_NAME) $(TARGET_DIRECTORY)/linux
-
-.PHONY: build-scratch
-build-scratch:
-	@GOOS=linux \
-	GOARCH=amd64 \
-	CGO_ENABLED=0 \
-	go build \
-		-a \
-		-installsuffix cgo \
-		-ldflags \
-			"-s \
-			-w \
-			-X 'github.com/roncewind/move/cmd.buildIteration=${BUILD_ITERATION}' \
-			-X 'github.com/roncewind/move/cmd.buildVersion=${BUILD_VERSION}' \
-			-X 'github.com/roncewind/move/cmd.programName=${PROGRAM_NAME}' \
-			" \
-		-o $(GO_PACKAGE_NAME)
-	@mkdir -p $(TARGET_DIRECTORY)/scratch || true
-	@mv $(GO_PACKAGE_NAME) $(TARGET_DIRECTORY)/scratch
-
 # -----------------------------------------------------------------------------
 # Test
 # -----------------------------------------------------------------------------
@@ -94,62 +54,12 @@ test:
 	@go test -v -p 1 ./...
 
 # -----------------------------------------------------------------------------
-# docker-build
-#  - https://docs.docker.com/engine/reference/commandline/build/
-# -----------------------------------------------------------------------------
-
-.PHONY: docker-build
-docker-build:
-	@docker build \
-		--build-arg BUILD_ITERATION=$(BUILD_ITERATION) \
-		--build-arg BUILD_VERSION=$(BUILD_VERSION) \
-		--build-arg GO_PACKAGE_NAME=$(GO_PACKAGE_NAME) \
-		--build-arg PROGRAM_NAME=$(PROGRAM_NAME) \
-		--file Dockerfile \
-		--tag $(DOCKER_IMAGE_NAME) \
-		--tag $(DOCKER_IMAGE_NAME):$(BUILD_VERSION) \
-		.
-
-
-.PHONY: docker-build-package
-docker-build-package:
-	@docker build \
-		--build-arg BUILD_ITERATION=$(BUILD_ITERATION) \
-		--build-arg BUILD_VERSION=$(BUILD_VERSION) \
-		--build-arg GO_PACKAGE_NAME=$(GO_PACKAGE_NAME) \
-		--build-arg PROGRAM_NAME=$(PROGRAM_NAME) \
-		--no-cache \
-		--file package.Dockerfile \
-		--tag $(DOCKER_BUILD_IMAGE_NAME) \
-		.
-
-# -----------------------------------------------------------------------------
-# Package
-# -----------------------------------------------------------------------------
-
-.PHONY: package
-package: docker-build-package
-	@mkdir -p $(TARGET_DIRECTORY) || true
-	@CONTAINER_ID=$$(docker create $(DOCKER_BUILD_IMAGE_NAME)); \
-	docker cp $$CONTAINER_ID:/output/. $(TARGET_DIRECTORY)/; \
-	docker rm -v $$CONTAINER_ID
-
-# -----------------------------------------------------------------------------
 # Run
 # -----------------------------------------------------------------------------
 
 .PHONY: run
 run:
 	@go run main.go
-
-
-.PHONY: docker-run
-docker-run:
-	@docker run \
-		--interactive \
-		--tty \
-		--name $(DOCKER_CONTAINER_NAME) \
-		$(DOCKER_IMAGE_NAME)
 
 # -----------------------------------------------------------------------------
 # Utility targets
@@ -165,10 +75,11 @@ update-pkg-cache:
 clean:
 	@go clean -cache
 	@go clean -testcache
-	@docker rm --force $(DOCKER_CONTAINER_NAME) 2> /dev/null || true
-	@docker rmi --force $(DOCKER_IMAGE_NAME) $(DOCKER_BUILD_IMAGE_NAME) 2> /dev/null || true
 	@rm -rf $(TARGET_DIRECTORY) || true
 	@rm -f $(GOPATH)/bin/$(PROGRAM_NAME) || true
+	@rm -rf /tmp/sqlite
+	@mkdir  /tmp/sqlite
+	@cp testdata/sqlite/G2C.db /tmp/sqlite/G2C.db
 
 
 .PHONY: print-make-variables
