@@ -100,7 +100,7 @@ func TestSenzingRestServiceImpl_License(test *testing.T) {
 	switch responseTyped := response.(type) {
 	case *api.SzLicenseResponse:
 		recordLimit, _ := responseTyped.Data.Value.License.Value.RecordLimit.Get()
-		assert.Equal(test, int64(100000), recordLimit)
+		assert.Equal(test, int64(50000), recordLimit)
 	}
 }
 
