@@ -51,7 +51,10 @@ dependencies:
 
 .PHONY: test
 test:
-	@go test -v -p 1 ./...
+#	@go test -v -p 1 ./...
+#	@go test -v ./.
+#	@go test -v ./senzingrestapi
+	@go test -v ./senzingrestservice
 
 # -----------------------------------------------------------------------------
 # Run

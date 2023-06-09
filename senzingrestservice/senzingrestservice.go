@@ -387,12 +387,12 @@ func (restApiService *SenzingRestServiceImpl) AddDataSources(ctx context.Context
 
 	// Retrieve all DataSources
 
-	rawData, err := g2Config.ListDataSources(ctx, configurationHandle)
-	if err != nil {
-		return r, err
-	}
+	// rawData, err := g2Config.ListDataSources(ctx, configurationHandle)
+	// if err != nil {
+	// 	return r, err
+	// }
 
-	fmt.Printf(">>>>>> ListDataSources: %s\n", rawData)
+	// fmt.Printf(">>>>>> ListDataSources: %s\n", rawData)
 
 	err = g2Config.Close(ctx, configurationHandle)
 

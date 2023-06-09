@@ -3,7 +3,6 @@ package senzingrestservice
 import (
 	"context"
 	"fmt"
-	"os"
 	"reflect"
 	"testing"
 	"time"
@@ -45,34 +44,6 @@ func testError(test *testing.T, ctx context.Context, err error) {
 }
 
 // ----------------------------------------------------------------------------
-// Test harness
-// ----------------------------------------------------------------------------
-
-func TestMain(m *testing.M) {
-	err := setup()
-	if err != nil {
-		fmt.Print(err)
-		os.Exit(1)
-	}
-	code := m.Run()
-	err = teardown()
-	if err != nil {
-		fmt.Print(err)
-	}
-	os.Exit(code)
-}
-
-func setup() error {
-	var err error = nil
-	return err
-}
-
-func teardown() error {
-	var err error = nil
-	return err
-}
-
-// ----------------------------------------------------------------------------
 // Test interface functions
 // ----------------------------------------------------------------------------
 
@@ -86,7 +57,6 @@ func TestSenzingRestServiceImpl_AddDataSources(test *testing.T) {
 	}
 	response, err := testObject.AddDataSources(ctx, request, params)
 	testError(test, ctx, err)
-
 	switch responseTyped := response.(type) {
 	case *api.SzDataSourcesResponse:
 		if debug {
@@ -117,6 +87,47 @@ func TestSenzingRestServiceImpl_Heartbeat(test *testing.T) {
 	httpMethod, err := response.Meta.Value.HttpMethod.Value.MarshalText()
 	testError(test, ctx, err)
 	assert.Equal(test, "GET", string(httpMethod))
+}
+
+func TestSenzingRestServiceImpl_License(test *testing.T) {
+	ctx := context.TODO()
+	testObject := getTestObject(ctx, test)
+	params := api.LicenseParams{
+		WithRaw: api.NewOptBool(false),
+	}
+	response, err := testObject.License(ctx, params)
+	testError(test, ctx, err)
+	switch responseTyped := response.(type) {
+	case *api.SzLicenseResponse:
+		recordLimit, _ := responseTyped.Data.Value.License.Value.RecordLimit.Get()
+		assert.Equal(test, int64(100000), recordLimit)
+	}
+}
+
+func TestSenzingRestServiceImpl_OpenApiSpecification(test *testing.T) {
+	ctx := context.TODO()
+	testObject := getTestObject(ctx, test)
+	var openApiSpecificationBytes []byte
+	response, err := testObject.OpenApiSpecification(ctx)
+	testError(test, ctx, err)
+	numBytes, _ := response.Data.Read(openApiSpecificationBytes)
+	// testError(test, ctx, err)
+	test.Logf(">>>>> %d;  %v\n", numBytes, openApiSpecificationBytes)
+}
+
+func TestSenzingRestServiceImpl_Version(test *testing.T) {
+	ctx := context.TODO()
+	testObject := getTestObject(ctx, test)
+	params := api.VersionParams{
+		WithRaw: api.NewOptBool(false),
+	}
+	response, err := testObject.Version(ctx, params)
+	testError(test, ctx, err)
+	switch responseTyped := response.(type) {
+	case *api.SzVersionResponse:
+		apiServerVersion, _ := responseTyped.Data.Value.ApiServerVersion.Get()
+		assert.Equal(test, "0.0.0", apiServerVersion)
+	}
 }
 
 // ----------------------------------------------------------------------------
