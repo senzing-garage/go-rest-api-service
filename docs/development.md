@@ -31,6 +31,50 @@ Since the Senzing library is a prerequisite, it must be installed first.
 1. Using the environment variables values just set, follow steps in
    [clone-repository](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/clone-repository.md) to install the Git repository.
 
+## Make a test database
+
+1. Install
+   [senzing-tools](https://github.com/Senzing/senzing-tools#install).
+1. Create database.
+   **Note:** The database location in the following example matches what's in the `Makefile`.
+   Example:
+
+    ```console
+    export LD_LIBRARY_PATH=/opt/senzing/g2/lib/
+    senzing-tools init-database --database-url sqlite3://na:na@/tmp/sqlite/G2C.db
+    ```
+
+## Development cycle
+
+Instructions are at
+[Ogen QuickStart](https://ogen.dev/docs/intro/).
+
+1. Get latest version of `ogen`
+
+    ```console
+    cd ${GIT_REPOSITORY_DIR}
+    go get -d github.com/ogen-go/ogen
+    ```
+
+1. View version.
+
+    ```console
+    cd ${GIT_REPOSITORY_DIR}
+    go list -m github.com/ogen-go/ogen
+    ```
+
+1. Down latest version of
+   [senzing-rest-api.yaml](https://raw.githubusercontent.com/Senzing/senzing-rest-api-specification/main/senzing-rest-api.yaml)
+   to
+   [restapiservice/openapi.yaml](https://github.com/senzing/go-rest-api-service/blob/main/restapiservice/openapi.yaml).
+
+1. Create `generate.go`
+
+    ```console
+    cd ${GIT_REPOSITORY_DIR}
+    go generate ./...
+    ```
+
 ## Build
 
 1. Build the binaries.
