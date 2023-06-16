@@ -279,7 +279,7 @@ func (restApiService *SenzingRestServiceImpl) getSenzingVersion(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	return senzing.ParseProductVersionResponse(ctx, response)
+	return senzing.UnmarshalProductVersionResponse(ctx, response)
 }
 
 // --- Debug ------------------------------------------------------------------
@@ -496,7 +496,7 @@ func (restApiService *SenzingRestServiceImpl) License(ctx context.Context, param
 	if err != nil {
 		return nil, err
 	}
-	parsedResponse, err := senzing.ParseProductLicenseResponse(ctx, response)
+	parsedResponse, err := senzing.UnmarshalProductLicenseResponse(ctx, response)
 	if err != nil {
 		return nil, err
 	}
