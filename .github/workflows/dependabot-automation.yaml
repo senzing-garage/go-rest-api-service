@@ -2,7 +2,7 @@
 
 name: 'dependabot automation'
 
-on: [pull_request_target]
+on: pull_request_target
 
 jobs:
   dependabot-approve-and-merge:
