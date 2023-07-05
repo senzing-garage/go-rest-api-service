@@ -4,8 +4,8 @@ name: 'dependabot automation'
 
 on:
   pull_request_target:
-    branches:
-      - main
+    branches: [main]
+    types: [opened, synchronize, reopened]
 
 jobs:
 
