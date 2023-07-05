@@ -9,18 +9,10 @@ on:
 
 jobs:
 
-  print_context:
-    runs-on: ubuntu-latest
-    steps:
-      - env:
-          EVENT_CONTEXT: ${{ toJSON(github.event) }}
-        run: |
-          echo $EVENT_CONTEXT
-
-  #dependabot-approve-and-merge:
-  #  permissions:
-  #    contents: write
-  #    pull-requests: write
-  #  uses: Senzing/build-resources/.github/workflows/dependabot-approve-and-merge.yaml@main
-  #  secrets:
-  #    SENZING_GITHUB_CODEOWNER_PR_RW_TOKEN: ${{ secrets.SENZING_GITHUB_CODEOWNER_PR_RW_TOKEN }}
+  dependabot-approve-and-merge:
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: Senzing/build-resources/.github/workflows/dependabot-approve-and-merge.yaml@main
+    secrets:
+      SENZING_GITHUB_CODEOWNER_PR_RW_TOKEN: ${{ secrets.SENZING_GITHUB_CODEOWNER_PR_RW_TOKEN }}
