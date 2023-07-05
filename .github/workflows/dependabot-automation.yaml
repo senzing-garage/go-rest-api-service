@@ -2,11 +2,13 @@
 
 name: 'dependabot automation'
 
-on: 
-  pull_request:
+on:
+  pull_request_target:
     branches: [main]
+    types: [opened, synchronize, reopened]
 
 jobs:
+
   dependabot-approve-and-merge:
     permissions:
       contents: write
