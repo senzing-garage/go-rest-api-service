@@ -3,7 +3,7 @@
 name: 'dependabot automation'
 
 on: 
-  pull_request:
+  pull_request_target:
     branches: [main]
 
 jobs:
