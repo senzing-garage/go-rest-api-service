@@ -11,6 +11,7 @@ import (
 
 	"github.com/senzing/g2-sdk-go/g2api"
 	"github.com/senzing/g2-sdk-go/senzing"
+	"github.com/senzing/g2-sdk-json-type-definition/go/typedef"
 	"github.com/senzing/go-logging/logging"
 	"github.com/senzing/go-observing/observer"
 	api "github.com/senzing/go-rest-api-service/senzingrestapi"
@@ -274,7 +275,7 @@ func (restApiService *SenzingRestServiceImpl) persistConfiguration(ctx context.C
 	return err
 }
 
-func (restApiService *SenzingRestServiceImpl) getSenzingVersion(ctx context.Context) (*senzing.ProductVersionResponse, error) {
+func (restApiService *SenzingRestServiceImpl) getSenzingVersion(ctx context.Context) (*typedef.ProductVersionResponse, error) {
 	response, err := restApiService.getG2product(ctx).Version(ctx)
 	if err != nil {
 		return nil, err
