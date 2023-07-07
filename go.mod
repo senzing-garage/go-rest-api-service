@@ -6,7 +6,7 @@ require (
 	github.com/go-faster/errors v0.6.1
 	github.com/go-faster/jx v1.0.0
 	github.com/ogen-go/ogen v0.70.0
-	github.com/senzing/g2-sdk-go v0.6.6
+	github.com/senzing/g2-sdk-go v0.6.7
 	github.com/senzing/go-common v0.1.4
 	github.com/senzing/go-logging v1.3.0
 	github.com/senzing/go-observing v0.2.6
@@ -36,6 +36,7 @@ require (
 	github.com/segmentio/asm v1.2.0 // indirect
 	github.com/senzing/g2-sdk-go-base v0.2.1 // indirect
 	github.com/senzing/g2-sdk-go-grpc v0.3.1 // indirect
+	github.com/senzing/g2-sdk-json-type-definition v0.1.1 // indirect
 	github.com/senzing/g2-sdk-proto/go v0.0.0-20230608182106-25c8cdc02e3c // indirect
 	github.com/senzing/go-messaging v0.2.2 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
