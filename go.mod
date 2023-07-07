@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/go-faster/errors v0.6.1
 	github.com/go-faster/jx v1.0.0
-	github.com/ogen-go/ogen v0.70.0
+	github.com/ogen-go/ogen v0.70.1
 	github.com/senzing/g2-sdk-go v0.6.6
 	github.com/senzing/go-common v0.1.4
 	github.com/senzing/go-logging v1.3.0
