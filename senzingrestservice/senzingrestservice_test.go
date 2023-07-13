@@ -23,7 +23,7 @@ var (
 
 func getTestObject(ctx context.Context, test *testing.T) SenzingRestService {
 	if senzingRestServiceSingleton == nil {
-		senzingEngineConfigurationJson, err := g2engineconfigurationjson.BuildSimpleSystemConfigurationJson("")
+		senzingEngineConfigurationJson, err := g2engineconfigurationjson.BuildSimpleSystemConfigurationJsonUsingEnvVars()
 		if err != nil {
 			test.Errorf("Error: %s", err)
 		}
