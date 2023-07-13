@@ -20,9 +20,9 @@ A RESTful service demonstrating aspects of the SenzingAPI.
 [OpenAPI](https://www.openapis.org/)
 specification:
 
-1. In [Swagger UI](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/Senzing/go-rest-api-service/main/openapi.json)
-1. In [Swagger validator](http://validator.swagger.io/?url=https://raw.githubusercontent.com/Senzing/go-rest-api-service/main/openapi.json)
-1. In [Swagger editor](http://editor.swagger.io/?url=https://raw.githubusercontent.com/Senzing/go-rest-api-service/main/openapi.json)
+1. In [Swagger UI](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/Senzing/go-rest-api-service/main/senzingrestservice/openapi.json)
+1. In [Swagger validator](http://validator.swagger.io/?url=https://raw.githubusercontent.com/Senzing/go-rest-api-service/main/senzingrestservice/openapi.json)
+1. In [Swagger editor](http://editor.swagger.io/?url=https://raw.githubusercontent.com/Senzing/go-rest-api-service/main/senzingrestservice/openapi.json)
 
 ## References
 
