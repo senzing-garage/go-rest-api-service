@@ -116,8 +116,9 @@ func (c *Client) sendAddDataSources(ctx context.Context, request AddDataSourcesR
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -248,8 +249,9 @@ func (c *Client) sendAddRecord(ctx context.Context, request AddRecordReq, params
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -428,8 +430,9 @@ func (c *Client) sendAddRecordWithReturnedRecordId(ctx context.Context, request 
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -631,8 +634,9 @@ func (c *Client) sendAnalyzeBulkRecords(ctx context.Context, request AnalyzeBulk
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -750,8 +754,9 @@ func (c *Client) sendDeleteRecord(ctx context.Context, params DeleteRecordParams
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -925,8 +930,9 @@ func (c *Client) sendFindEntityNetwork(ctx context.Context, params FindEntityNet
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -966,7 +972,7 @@ func (c *Client) sendFindEntityNetwork(ctx context.Context, params FindEntityNet
 
 		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
 			if val, ok := params.MaxDegrees.Get(); ok {
-				return e.EncodeValue(conv.IntToString(val))
+				return e.EncodeValue(conv.Int8ToString(val))
 			}
 			return nil
 		}); err != nil {
@@ -983,7 +989,7 @@ func (c *Client) sendFindEntityNetwork(ctx context.Context, params FindEntityNet
 
 		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
 			if val, ok := params.BuildOut.Get(); ok {
-				return e.EncodeValue(conv.IntToString(val))
+				return e.EncodeValue(conv.Int8ToString(val))
 			}
 			return nil
 		}); err != nil {
@@ -1163,8 +1169,9 @@ func (c *Client) sendFindEntityPath(ctx context.Context, params FindEntityPathPa
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -1204,7 +1211,7 @@ func (c *Client) sendFindEntityPath(ctx context.Context, params FindEntityPathPa
 
 		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
 			if val, ok := params.MaxDegrees.Get(); ok {
-				return e.EncodeValue(conv.IntToString(val))
+				return e.EncodeValue(conv.Int8ToString(val))
 			}
 			return nil
 		}); err != nil {
@@ -1400,8 +1407,9 @@ func (c *Client) sendGetActiveConfig(ctx context.Context) (res GetActiveConfigRe
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -1471,8 +1479,9 @@ func (c *Client) sendGetAttributeType(ctx context.Context, params GetAttributeTy
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -1582,8 +1591,9 @@ func (c *Client) sendGetAttributeTypes(ctx context.Context, params GetAttributeT
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -1725,8 +1735,9 @@ func (c *Client) sendGetDataSource(ctx context.Context, params GetDataSourcePara
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -1835,8 +1846,9 @@ func (c *Client) sendGetDataSources(ctx context.Context, params GetDataSourcesPa
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -1932,8 +1944,9 @@ func (c *Client) sendGetEntityByEntityId(ctx context.Context, params GetEntityBy
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -2145,8 +2158,9 @@ func (c *Client) sendGetEntityByRecordId(ctx context.Context, params GetEntityBy
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -2377,8 +2391,9 @@ func (c *Client) sendGetRecord(ctx context.Context, params GetRecordParams) (res
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -2509,8 +2524,9 @@ func (c *Client) sendGetServerInfo(ctx context.Context) (res GetServerInfoRes, e
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -2585,8 +2601,9 @@ func (c *Client) sendGetTemplateConfig(ctx context.Context) (res GetTemplateConf
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -2658,8 +2675,9 @@ func (c *Client) sendGetVirtualEntityByRecordIds(ctx context.Context, params Get
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -2837,8 +2855,9 @@ func (c *Client) sendHeartbeat(ctx context.Context) (res *SzBaseResponse, err er
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -2914,8 +2933,9 @@ func (c *Client) sendHowEntityByEntityID(ctx context.Context, params HowEntityBy
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -3026,8 +3046,9 @@ func (c *Client) sendHowEntityByRecordID(ctx context.Context, params HowEntityBy
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -3156,8 +3177,9 @@ func (c *Client) sendLicense(ctx context.Context, params LicenseParams) (res Lic
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -3303,8 +3325,9 @@ func (c *Client) sendLoadBulkRecords(ctx context.Context, request LoadBulkRecord
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -3492,8 +3515,9 @@ func (c *Client) sendOpenApiSpecification(ctx context.Context) (res OpenApiSpeci
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -3573,8 +3597,9 @@ func (c *Client) sendReevaluateEntity(ctx context.Context, params ReevaluateEnti
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -3703,8 +3728,9 @@ func (c *Client) sendReevaluateRecord(ctx context.Context, params ReevaluateReco
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -3852,8 +3878,9 @@ func (c *Client) sendRoot(ctx context.Context) (res *SzBaseResponse, err error) 
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -3937,8 +3964,9 @@ func (c *Client) sendSearchEntitiesByGet(ctx context.Context, params SearchEntit
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -4208,8 +4236,9 @@ func (c *Client) sendSearchEntitiesByPost(ctx context.Context, request SearchEnt
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -4429,8 +4458,9 @@ func (c *Client) sendVersion(ctx context.Context, params VersionParams) (res Ver
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -4530,8 +4560,9 @@ func (c *Client) sendWhyEntities(ctx context.Context, params WhyEntitiesParams) 
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -4758,8 +4789,9 @@ func (c *Client) sendWhyEntityByEntityID(ctx context.Context, params WhyEntityBy
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -4972,8 +5004,9 @@ func (c *Client) sendWhyEntityByRecordID(ctx context.Context, params WhyEntityBy
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.
@@ -5205,8 +5238,9 @@ func (c *Client) sendWhyRecords(ctx context.Context, params WhyRecordsParams) (r
 	// Run stopwatch.
 	startTime := time.Now()
 	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
 		elapsedDuration := time.Since(startTime)
-		c.duration.Record(ctx, elapsedDuration.Microseconds(), metric.WithAttributes(otelAttrs...))
+		c.duration.Record(ctx, float64(float64(elapsedDuration)/float64(time.Millisecond)), metric.WithAttributes(otelAttrs...))
 	}()
 
 	// Increment request counter.

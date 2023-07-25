@@ -373,10 +373,10 @@ func (s *OptDateTime) SetFake() {
 }
 
 // SetFake set fake values.
-func (s *OptInt) SetFake() {
-	var elem int
+func (s *OptInt16) SetFake() {
+	var elem int16
 	{
-		elem = int(0)
+		elem = int16(0)
 	}
 	s.SetTo(elem)
 }
@@ -395,6 +395,15 @@ func (s *OptInt64) SetFake() {
 	var elem int64
 	{
 		elem = int64(0)
+	}
+	s.SetTo(elem)
+}
+
+// SetFake set fake values.
+func (s *OptInt8) SetFake() {
+	var elem int8
+	{
+		elem = int8(0)
 	}
 	s.SetTo(elem)
 }
@@ -4189,8 +4198,8 @@ func (s *SzWhyEntityResponseRawData) SetFake() {
 // SetFake set fake values.
 func (s *SzWhyEntityResult) SetFake() {
 	{
-		{ // Keep pointer nil to prevent infinite recursion.
-			s.Perspective = nil
+		{
+			s.Perspective.SetFake()
 		}
 	}
 	{
@@ -4324,13 +4333,13 @@ func (s *SzWhyRecordsResponseRawData) SetFake() {
 // SetFake set fake values.
 func (s *SzWhyRecordsResult) SetFake() {
 	{
-		{ // Keep pointer nil to prevent infinite recursion.
-			s.Perspective1 = nil
+		{
+			s.Perspective1.SetFake()
 		}
 	}
 	{
-		{ // Keep pointer nil to prevent infinite recursion.
-			s.Perspective2 = nil
+		{
+			s.Perspective2.SetFake()
 		}
 	}
 	{

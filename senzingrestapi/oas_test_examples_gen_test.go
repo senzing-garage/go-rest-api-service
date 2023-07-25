@@ -58,15 +58,16 @@ func TestAddDataSourcesReqApplicationJSON_Examples(t *testing.T) {
 	for i, tc := range []struct {
 		Input string
 	}{
-		{Input: `[{"dataSourceCode": "CUSTOMERS"}]`},
-		{Input: `["CUSTOMERS", "EMPLOYEES"]`},
-		{Input: `["CUSTOMERS"]`},
-		{Input: `["CUSTOMERS", { "dataSourceCode": "EMPLOYEES"}, { "dataSourceCode": "VENDOR", "dataSourceId": 1002}]`},
-		{Input: `[{"dataSourceCode": "CUSTOMERS", "dataSourceId": 1000}, { "dataSourceCode": "EMPLOYEES", "dataSourceId": 1001}]`},
-		{Input: `[{"dataSourceCode": "CUSTOMERS", "dataSourceId": 1000}]`},
-		{Input: `"CUSTOMERS"`},
-		{Input: `{"dataSourceCode": "CUSTOMERS"}`},
-		{Input: `{"dataSourceCode": "CUSTOMERS", "dataSourceId": 1000}`},
+		{Input: "\"\""},
+		{Input: "\"[ {\\\"dataSourceCode\\\": \\\"CUSTOMERS\\\"} ]\""},
+		{Input: "\"[\\\"CUSTOMERS\\\", \\\"EMPLOYEES\\\"]\""},
+		{Input: "\"[\\\"CUSTOMERS\\\"]\""},
+		{Input: "\"[\\n  \\\"CUSTOMERS\\\",\\n  {\\n    \\\"dataSourceCode\\\": \\\"EMPLOYEES\\\"\\n  },\\n  {\\n    \\\"dataSourceCode\\\": \\\"VENDOR\\\",\\n    \\\"dataSourceId\\\": 1002\\n  }\\n]\""},
+		{Input: "\"[\\n  {\\n    \\\"dataSourceCode\\\": \\\"CUSTOMERS\\\",\\n    \\\"dataSourceId\\\": 1000\\n  },\\n  {\\n    \\\"dataSourceCode\\\": \\\"EMPLOYEES\\\",\\n    \\\"dataSourceId\\\": 1001\\n  }\\n]\""},
+		{Input: "\"[\\n  {\\n    \\\"dataSourceCode\\\": \\\"CUSTOMERS\\\",\\n    \\\"dataSourceId\\\": 1000\\n  }\\n]\""},
+		{Input: "\"\\\"CUSTOMERS\\\"\""},
+		{Input: "\"{\\\"dataSourceCode\\\": \\\"CUSTOMERS\\\"}\""},
+		{Input: "\"{\\n  \\\"dataSourceCode\\\": \\\"CUSTOMERS\\\",\\n  \\\"dataSourceId\\\": 1000\\n}\""},
 	} {
 		tc := tc
 		t.Run(fmt.Sprintf("Test%d", i+1), func(t *testing.T) {
@@ -157,10 +158,10 @@ func TestAddRecordReq_Examples(t *testing.T) {
 	for i, tc := range []struct {
 		Input string
 	}{
-		{Input: `{"NAMES": [{"NAME_FIRST": "JANE", "NAME_LAST": "SCHMOE" }],"PHONE_NUMBERS": [{"PHONE_NUMBER": "559-555-1212"}],"ADDRESSES": [{"ADDR_LINE1":"653 STATE ROUTE 7","ADDR_CITY":"FRESNO","ADDR_STATE":"CA","ADDR_POSTAL_CODE":"55073-1234"}]}`},
-		{Input: `{"NAMES": [{"NAME_TYPE": "PRIMARY", "NAME_FIRST": "JANE", "NAME_LAST": "SCHMOE"}, { "NAME_TYPE": "MAIDEN", "NAME_FIRST": "JANE", "NAME_LAST": "SMITH" } ], "PHONE_NUMBERS": [ { "PHONE_TYPE": "HOME", "PHONE_NUMBER": "559-555-1212" }, { "PHONE_TYPE": "WORK", "PHONE_NUMBER": "559-555-1414" } ], "ADDRESSES": [ { "ADDR_TYPE": "HOME", "ADDR_LINE1": "653 STATE ROUTE 7", "ADDR_CITY": "FRESNO", "ADDR_STATE": "CA", "ADDR_POSTAL_CODE": "55073-1234" }, { "ADDR_TYPE": "WORK", "ADDR_LINE1": "701 E MAIN STREET", "ADDR_CITY": "FOWLER", "ADDR_STATE": "CA", "ADDR_POSTAL_CODE": "93625"}]}`},
-		{Input: `{"NAME_FIRST": "JANE", "NAME_LAST": "SCHMOE", "HOME_PHONE_NUMBER": "559-555-1212", "WORK_PHONE_NUMBER": "559-555-1414", "HOME_ADDR_LINE1": "653 STATE ROUTE 7", "HOME_ADDR_CITY": "FRESNO", "HOME_ADDR_STATE": "CA", "HOME_ADDR_POSTAL_CODE": "55073-1234", "WORK_ADDR_LINE1": "701 E MAIN STREET", "WORK_ADDR_CITY": "FOWLER", "WORK_ADDR_STATE": "CA", "WORK_ADDR_POSTAL_CODE": "93625"}`},
-		{Input: `{"NAME_FIRST": "JANE", "NAME_LAST": "SCHMOE", "PHONE_NUMBER": "559-555-1212", "ADDR_LINE1": "653 STATE ROUTE 7", "ADDR_CITY": "FRESNO", "ADDR_STATE": "CA", "ADDR_POSTAL_CODE": "55073-1234"}`},
+		{Input: "\"{\\n  \\\"NAMES\\\": [\\n    {\\n      \\\"NAME_FIRST\\\": \\\"JANE\\\",\\n      \\\"NAME_LAST\\\": \\\"SCHMOE\\\"\\n    }\\n  ],\\n  \\\"PHONE_NUMBERS\\\": [\\n    {\\n      \\\"PHONE_NUMBER\\\": \\\"559-555-1212\\\"\\n    }\\n  ],\\n  \\\"ADDRESSES\\\": [\\n    {\\n      \\\"ADDR_LINE1\\\": \\\"653 STATE ROUTE 7\\\",\\n      \\\"ADDR_CITY\\\": \\\"FRESNO\\\",\\n      \\\"ADDR_STATE\\\": \\\"CA\\\",\\n      \\\"ADDR_POSTAL_CODE\\\": \\\"55073-1234\\\"\\n    }\\n  ]\\n}\""},
+		{Input: "\"{\\n  \\\"NAMES\\\": [\\n    {\\n      \\\"NAME_TYPE\\\": \\\"PRIMARY\\\",\\n      \\\"NAME_FIRST\\\": \\\"JANE\\\",\\n      \\\"NAME_LAST\\\": \\\"SCHMOE\\\"\\n    },\\n    {\\n      \\\"NAME_TYPE\\\": \\\"MAIDEN\\\",\\n      \\\"NAME_FIRST\\\": \\\"JANE\\\",\\n      \\\"NAME_LAST\\\": \\\"SMITH\\\"\\n    }\\n  ],\\n  \\\"PHONE_NUMBERS\\\": [\\n    {\\n      \\\"PHONE_TYPE\\\": \\\"HOME\\\",\\n      \\\"PHONE_NUMBER\\\": \\\"559-555-1212\\\"\\n    },\\n    {\\n      \\\"PHONE_TYPE\\\": \\\"WORK\\\",\\n      \\\"PHONE_NUMBER\\\": \\\"559-555-1414\\\"\\n    }\\n  ],\\n  \\\"ADDRESSES\\\": [\\n    {\\n      \\\"ADDR_TYPE\\\": \\\"HOME\\\",\\n      \\\"ADDR_LINE1\\\": \\\"653 STATE ROUTE 7\\\",\\n      \\\"ADDR_CITY\\\": \\\"FRESNO\\\",\\n      \\\"ADDR_STATE\\\": \\\"CA\\\",\\n      \\\"ADDR_POSTAL_CODE\\\": \\\"55073-1234\\\"\\n    },\\n    {\\n      \\\"ADDR_TYPE\\\": \\\"WORK\\\",\\n      \\\"ADDR_LINE1\\\": \\\"701 E MAIN STREET\\\",\\n      \\\"ADDR_CITY\\\": \\\"FOWLER\\\",\\n      \\\"ADDR_STATE\\\": \\\"CA\\\",\\n      \\\"ADDR_POSTAL_CODE\\\": \\\"93625\\\"\\n    }\\n  ]\\n}\""},
+		{Input: "\"{\\n  \\\"NAME_FIRST\\\": \\\"JANE\\\",\\n  \\\"NAME_LAST\\\": \\\"SCHMOE\\\",\\n  \\\"HOME_PHONE_NUMBER\\\": \\\"559-555-1212\\\",\\n  \\\"WORK_PHONE_NUMBER\\\": \\\"559-555-1414\\\",\\n  \\\"HOME_ADDR_LINE1\\\": \\\"653 STATE ROUTE 7\\\",\\n  \\\"HOME_ADDR_CITY\\\": \\\"FRESNO\\\",\\n  \\\"HOME_ADDR_STATE\\\": \\\"CA\\\",\\n  \\\"HOME_ADDR_POSTAL_CODE\\\": \\\"55073-1234\\\"\\n  \\\"WORK_ADDR_LINE1\\\": \\\"701 E MAIN STREET\\\",\\n  \\\"WORK_ADDR_CITY\\\": \\\"FOWLER\\\",\\n  \\\"WORK_ADDR_STATE\\\": \\\"CA\\\",\\n  \\\"WORK_ADDR_POSTAL_CODE\\\": \\\"93625\\\"\\n}\""},
+		{Input: "\"{\\n  \\\"NAME_FIRST\\\": \\\"JANE\\\",\\n  \\\"NAME_LAST\\\": \\\"SCHMOE\\\",\\n  \\\"PHONE_NUMBER\\\": \\\"559-555-1212\\\",\\n  \\\"ADDR_LINE1\\\": \\\"653 STATE ROUTE 7\\\",\\n  \\\"ADDR_CITY\\\": \\\"FRESNO\\\",\\n  \\\"ADDR_STATE\\\": \\\"CA\\\",\\n  \\\"ADDR_POSTAL_CODE\\\": \\\"55073-1234\\\"\\n}\""},
 	} {
 		tc := tc
 		t.Run(fmt.Sprintf("Test%d", i+1), func(t *testing.T) {
@@ -253,10 +254,10 @@ func TestAddRecordWithReturnedRecordIdReq_Examples(t *testing.T) {
 	for i, tc := range []struct {
 		Input string
 	}{
-		{Input: `{"NAMES": [{"NAME_FIRST": "JANE", "NAME_LAST": "SCHMOE"}], "PHONE_NUMBERS": [{"PHONE_NUMBER": "559-555-1212"}], "ADDRESSES": [{"ADDR_LINE1": "653 STATE ROUTE 7", "ADDR_CITY": "FRESNO", "ADDR_STATE": "CA", "ADDR_POSTAL_CODE": "55073-1234"}]}`},
-		{Input: `{"NAMES": [{"NAME_TYPE": "PRIMARY", "NAME_FIRST": "JANE", "NAME_LAST": "SCHMOE"}, {"NAME_TYPE": "MAIDEN", "NAME_FIRST": "JANE", "NAME_LAST": "SMITH"}], "PHONE_NUMBERS": [{"PHONE_TYPE": "HOME", "PHONE_NUMBER": "559-555-1212"}, {"PHONE_TYPE": "WORK", "PHONE_NUMBER": "559-555-1414"}], "ADDRESSES": [{"ADDR_TYPE": "HOME", "ADDR_LINE1": "653 STATE ROUTE 7", "ADDR_CITY": "FRESNO", "ADDR_STATE": "CA", "ADDR_POSTAL_CODE": "55073-1234" }, {"ADDR_TYPE": "WORK", "ADDR_LINE1": "701 E MAIN STREET", "ADDR_CITY": "FOWLER", "ADDR_STATE": "CA", "ADDR_POSTAL_CODE": "93625"}]}`},
-		{Input: `{"NAME_FIRST": "JANE", "NAME_LAST": "SCHMOE", "HOME_PHONE_NUMBER": "559-555-1212", "WORK_PHONE_NUMBER": "559-555-1414", "HOME_ADDR_LINE1": "653 STATE ROUTE 7", "HOME_ADDR_CITY": "FRESNO", "HOME_ADDR_STATE": "CA", "HOME_ADDR_POSTAL_CODE": "55073-1234", "WORK_ADDR_LINE1": "701 E MAIN STREET", "WORK_ADDR_CITY": "FOWLER", "WORK_ADDR_STATE": "CA", "WORK_ADDR_POSTAL_CODE": "93625"}`},
-		{Input: `{"NAME_FIRST": "JANE", "NAME_LAST": "SCHMOE", "PHONE_NUMBER": "559-555-1212", "ADDR_LINE1": "653 STATE ROUTE 7", "ADDR_CITY": "FRESNO", "ADDR_STATE": "CA", "ADDR_POSTAL_CODE": "55073-1234"}`},
+		{Input: "\"{\\n  \\\"NAMES\\\": [\\n    {\\n      \\\"NAME_FIRST\\\": \\\"JANE\\\",\\n      \\\"NAME_LAST\\\": \\\"SCHMOE\\\"\\n    }\\n  ],\\n  \\\"PHONE_NUMBERS\\\": [\\n    {\\n      \\\"PHONE_NUMBER\\\": \\\"559-555-1212\\\"\\n    }\\n  ],\\n  \\\"ADDRESSES\\\": [\\n    {\\n      \\\"ADDR_LINE1\\\": \\\"653 STATE ROUTE 7\\\",\\n      \\\"ADDR_CITY\\\": \\\"FRESNO\\\",\\n      \\\"ADDR_STATE\\\": \\\"CA\\\",\\n      \\\"ADDR_POSTAL_CODE\\\": \\\"55073-1234\\\"\\n    }\\n  ]\\n}\""},
+		{Input: "\"{\\n  \\\"NAMES\\\": [\\n    {\\n      \\\"NAME_TYPE\\\": \\\"PRIMARY\\\",\\n      \\\"NAME_FIRST\\\": \\\"JANE\\\",\\n      \\\"NAME_LAST\\\": \\\"SCHMOE\\\"\\n    },\\n    {\\n      \\\"NAME_TYPE\\\": \\\"MAIDEN\\\",\\n      \\\"NAME_FIRST\\\": \\\"JANE\\\",\\n      \\\"NAME_LAST\\\": \\\"SMITH\\\"\\n    }\\n  ],\\n  \\\"PHONE_NUMBERS\\\": [\\n    {\\n      \\\"PHONE_TYPE\\\": \\\"HOME\\\",\\n      \\\"PHONE_NUMBER\\\": \\\"559-555-1212\\\"\\n    },\\n    {\\n      \\\"PHONE_TYPE\\\": \\\"WORK\\\",\\n      \\\"PHONE_NUMBER\\\": \\\"559-555-1414\\\"\\n    }\\n  ],\\n  \\\"ADDRESSES\\\": [\\n    {\\n      \\\"ADDR_TYPE\\\": \\\"HOME\\\",\\n      \\\"ADDR_LINE1\\\": \\\"653 STATE ROUTE 7\\\",\\n      \\\"ADDR_CITY\\\": \\\"FRESNO\\\",\\n      \\\"ADDR_STATE\\\": \\\"CA\\\",\\n      \\\"ADDR_POSTAL_CODE\\\": \\\"55073-1234\\\"\\n    },\\n    {\\n      \\\"ADDR_TYPE\\\": \\\"WORK\\\",\\n      \\\"ADDR_LINE1\\\": \\\"701 E MAIN STREET\\\",\\n      \\\"ADDR_CITY\\\": \\\"FOWLER\\\",\\n      \\\"ADDR_STATE\\\": \\\"CA\\\",\\n      \\\"ADDR_POSTAL_CODE\\\": \\\"93625\\\"\\n    }\\n  ]\\n}\""},
+		{Input: "\"{\\n  \\\"NAME_FIRST\\\": \\\"JANE\\\",\\n  \\\"NAME_LAST\\\": \\\"SCHMOE\\\",\\n  \\\"HOME_PHONE_NUMBER\\\": \\\"559-555-1212\\\",\\n  \\\"WORK_PHONE_NUMBER\\\": \\\"559-555-1414\\\",\\n  \\\"HOME_ADDR_LINE1\\\": \\\"653 STATE ROUTE 7\\\",\\n  \\\"HOME_ADDR_CITY\\\": \\\"FRESNO\\\",\\n  \\\"HOME_ADDR_STATE\\\": \\\"CA\\\",\\n  \\\"HOME_ADDR_POSTAL_CODE\\\": \\\"55073-1234\\\"\\n  \\\"WORK_ADDR_LINE1\\\": \\\"701 E MAIN STREET\\\",\\n  \\\"WORK_ADDR_CITY\\\": \\\"FOWLER\\\",\\n  \\\"WORK_ADDR_STATE\\\": \\\"CA\\\",\\n  \\\"WORK_ADDR_POSTAL_CODE\\\": \\\"93625\\\"\\n}\""},
+		{Input: "\"{\\n  \\\"NAME_FIRST\\\": \\\"JANE\\\",\\n  \\\"NAME_LAST\\\": \\\"SCHMOE\\\",\\n  \\\"PHONE_NUMBER\\\": \\\"559-555-1212\\\",\\n  \\\"ADDR_LINE1\\\": \\\"653 STATE ROUTE 7\\\",\\n  \\\"ADDR_CITY\\\": \\\"FRESNO\\\",\\n  \\\"ADDR_STATE\\\": \\\"CA\\\",\\n  \\\"ADDR_POSTAL_CODE\\\": \\\"55073-1234\\\"\\n}\""},
 	} {
 		tc := tc
 		t.Run(fmt.Sprintf("Test%d", i+1), func(t *testing.T) {
@@ -685,9 +686,9 @@ func TestSearchEntitiesByPostReq_Examples(t *testing.T) {
 	for i, tc := range []struct {
 		Input string
 	}{
-		{Input: `{"NAME_FULL": "JANE SMITH", "ADDR_LINE1": "653 STATE ROUTE 7", "ADDR_CITY": "FRESNO", "ADDR_STATE": "CA", "ADDR_POSTAL_CODE": "55073-1234"}`},
-		{Input: `{"NAME_FULL": "JANE SMITH", "DATE_OF_BIRTH": "03-SEP-1987"}`},
-		{Input: `{"SSN_NUMBER": "111-22-3333"}`},
+		{Input: "\"{\\n  \\\"NAME_FULL\\\": \\\"JANE SMITH\\\",\\n  \\\"ADDR_LINE1\\\": \\\"653 STATE ROUTE 7\\\",\\n  \\\"ADDR_CITY\\\": \\\"FRESNO\\\",\\n  \\\"ADDR_STATE\\\": \\\"CA\\\",\\n  \\\"ADDR_POSTAL_CODE\\\": \\\"55073-1234\\\"\\n}\""},
+		{Input: "\"{\\n  \\\"NAME_FULL\\\": \\\"JANE SMITH\\\",\\n  \\\"DATE_OF_BIRTH\\\": \\\"03-SEP-1987\\\"\\n}\""},
+		{Input: "\"{\\n  \\\"SSN_NUMBER\\\": \\\"111-22-3333\\\"\\n}\""},
 	} {
 		tc := tc
 		t.Run(fmt.Sprintf("Test%d", i+1), func(t *testing.T) {

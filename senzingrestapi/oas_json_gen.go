@@ -1551,37 +1551,37 @@ func (s *OptDateTime) UnmarshalJSON(data []byte) error {
 	return s.Decode(d, json.DecodeDateTime)
 }
 
-// Encode encodes int as json.
-func (o OptInt) Encode(e *jx.Encoder) {
+// Encode encodes int16 as json.
+func (o OptInt16) Encode(e *jx.Encoder) {
 	if !o.Set {
 		return
 	}
-	e.Int(int(o.Value))
+	e.Int16(int16(o.Value))
 }
 
-// Decode decodes int from json.
-func (o *OptInt) Decode(d *jx.Decoder) error {
+// Decode decodes int16 from json.
+func (o *OptInt16) Decode(d *jx.Decoder) error {
 	if o == nil {
-		return errors.New("invalid: unable to decode OptInt to nil")
+		return errors.New("invalid: unable to decode OptInt16 to nil")
 	}
 	o.Set = true
-	v, err := d.Int()
+	v, err := d.Int16()
 	if err != nil {
 		return err
 	}
-	o.Value = int(v)
+	o.Value = int16(v)
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s OptInt) MarshalJSON() ([]byte, error) {
+func (s OptInt16) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptInt) UnmarshalJSON(data []byte) error {
+func (s *OptInt16) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -1652,6 +1652,41 @@ func (s OptInt64) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
 func (s *OptInt64) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes int8 as json.
+func (o OptInt8) Encode(e *jx.Encoder) {
+	if !o.Set {
+		return
+	}
+	e.Int8(int8(o.Value))
+}
+
+// Decode decodes int8 from json.
+func (o *OptInt8) Decode(d *jx.Decoder) error {
+	if o == nil {
+		return errors.New("invalid: unable to decode OptInt8 to nil")
+	}
+	o.Set = true
+	v, err := d.Int8()
+	if err != nil {
+		return err
+	}
+	o.Value = int8(v)
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s OptInt8) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *OptInt8) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -18527,10 +18562,8 @@ func (s *SzWhyEntityResult) Encode(e *jx.Encoder) {
 // encodeFields encodes fields.
 func (s *SzWhyEntityResult) encodeFields(e *jx.Encoder) {
 	{
-		if s.Perspective != nil {
-			e.FieldStart("perspective")
-			s.Perspective.Encode(e)
-		}
+		e.FieldStart("perspective")
+		s.Perspective.Encode(e)
 	}
 	{
 		if s.MatchInfo.Set {
@@ -18555,12 +18588,9 @@ func (s *SzWhyEntityResult) Decode(d *jx.Decoder) error {
 		switch string(k) {
 		case "perspective":
 			if err := func() error {
-				s.Perspective = nil
-				var elem SzWhyPerspective
-				if err := elem.Decode(d); err != nil {
+				if err := s.Perspective.Decode(d); err != nil {
 					return err
 				}
-				s.Perspective = &elem
 				return nil
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"perspective\"")
@@ -19194,16 +19224,12 @@ func (s *SzWhyRecordsResult) Encode(e *jx.Encoder) {
 // encodeFields encodes fields.
 func (s *SzWhyRecordsResult) encodeFields(e *jx.Encoder) {
 	{
-		if s.Perspective1 != nil {
-			e.FieldStart("perspective1")
-			s.Perspective1.Encode(e)
-		}
+		e.FieldStart("perspective1")
+		s.Perspective1.Encode(e)
 	}
 	{
-		if s.Perspective2 != nil {
-			e.FieldStart("perspective2")
-			s.Perspective2.Encode(e)
-		}
+		e.FieldStart("perspective2")
+		s.Perspective2.Encode(e)
 	}
 	{
 		if s.MatchInfo.Set {
@@ -19229,24 +19255,18 @@ func (s *SzWhyRecordsResult) Decode(d *jx.Decoder) error {
 		switch string(k) {
 		case "perspective1":
 			if err := func() error {
-				s.Perspective1 = nil
-				var elem SzWhyPerspective
-				if err := elem.Decode(d); err != nil {
+				if err := s.Perspective1.Decode(d); err != nil {
 					return err
 				}
-				s.Perspective1 = &elem
 				return nil
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"perspective1\"")
 			}
 		case "perspective2":
 			if err := func() error {
-				s.Perspective2 = nil
-				var elem SzWhyPerspective
-				if err := elem.Decode(d); err != nil {
+				if err := s.Perspective2.Decode(d); err != nil {
 					return err
 				}
-				s.Perspective2 = &elem
 				return nil
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"perspective2\"")

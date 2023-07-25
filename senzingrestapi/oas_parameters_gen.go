@@ -1109,11 +1109,11 @@ type FindEntityNetworkParams struct {
 	//  this defaults to `3`. Unlike `GET /entity-paths/` the value here may be zero (0) which allows the
 	// caller to specify a list of entities and simply "build out" the network around each to a maximum
 	// number of degrees and up to a maximum number of entities.
-	MaxDegrees OptInt
+	MaxDegrees OptInt8
 	// The maximum number of degrees to build out around each of the specified entities regardless of
 	// those entities being on the path between entities.  The number of entities built out is limited by
 	// the `maxEntities` parameter.  This defaults to `1` degree if not specified.
-	BuildOut OptInt
+	BuildOut OptInt8
 	// The maximum number of entities to build out when the `buildOut` is greater than zero (0).  This
 	// defaults to `1000` if not specified.
 	MaxEntities OptInt32
@@ -1201,7 +1201,7 @@ func unpackFindEntityNetworkParams(packed middleware.Parameters) (params FindEnt
 			In:   "query",
 		}
 		if v, ok := packed[key]; ok {
-			params.MaxDegrees = v.(OptInt)
+			params.MaxDegrees = v.(OptInt8)
 		}
 	}
 	{
@@ -1210,7 +1210,7 @@ func unpackFindEntityNetworkParams(packed middleware.Parameters) (params FindEnt
 			In:   "query",
 		}
 		if v, ok := packed[key]; ok {
-			params.BuildOut = v.(OptInt)
+			params.BuildOut = v.(OptInt8)
 		}
 	}
 	{
@@ -1283,7 +1283,7 @@ func decodeFindEntityNetworkParams(args [0]string, argsEscaped bool, r *http.Req
 	q := uri.NewQueryDecoder(r.URL.Query())
 	// Set default value for query: maxDegrees.
 	{
-		val := int(3)
+		val := int8(3)
 		params.MaxDegrees.SetTo(val)
 	}
 	// Decode query: maxDegrees.
@@ -1296,14 +1296,14 @@ func decodeFindEntityNetworkParams(args [0]string, argsEscaped bool, r *http.Req
 
 		if err := q.HasParam(cfg); err == nil {
 			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
-				var paramsDotMaxDegreesVal int
+				var paramsDotMaxDegreesVal int8
 				if err := func() error {
 					val, err := d.DecodeValue()
 					if err != nil {
 						return err
 					}
 
-					c, err := conv.ToInt(val)
+					c, err := conv.ToInt8(val)
 					if err != nil {
 						return err
 					}
@@ -1319,7 +1319,7 @@ func decodeFindEntityNetworkParams(args [0]string, argsEscaped bool, r *http.Req
 				return err
 			}
 			if err := func() error {
-				if params.MaxDegrees.Set {
+				if value, ok := params.MaxDegrees.Get(); ok {
 					if err := func() error {
 						if err := (validate.Int{
 							MinSet:        true,
@@ -1330,7 +1330,7 @@ func decodeFindEntityNetworkParams(args [0]string, argsEscaped bool, r *http.Req
 							MaxExclusive:  false,
 							MultipleOfSet: false,
 							MultipleOf:    0,
-						}).Validate(int64(params.MaxDegrees.Value)); err != nil {
+						}).Validate(int64(value)); err != nil {
 							return errors.Wrap(err, "int")
 						}
 						return nil
@@ -1353,7 +1353,7 @@ func decodeFindEntityNetworkParams(args [0]string, argsEscaped bool, r *http.Req
 	}
 	// Set default value for query: buildOut.
 	{
-		val := int(1)
+		val := int8(1)
 		params.BuildOut.SetTo(val)
 	}
 	// Decode query: buildOut.
@@ -1366,14 +1366,14 @@ func decodeFindEntityNetworkParams(args [0]string, argsEscaped bool, r *http.Req
 
 		if err := q.HasParam(cfg); err == nil {
 			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
-				var paramsDotBuildOutVal int
+				var paramsDotBuildOutVal int8
 				if err := func() error {
 					val, err := d.DecodeValue()
 					if err != nil {
 						return err
 					}
 
-					c, err := conv.ToInt(val)
+					c, err := conv.ToInt8(val)
 					if err != nil {
 						return err
 					}
@@ -1389,7 +1389,7 @@ func decodeFindEntityNetworkParams(args [0]string, argsEscaped bool, r *http.Req
 				return err
 			}
 			if err := func() error {
-				if params.BuildOut.Set {
+				if value, ok := params.BuildOut.Get(); ok {
 					if err := func() error {
 						if err := (validate.Int{
 							MinSet:        true,
@@ -1400,7 +1400,7 @@ func decodeFindEntityNetworkParams(args [0]string, argsEscaped bool, r *http.Req
 							MaxExclusive:  false,
 							MultipleOfSet: false,
 							MultipleOf:    0,
-						}).Validate(int64(params.BuildOut.Value)); err != nil {
+						}).Validate(int64(value)); err != nil {
 							return errors.Wrap(err, "int")
 						}
 						return nil
@@ -1459,7 +1459,7 @@ func decodeFindEntityNetworkParams(args [0]string, argsEscaped bool, r *http.Req
 				return err
 			}
 			if err := func() error {
-				if params.MaxEntities.Set {
+				if value, ok := params.MaxEntities.Get(); ok {
 					if err := func() error {
 						if err := (validate.Int{
 							MinSet:        true,
@@ -1470,7 +1470,7 @@ func decodeFindEntityNetworkParams(args [0]string, argsEscaped bool, r *http.Req
 							MaxExclusive:  false,
 							MultipleOfSet: false,
 							MultipleOf:    0,
-						}).Validate(int64(params.MaxEntities.Value)); err != nil {
+						}).Validate(int64(value)); err != nil {
 							return errors.Wrap(err, "int")
 						}
 						return nil
@@ -1529,9 +1529,9 @@ func decodeFindEntityNetworkParams(args [0]string, argsEscaped bool, r *http.Req
 				return err
 			}
 			if err := func() error {
-				if params.DetailLevel.Set {
+				if value, ok := params.DetailLevel.Get(); ok {
 					if err := func() error {
-						if err := params.DetailLevel.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -1590,9 +1590,9 @@ func decodeFindEntityNetworkParams(args [0]string, argsEscaped bool, r *http.Req
 				return err
 			}
 			if err := func() error {
-				if params.FeatureMode.Set {
+				if value, ok := params.FeatureMode.Get(); ok {
 					if err := func() error {
-						if err := params.FeatureMode.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -1805,7 +1805,7 @@ type FindEntityPathParams struct {
 	// The maximum number of degrees to look for a path from the first entity to the last entity.  This
 	// defaults to `3` if not specified. If specified, the value must be greater-than zero (0) since a
 	// path cannot exist at zero degrees of separation.
-	MaxDegrees OptInt
+	MaxDegrees OptInt8
 	// If the avoidEntities parameter is provided then this flag is used to control whether or not to
 	// forbid the avoided entities rather than include them in the path as a "last resort".
 	ForbidAvoided OptBool
@@ -1897,7 +1897,7 @@ func unpackFindEntityPathParams(packed middleware.Parameters) (params FindEntity
 			In:   "query",
 		}
 		if v, ok := packed[key]; ok {
-			params.MaxDegrees = v.(OptInt)
+			params.MaxDegrees = v.(OptInt8)
 		}
 	}
 	{
@@ -1979,7 +1979,7 @@ func decodeFindEntityPathParams(args [0]string, argsEscaped bool, r *http.Reques
 	q := uri.NewQueryDecoder(r.URL.Query())
 	// Set default value for query: maxDegrees.
 	{
-		val := int(3)
+		val := int8(3)
 		params.MaxDegrees.SetTo(val)
 	}
 	// Decode query: maxDegrees.
@@ -1992,14 +1992,14 @@ func decodeFindEntityPathParams(args [0]string, argsEscaped bool, r *http.Reques
 
 		if err := q.HasParam(cfg); err == nil {
 			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
-				var paramsDotMaxDegreesVal int
+				var paramsDotMaxDegreesVal int8
 				if err := func() error {
 					val, err := d.DecodeValue()
 					if err != nil {
 						return err
 					}
 
-					c, err := conv.ToInt(val)
+					c, err := conv.ToInt8(val)
 					if err != nil {
 						return err
 					}
@@ -2015,7 +2015,7 @@ func decodeFindEntityPathParams(args [0]string, argsEscaped bool, r *http.Reques
 				return err
 			}
 			if err := func() error {
-				if params.MaxDegrees.Set {
+				if value, ok := params.MaxDegrees.Get(); ok {
 					if err := func() error {
 						if err := (validate.Int{
 							MinSet:        true,
@@ -2026,7 +2026,7 @@ func decodeFindEntityPathParams(args [0]string, argsEscaped bool, r *http.Reques
 							MaxExclusive:  false,
 							MultipleOfSet: false,
 							MultipleOf:    0,
-						}).Validate(int64(params.MaxDegrees.Value)); err != nil {
+						}).Validate(int64(value)); err != nil {
 							return errors.Wrap(err, "int")
 						}
 						return nil
@@ -2174,9 +2174,9 @@ func decodeFindEntityPathParams(args [0]string, argsEscaped bool, r *http.Reques
 				return err
 			}
 			if err := func() error {
-				if params.DetailLevel.Set {
+				if value, ok := params.DetailLevel.Get(); ok {
 					if err := func() error {
-						if err := params.DetailLevel.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -2235,9 +2235,9 @@ func decodeFindEntityPathParams(args [0]string, argsEscaped bool, r *http.Reques
 				return err
 			}
 			if err := func() error {
-				if params.FeatureMode.Set {
+				if value, ok := params.FeatureMode.Get(); ok {
 					if err := func() error {
-						if err := params.FeatureMode.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -2712,9 +2712,9 @@ func decodeGetAttributeTypesParams(args [0]string, argsEscaped bool, r *http.Req
 				return err
 			}
 			if err := func() error {
-				if params.AttributeClass.Set {
+				if value, ok := params.AttributeClass.Get(); ok {
 					if err := func() error {
-						if err := params.AttributeClass.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -3289,9 +3289,9 @@ func decodeGetEntityByEntityIdParams(args [1]string, argsEscaped bool, r *http.R
 				return err
 			}
 			if err := func() error {
-				if params.DetailLevel.Set {
+				if value, ok := params.DetailLevel.Get(); ok {
 					if err := func() error {
-						if err := params.DetailLevel.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -3350,9 +3350,9 @@ func decodeGetEntityByEntityIdParams(args [1]string, argsEscaped bool, r *http.R
 				return err
 			}
 			if err := func() error {
-				if params.FeatureMode.Set {
+				if value, ok := params.FeatureMode.Get(); ok {
 					if err := func() error {
-						if err := params.FeatureMode.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -3549,9 +3549,9 @@ func decodeGetEntityByEntityIdParams(args [1]string, argsEscaped bool, r *http.R
 				return err
 			}
 			if err := func() error {
-				if params.WithRelated.Set {
+				if value, ok := params.WithRelated.Get(); ok {
 					if err := func() error {
-						if err := params.WithRelated.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -3935,9 +3935,9 @@ func decodeGetEntityByRecordIdParams(args [2]string, argsEscaped bool, r *http.R
 				return err
 			}
 			if err := func() error {
-				if params.DetailLevel.Set {
+				if value, ok := params.DetailLevel.Get(); ok {
 					if err := func() error {
-						if err := params.DetailLevel.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -3996,9 +3996,9 @@ func decodeGetEntityByRecordIdParams(args [2]string, argsEscaped bool, r *http.R
 				return err
 			}
 			if err := func() error {
-				if params.FeatureMode.Set {
+				if value, ok := params.FeatureMode.Get(); ok {
 					if err := func() error {
-						if err := params.FeatureMode.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -4195,9 +4195,9 @@ func decodeGetEntityByRecordIdParams(args [2]string, argsEscaped bool, r *http.R
 				return err
 			}
 			if err := func() error {
-				if params.WithRelated.Set {
+				if value, ok := params.WithRelated.Get(); ok {
 					if err := func() error {
-						if err := params.WithRelated.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -4626,9 +4626,9 @@ func decodeGetVirtualEntityByRecordIdsParams(args [0]string, argsEscaped bool, r
 				return err
 			}
 			if err := func() error {
-				if params.DetailLevel.Set {
+				if value, ok := params.DetailLevel.Get(); ok {
 					if err := func() error {
-						if err := params.DetailLevel.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -4687,9 +4687,9 @@ func decodeGetVirtualEntityByRecordIdsParams(args [0]string, argsEscaped bool, r
 				return err
 			}
 			if err := func() error {
-				if params.FeatureMode.Set {
+				if value, ok := params.FeatureMode.Get(); ok {
 					if err := func() error {
-						if err := params.FeatureMode.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -6536,9 +6536,9 @@ func decodeSearchEntitiesByGetParams(args [0]string, argsEscaped bool, r *http.R
 				return err
 			}
 			if err := func() error {
-				if params.DetailLevel.Set {
+				if value, ok := params.DetailLevel.Get(); ok {
 					if err := func() error {
-						if err := params.DetailLevel.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -6597,9 +6597,9 @@ func decodeSearchEntitiesByGetParams(args [0]string, argsEscaped bool, r *http.R
 				return err
 			}
 			if err := func() error {
-				if params.FeatureMode.Set {
+				if value, ok := params.FeatureMode.Get(); ok {
 					if err := func() error {
-						if err := params.FeatureMode.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -7121,9 +7121,9 @@ func decodeSearchEntitiesByPostParams(args [0]string, argsEscaped bool, r *http.
 				return err
 			}
 			if err := func() error {
-				if params.DetailLevel.Set {
+				if value, ok := params.DetailLevel.Get(); ok {
 					if err := func() error {
-						if err := params.DetailLevel.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -7182,9 +7182,9 @@ func decodeSearchEntitiesByPostParams(args [0]string, argsEscaped bool, r *http.
 				return err
 			}
 			if err := func() error {
-				if params.FeatureMode.Set {
+				if value, ok := params.FeatureMode.Get(); ok {
 					if err := func() error {
-						if err := params.FeatureMode.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -7941,9 +7941,9 @@ func decodeWhyEntitiesParams(args [0]string, argsEscaped bool, r *http.Request) 
 				return err
 			}
 			if err := func() error {
-				if params.DetailLevel.Set {
+				if value, ok := params.DetailLevel.Get(); ok {
 					if err := func() error {
-						if err := params.DetailLevel.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -8002,9 +8002,9 @@ func decodeWhyEntitiesParams(args [0]string, argsEscaped bool, r *http.Request) 
 				return err
 			}
 			if err := func() error {
-				if params.FeatureMode.Set {
+				if value, ok := params.FeatureMode.Get(); ok {
 					if err := func() error {
-						if err := params.FeatureMode.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -8502,9 +8502,9 @@ func decodeWhyEntityByEntityIDParams(args [1]string, argsEscaped bool, r *http.R
 				return err
 			}
 			if err := func() error {
-				if params.DetailLevel.Set {
+				if value, ok := params.DetailLevel.Get(); ok {
 					if err := func() error {
-						if err := params.DetailLevel.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -8563,9 +8563,9 @@ func decodeWhyEntityByEntityIDParams(args [1]string, argsEscaped bool, r *http.R
 				return err
 			}
 			if err := func() error {
-				if params.FeatureMode.Set {
+				if value, ok := params.FeatureMode.Get(); ok {
 					if err := func() error {
-						if err := params.FeatureMode.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -9118,9 +9118,9 @@ func decodeWhyEntityByRecordIDParams(args [2]string, argsEscaped bool, r *http.R
 				return err
 			}
 			if err := func() error {
-				if params.DetailLevel.Set {
+				if value, ok := params.DetailLevel.Get(); ok {
 					if err := func() error {
-						if err := params.DetailLevel.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -9179,9 +9179,9 @@ func decodeWhyEntityByRecordIDParams(args [2]string, argsEscaped bool, r *http.R
 				return err
 			}
 			if err := func() error {
-				if params.FeatureMode.Set {
+				if value, ok := params.FeatureMode.Get(); ok {
 					if err := func() error {
-						if err := params.FeatureMode.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -9805,9 +9805,9 @@ func decodeWhyRecordsParams(args [0]string, argsEscaped bool, r *http.Request) (
 				return err
 			}
 			if err := func() error {
-				if params.DetailLevel.Set {
+				if value, ok := params.DetailLevel.Get(); ok {
 					if err := func() error {
-						if err := params.DetailLevel.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
@@ -9866,9 +9866,9 @@ func decodeWhyRecordsParams(args [0]string, argsEscaped bool, r *http.Request) (
 				return err
 			}
 			if err := func() error {
-				if params.FeatureMode.Set {
+				if value, ok := params.FeatureMode.Get(); ok {
 					if err := func() error {
-						if err := params.FeatureMode.Value.Validate(); err != nil {
+						if err := value.Validate(); err != nil {
 							return err
 						}
 						return nil
