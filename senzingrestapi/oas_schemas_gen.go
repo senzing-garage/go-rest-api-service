@@ -1218,38 +1218,38 @@ func (o OptDateTime) Or(d time.Time) time.Time {
 	return d
 }
 
-// NewOptInt returns new OptInt with value set to v.
-func NewOptInt(v int) OptInt {
-	return OptInt{
+// NewOptInt16 returns new OptInt16 with value set to v.
+func NewOptInt16(v int16) OptInt16 {
+	return OptInt16{
 		Value: v,
 		Set:   true,
 	}
 }
 
-// OptInt is optional int.
-type OptInt struct {
-	Value int
+// OptInt16 is optional int16.
+type OptInt16 struct {
+	Value int16
 	Set   bool
 }
 
-// IsSet returns true if OptInt was set.
-func (o OptInt) IsSet() bool { return o.Set }
+// IsSet returns true if OptInt16 was set.
+func (o OptInt16) IsSet() bool { return o.Set }
 
 // Reset unsets value.
-func (o *OptInt) Reset() {
-	var v int
+func (o *OptInt16) Reset() {
+	var v int16
 	o.Value = v
 	o.Set = false
 }
 
 // SetTo sets value to v.
-func (o *OptInt) SetTo(v int) {
+func (o *OptInt16) SetTo(v int16) {
 	o.Set = true
 	o.Value = v
 }
 
 // Get returns value and boolean that denotes whether value was set.
-func (o OptInt) Get() (v int, ok bool) {
+func (o OptInt16) Get() (v int16, ok bool) {
 	if !o.Set {
 		return v, false
 	}
@@ -1257,7 +1257,7 @@ func (o OptInt) Get() (v int, ok bool) {
 }
 
 // Or returns value if set, or given parameter if does not.
-func (o OptInt) Or(d int) int {
+func (o OptInt16) Or(d int16) int16 {
 	if v, ok := o.Get(); ok {
 		return v
 	}
@@ -1350,6 +1350,52 @@ func (o OptInt64) Get() (v int64, ok bool) {
 
 // Or returns value if set, or given parameter if does not.
 func (o OptInt64) Or(d int64) int64 {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptInt8 returns new OptInt8 with value set to v.
+func NewOptInt8(v int8) OptInt8 {
+	return OptInt8{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptInt8 is optional int8.
+type OptInt8 struct {
+	Value int8
+	Set   bool
+}
+
+// IsSet returns true if OptInt8 was set.
+func (o OptInt8) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptInt8) Reset() {
+	var v int8
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptInt8) SetTo(v int8) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptInt8) Get() (v int8, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptInt8) Or(d int8) int8 {
 	if v, ok := o.Get(); ok {
 		return v
 	}
@@ -9590,7 +9636,7 @@ type SzFlaggedEntity struct {
 	// The entity ID of the relevant entity.
 	EntityId OptInt64 `json:"entityId"`
 	// The number of degrees this entity is separated from the entity that was affected.
-	Degrees OptInt `json:"degrees"`
+	Degrees OptInt8 `json:"degrees"`
 	// The array of flags that were triggered making this entity relevant.
 	Flags []string `json:"flags"`
 	// An array of objects describing sample records from the relevant entity and the triggered flags for
@@ -9604,7 +9650,7 @@ func (s *SzFlaggedEntity) GetEntityId() OptInt64 {
 }
 
 // GetDegrees returns the value of Degrees.
-func (s *SzFlaggedEntity) GetDegrees() OptInt {
+func (s *SzFlaggedEntity) GetDegrees() OptInt8 {
 	return s.Degrees
 }
 
@@ -9624,7 +9670,7 @@ func (s *SzFlaggedEntity) SetEntityId(val OptInt64) {
 }
 
 // SetDegrees sets the value of Degrees.
-func (s *SzFlaggedEntity) SetDegrees(val OptInt) {
+func (s *SzFlaggedEntity) SetDegrees(val OptInt8) {
 	s.Degrees = val
 }
 
@@ -10503,7 +10549,7 @@ type SzMeta struct {
 	Server     OptString       `json:"server"`
 	HttpMethod OptSzHttpMethod `json:"httpMethod"`
 	// The HTTP status response code.
-	HttpStatusCode OptInt `json:"httpStatusCode"`
+	HttpStatusCode OptInt16 `json:"httpStatusCode"`
 	// The timestamp of the operation's execution.
 	Timestamp OptDateTime `json:"timestamp"`
 	// The version number of the server.
@@ -10536,7 +10582,7 @@ func (s *SzMeta) GetHttpMethod() OptSzHttpMethod {
 }
 
 // GetHttpStatusCode returns the value of HttpStatusCode.
-func (s *SzMeta) GetHttpStatusCode() OptInt {
+func (s *SzMeta) GetHttpStatusCode() OptInt16 {
 	return s.HttpStatusCode
 }
 
@@ -10596,7 +10642,7 @@ func (s *SzMeta) SetHttpMethod(val OptSzHttpMethod) {
 }
 
 // SetHttpStatusCode sets the value of HttpStatusCode.
-func (s *SzMeta) SetHttpStatusCode(val OptInt) {
+func (s *SzMeta) SetHttpStatusCode(val OptInt16) {
 	s.HttpStatusCode = val
 }
 
@@ -12878,13 +12924,13 @@ func (s *SzWhyEntityResponseRawData) init() SzWhyEntityResponseRawData {
 // Ref: #/components/schemas/SzWhyEntityResult
 type SzWhyEntityResult struct {
 	// The `SzWhyPerspective` identifying and describing the perspective for this why result.
-	Perspective *SzWhyPerspective `json:"perspective"`
+	Perspective SzWhyPerspective `json:"perspective"`
 	// The `SzWhyMatchInfo` providing the details of the result.
 	MatchInfo OptSzWhyMatchInfo `json:"matchInfo"`
 }
 
 // GetPerspective returns the value of Perspective.
-func (s *SzWhyEntityResult) GetPerspective() *SzWhyPerspective {
+func (s *SzWhyEntityResult) GetPerspective() SzWhyPerspective {
 	return s.Perspective
 }
 
@@ -12894,7 +12940,7 @@ func (s *SzWhyEntityResult) GetMatchInfo() OptSzWhyMatchInfo {
 }
 
 // SetPerspective sets the value of Perspective.
-func (s *SzWhyEntityResult) SetPerspective(val *SzWhyPerspective) {
+func (s *SzWhyEntityResult) SetPerspective(val SzWhyPerspective) {
 	s.Perspective = val
 }
 
@@ -13104,20 +13150,20 @@ func (s *SzWhyRecordsResponseRawData) init() SzWhyRecordsResponseRawData {
 // Ref: #/components/schemas/SzWhyRecordsResult
 type SzWhyRecordsResult struct {
 	// The `SzWhyPerspective` identifying and describing the perspective from the first record.
-	Perspective1 *SzWhyPerspective `json:"perspective1"`
+	Perspective1 SzWhyPerspective `json:"perspective1"`
 	// The `SzWhyPerspective` identifying and describing the perspective from the second record.
-	Perspective2 *SzWhyPerspective `json:"perspective2"`
+	Perspective2 SzWhyPerspective `json:"perspective2"`
 	// The `SzWhyMatchInfo` providing the details of the result.
 	MatchInfo OptSzWhyMatchInfo `json:"matchInfo"`
 }
 
 // GetPerspective1 returns the value of Perspective1.
-func (s *SzWhyRecordsResult) GetPerspective1() *SzWhyPerspective {
+func (s *SzWhyRecordsResult) GetPerspective1() SzWhyPerspective {
 	return s.Perspective1
 }
 
 // GetPerspective2 returns the value of Perspective2.
-func (s *SzWhyRecordsResult) GetPerspective2() *SzWhyPerspective {
+func (s *SzWhyRecordsResult) GetPerspective2() SzWhyPerspective {
 	return s.Perspective2
 }
 
@@ -13127,12 +13173,12 @@ func (s *SzWhyRecordsResult) GetMatchInfo() OptSzWhyMatchInfo {
 }
 
 // SetPerspective1 sets the value of Perspective1.
-func (s *SzWhyRecordsResult) SetPerspective1(val *SzWhyPerspective) {
+func (s *SzWhyRecordsResult) SetPerspective1(val SzWhyPerspective) {
 	s.Perspective1 = val
 }
 
 // SetPerspective2 sets the value of Perspective2.
-func (s *SzWhyRecordsResult) SetPerspective2(val *SzWhyPerspective) {
+func (s *SzWhyRecordsResult) SetPerspective2(val SzWhyPerspective) {
 	s.Perspective2 = val
 }
 

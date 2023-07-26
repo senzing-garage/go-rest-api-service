@@ -197,7 +197,7 @@ func (restApiService *SenzingRestServiceImpl) getOptSzLinks(ctx context.Context,
 	return result
 }
 
-func (restApiService *SenzingRestServiceImpl) getOptSzMeta(ctx context.Context, httpMethod api.SzHttpMethod, httpStatusCode int) api.OptSzMeta {
+func (restApiService *SenzingRestServiceImpl) getOptSzMeta(ctx context.Context, httpMethod api.SzHttpMethod, httpStatusCode int16) api.OptSzMeta {
 	var result api.OptSzMeta
 
 	senzingVersion, err := restApiService.getSenzingVersion(ctx)
@@ -213,7 +213,7 @@ func (restApiService *SenzingRestServiceImpl) getOptSzMeta(ctx context.Context, 
 	szMeta := api.SzMeta{
 		Server:                     api.NewOptString("Senzing REST API Server - go"),
 		HttpMethod:                 api.NewOptSzHttpMethod(httpMethod),
-		HttpStatusCode:             api.NewOptInt(httpStatusCode),
+		HttpStatusCode:             api.NewOptInt16(httpStatusCode),
 		Timestamp:                  api.NewOptDateTime(time.Now().UTC()),
 		Version:                    api.NewOptString("0.0.0"),
 		RestApiVersion:             api.NewOptString("3.4.1"),
