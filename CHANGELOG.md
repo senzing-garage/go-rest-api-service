@@ -8,15 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.0.4] - 2023-07-25
+## [0.0.4] - 2023-07-26
 
 ### Changed in 0.0.4
 
 - Re-generate files in `senzingrestapi` package
-
 - Update dependencies
-
-  -
+  - github.com/go-faster/jx v1.0.1
+  - github.com/ogen-go/ogen v0.71.1
+  - github.com/senzing/go-common v0.2.5
 
 ## [0.0.3] - 2023-07-14
 
