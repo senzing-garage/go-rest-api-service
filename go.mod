@@ -8,7 +8,7 @@ require (
 	github.com/ogen-go/ogen v0.72.1
 	github.com/senzing/g2-sdk-go v0.6.7
 	github.com/senzing/g2-sdk-json-type-definition v0.1.1
-	github.com/senzing/go-common v0.2.8
+	github.com/senzing/go-common v0.2.10
 	github.com/senzing/go-logging v1.3.1
 	github.com/senzing/go-observing v0.2.6
 	github.com/senzing/go-sdk-abstract-factory v0.3.1
@@ -41,7 +41,7 @@ require (
 	github.com/senzing/go-messaging v1.3.1 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/zap v1.24.0 // indirect
-	golang.org/x/exp v0.0.0-20230725093048-515e97ebf090 // indirect
+	golang.org/x/exp v0.0.0-20230801115018-d63ba01acd4b // indirect
 	golang.org/x/net v0.12.0 // indirect
 	golang.org/x/sync v0.3.0 // indirect
 	golang.org/x/sys v0.10.0 // indirect
