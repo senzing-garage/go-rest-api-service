@@ -1,7 +1,7 @@
 # Based on
 # - https://github.com/marketplace/actions/setup-go-environment
 
-name: go-test.yaml
+name: go-test-darwin.yaml
 
 on: [push]
 
@@ -12,7 +12,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     env:
       GO111MODULE: on
       LD_LIBRARY_PATH: /opt/senzing/g2/lib/
@@ -20,9 +20,12 @@ jobs:
     strategy:
       matrix:
         go: ["1.20"]
-    name: Go ${{ matrix.go }}
+    name: Go ${{ matrix.go }} - darwin
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup go
         uses: actions/setup-go@v4
         with:
