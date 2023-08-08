@@ -1,6 +1,5 @@
 ---
-
-name: 'dependabot automation'
+name: dependabot-approve-and-merge.yaml
 
 on:
   pull_request:

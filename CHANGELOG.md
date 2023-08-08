@@ -8,6 +8,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.5] - 2023-08-07
+
+### Changed in 0.0.5
+
+- Refactor to `template-go`
+- Update dependencies
+  - github.com/go-faster/jx v1.1.0
+  - github.com/ogen-go/ogen v0.72.1
+  - github.com/senzing/g2-sdk-go v0.6.8
+  - github.com/senzing/go-common v0.2.11
+  - github.com/senzing/go-logging v1.3.2
+  - github.com/senzing/go-observing v0.2.7
+  - google.golang.org/grpc v1.57.0
+
 ## [0.0.4] - 2023-07-26
 
 ### Changed in 0.0.4
