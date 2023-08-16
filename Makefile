@@ -20,6 +20,7 @@ BUILD_TAG := $(shell git describe --always --tags --abbrev=0  | sed 's/v//')
 BUILD_ITERATION := $(shell git log $(BUILD_TAG)..HEAD --oneline | wc -l | sed 's/^ *//')
 GIT_REMOTE_URL := $(shell git config --get remote.origin.url)
 GO_PACKAGE_NAME := $(shell echo $(GIT_REMOTE_URL) | sed -e 's|^git@github.com:|github.com/|' -e 's|\.git$$||' -e 's|Senzing|senzing|')
+PATH := $(MAKEFILE_DIRECTORY)/bin:$(PATH)
 
 # Recursive assignment ('=')
 
@@ -81,14 +82,9 @@ build-all: $(PLATFORMS)
 
 # -----------------------------------------------------------------------------
 # Test
+#  - The "test" target is implemented in Makefile.OS.ARCH files.
 # -----------------------------------------------------------------------------
 
-.PHONY: test
-test:
-	@go test -v -p 1 ./...
-#	@go test -v ./.
-#	@go test -v ./senzingrestapi
-#	@go test -v ./senzingrestservice
 
 # -----------------------------------------------------------------------------
 # Run
