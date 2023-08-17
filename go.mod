@@ -39,7 +39,7 @@ require (
 	github.com/senzing/g2-sdk-proto/go v0.0.0-20230608182106-25c8cdc02e3c // indirect
 	github.com/senzing/go-messaging v1.3.2 // indirect
 	go.uber.org/zap v1.25.0 // indirect
-	golang.org/x/exp v0.0.0-20230811145659-89c5cff77bcb // indirect
+	golang.org/x/exp v0.0.0-20230817173708-d852ddb80c63 // indirect
 	golang.org/x/net v0.14.0 // indirect
 	golang.org/x/sync v0.3.0 // indirect
 	golang.org/x/sys v0.11.0 // indirect

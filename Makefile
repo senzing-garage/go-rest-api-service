@@ -28,12 +28,14 @@ CC = gcc
 GO_OSARCH = $(subst /, ,$@)
 GO_OS = $(word 1, $(GO_OSARCH))
 GO_ARCH = $(word 2, $(GO_OSARCH))
+SENZING_TOOLS_DATABASE_PATH=$(TARGET_DIRECTORY)/sqlite/G2C.db
 
 # Conditional assignment. ('?=')
 # Can be overridden with "export"
 # Example: "export LD_LIBRARY_PATH=/path/to/my/senzing/g2/lib"
 
 LD_LIBRARY_PATH ?= /opt/senzing/g2/lib
+SENZING_TOOLS_DATABASE_URL ?= sqlite3://na:na@$(SENZING_TOOLS_DATABASE_PATH)
 
 # Export environment variables.
 
@@ -104,9 +106,8 @@ clean:
 	@go clean -testcache
 	@rm -rf $(TARGET_DIRECTORY) || true
 	@rm -f $(GOPATH)/bin/$(PROGRAM_NAME) || true
-	@rm -rf /tmp/sqlite
-	@mkdir  /tmp/sqlite
-	@cp testdata/sqlite/G2C.db /tmp/sqlite/G2C.db
+	@rm -rf $(shell dirname $(SENZING_TOOLS_DATABASE_PATH))
+	@rm -rf /tmp/$(PROGRAM_NAME)
 
 
 .PHONY: help
@@ -125,7 +126,8 @@ print-make-variables:
 
 .PHONY: setup
 setup:
-	@echo "No setup required."
+	@mkdir -p $(shell dirname $(SENZING_TOOLS_DATABASE_PATH))
+	@if [ ! -f $(SENZING_TOOLS_DATABASE_PATH) ]; then cp testdata/sqlite/G2C.db $(SENZING_TOOLS_DATABASE_PATH); fi
 
 
 .PHONY: update-pkg-cache
