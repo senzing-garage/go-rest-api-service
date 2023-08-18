@@ -1,6 +1,6 @@
 # Makefile for go-rest-api-service.
 
-# Detect the operating system and architecture
+# Detect the operating system and architecture.
 
 include Makefile.osdetect
 
@@ -20,26 +20,26 @@ BUILD_TAG := $(shell git describe --always --tags --abbrev=0  | sed 's/v//')
 BUILD_ITERATION := $(shell git log $(BUILD_TAG)..HEAD --oneline | wc -l | sed 's/^ *//')
 GIT_REMOTE_URL := $(shell git config --get remote.origin.url)
 GO_PACKAGE_NAME := $(shell echo $(GIT_REMOTE_URL) | sed -e 's|^git@github.com:|github.com/|' -e 's|\.git$$||' -e 's|Senzing|senzing|')
-GO_OSARCH = $(subst /, ,$@)
-GO_OS = $(word 1, $(GO_OSARCH))
-GO_ARCH = $(word 2, $(GO_OSARCH))
+PATH := $(MAKEFILE_DIRECTORY)/bin:$(PATH)
 
 # Recursive assignment ('=')
 
 CC = gcc
+GO_OSARCH = $(subst /, ,$@)
+GO_OS = $(word 1, $(GO_OSARCH))
+GO_ARCH = $(word 2, $(GO_OSARCH))
+SENZING_TOOLS_DATABASE_PATH=$(TARGET_DIRECTORY)/sqlite/G2C.db
 
 # Conditional assignment. ('?=')
 # Can be overridden with "export"
 # Example: "export LD_LIBRARY_PATH=/path/to/my/senzing/g2/lib"
 
 LD_LIBRARY_PATH ?= /opt/senzing/g2/lib
+SENZING_TOOLS_DATABASE_URL ?= sqlite3://na:na@$(SENZING_TOOLS_DATABASE_PATH)
 
 # Export environment variables.
 
 .EXPORT_ALL_VARIABLES:
-
--include Makefile.$(OSTYPE)
--include Makefile.$(OSTYPE)_$(OSARCH)
 
 # -----------------------------------------------------------------------------
 # The first "make" target runs as default.
@@ -49,8 +49,14 @@ LD_LIBRARY_PATH ?= /opt/senzing/g2/lib
 default: help
 
 # -----------------------------------------------------------------------------
-# Build
-#  - The "build" target is implemented in Makefile.OS.ARCH files.
+# Operating System / Architecture targets
+# -----------------------------------------------------------------------------
+
+-include Makefile.$(OSTYPE)
+-include Makefile.$(OSTYPE)_$(OSARCH)
+
+# -----------------------------------------------------------------------------
+# Dependency management
 # -----------------------------------------------------------------------------
 
 .PHONY: dependencies
@@ -59,6 +65,11 @@ dependencies:
 	@go get -t -u ./...
 	@go mod tidy
 
+# -----------------------------------------------------------------------------
+# Build
+#  - The "build" target is implemented in Makefile.OS.ARCH files.
+#  - docker-build: https://docs.docker.com/engine/reference/commandline/build/
+# -----------------------------------------------------------------------------
 
 PLATFORMS := darwin/amd64 linux/amd64 windows/amd64
 $(PLATFORMS):
@@ -73,14 +84,9 @@ build-all: $(PLATFORMS)
 
 # -----------------------------------------------------------------------------
 # Test
+#  - The "test" target is implemented in Makefile.OS.ARCH files.
 # -----------------------------------------------------------------------------
 
-.PHONY: test
-test:
-	@go test -v -p 1 ./...
-#	@go test -v ./.
-#	@go test -v ./senzingrestapi
-#	@go test -v ./senzingrestservice
 
 # -----------------------------------------------------------------------------
 # Run
@@ -94,21 +100,21 @@ run:
 # Utility targets
 # -----------------------------------------------------------------------------
 
-.PHONY: update-pkg-cache
-update-pkg-cache:
-	@GOPROXY=https://proxy.golang.org GO111MODULE=on \
-		go get $(GO_PACKAGE_NAME)@$(BUILD_TAG)
-
-
 .PHONY: clean
 clean:
 	@go clean -cache
 	@go clean -testcache
 	@rm -rf $(TARGET_DIRECTORY) || true
 	@rm -f $(GOPATH)/bin/$(PROGRAM_NAME) || true
-	@rm -rf /tmp/sqlite
-	@mkdir  /tmp/sqlite
-	@cp testdata/sqlite/G2C.db /tmp/sqlite/G2C.db
+	@rm -rf $(shell dirname $(SENZING_TOOLS_DATABASE_PATH))
+	@rm -rf /tmp/$(PROGRAM_NAME)
+
+
+.PHONY: help
+help:
+	@echo "Build $(PROGRAM_NAME) version $(BUILD_VERSION)-$(BUILD_ITERATION)".
+	@echo "Makefile targets:"
+	@$(MAKE) -pRrq -f $(firstword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$' | xargs
 
 
 .PHONY: print-make-variables
@@ -117,20 +123,14 @@ print-make-variables:
 		$(if $(filter-out environment% default automatic, \
 		$(origin $V)),$(warning $V=$($V) ($(value $V)))))
 
-# -----------------------------------------------------------------------------
-# Help
-# -----------------------------------------------------------------------------
 
-.PHONY: help
-help:
-	@echo "Build $(PROGRAM_NAME) version $(BUILD_VERSION)-$(BUILD_ITERATION)".
-	@echo "Makefile targets:"
-	@$(MAKE) -pRrq -f $(firstword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$' | xargs
+.PHONY: setup
+setup:
+	@mkdir -p $(shell dirname $(SENZING_TOOLS_DATABASE_PATH))
+	@if [ ! -f $(SENZING_TOOLS_DATABASE_PATH) ]; then cp testdata/sqlite/G2C.db $(SENZING_TOOLS_DATABASE_PATH); fi
 
-# -----------------------------------------------------------------------------
-# Optionally include platform-specific settings and targets.
-#  - Note: This is last because the "last one wins" when over-writing targets.
-# -----------------------------------------------------------------------------
 
-# -include Makefile.$(OSTYPE)
-# -include Makefile.$(OSTYPE)_$(OSARCH)
+.PHONY: update-pkg-cache
+update-pkg-cache:
+	@GOPROXY=https://proxy.golang.org GO111MODULE=on \
+		go get $(GO_PACKAGE_NAME)@$(BUILD_TAG)
