@@ -11,7 +11,7 @@ require (
 	github.com/senzing/go-common v0.3.0
 	github.com/senzing/go-logging v1.3.2
 	github.com/senzing/go-observing v0.2.7
-	github.com/senzing/go-sdk-abstract-factory v0.3.2
+	github.com/senzing/go-sdk-abstract-factory v0.3.3
 	github.com/stretchr/testify v1.8.4
 	go.opentelemetry.io/otel v1.17.0
 	go.opentelemetry.io/otel/metric v1.17.0
@@ -34,8 +34,8 @@ require (
 	github.com/mattn/go-isatty v0.0.19 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/segmentio/asm v1.2.0 // indirect
-	github.com/senzing/g2-sdk-go-base v0.2.6 // indirect
-	github.com/senzing/g2-sdk-go-grpc v0.3.2 // indirect
+	github.com/senzing/g2-sdk-go-base v0.2.7 // indirect
+	github.com/senzing/g2-sdk-go-grpc v0.3.3 // indirect
 	github.com/senzing/g2-sdk-proto/go v0.0.0-20230608182106-25c8cdc02e3c // indirect
 	github.com/senzing/go-messaging v1.3.2 // indirect
 	go.uber.org/zap v1.25.0 // indirect
