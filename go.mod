@@ -11,7 +11,7 @@ require (
 	github.com/senzing/go-common v0.3.0
 	github.com/senzing/go-logging v1.3.2
 	github.com/senzing/go-observing v0.2.7
-	github.com/senzing/go-sdk-abstract-factory v0.3.3
+	github.com/senzing/go-sdk-abstract-factory v0.4.0
 	github.com/stretchr/testify v1.8.4
 	go.opentelemetry.io/otel v1.19.0
 	go.opentelemetry.io/otel/metric v1.19.0

@@ -62,8 +62,8 @@ github.com/senzing/go-messaging v1.3.2 h1:emr1mt4iv/E4t2gXi6PYz1h/j1r9nTG7GpQ77Z
 github.com/senzing/go-messaging v1.3.2/go.mod h1:IShYrqV+3lfuQ+Y0jL/z5v7G9QkWIA8UOquVso4cgPE=
 github.com/senzing/go-observing v0.2.7 h1:0HuGGUNWfAKm+a+WoBPHHfz+dcL8SzLqMjWd+U85pkY=
 github.com/senzing/go-observing v0.2.7/go.mod h1:EPBjqFdyXUjTPoC9C6WQBjUj1sFTp261pL3wlN80jD4=
-github.com/senzing/go-sdk-abstract-factory v0.3.3 h1:7pKLvVZRB9pgD4SmRcycqcV9kqLkc3DN7pM8otm7jgc=
-github.com/senzing/go-sdk-abstract-factory v0.3.3/go.mod h1:/NsZiz0gFZ9juoBmdnz7/eJE95Se03bMmffZaFhUso8=
+github.com/senzing/go-sdk-abstract-factory v0.4.0 h1:GluqwcuxNVVizxC87VsuTA/wsVASGcsJcrkGufVpb8s=
+github.com/senzing/go-sdk-abstract-factory v0.4.0/go.mod h1:o3lyONHzT/FgVR3HCwdl+npvof8ALO1jvRPZS9LDteE=
 github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcUk=
 github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
 go.opentelemetry.io/otel v1.19.0 h1:MuS/TNf4/j4IXsZuJegVzI1cwut7Qc00344rgH7p8bs=
