@@ -129,11 +129,3 @@ func TestSenzingRestServiceImpl_Version(test *testing.T) {
 		assert.Equal(test, "0.0.0", apiServerVersion)
 	}
 }
-
-// ----------------------------------------------------------------------------
-// Examples for godoc documentation
-// ----------------------------------------------------------------------------
-
-func ExampleSenzingRestServiceImpl_Heartbeat() {
-
-}

@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2023-10-03
+
+### Changed in 0.1.0
+
+- Supports SenzingAPI 3.8.0
+- Deprecated functions have been removed
+- Update dependencies
+
 ## [0.0.6] - 2023-09-01
 
 ### Changed in 0.0.6
