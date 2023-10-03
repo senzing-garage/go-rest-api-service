@@ -5,7 +5,7 @@ go 1.21
 require (
 	github.com/go-faster/errors v0.6.1
 	github.com/go-faster/jx v1.1.0
-	github.com/ogen-go/ogen v0.75.0
+	github.com/ogen-go/ogen v0.76.0
 	github.com/senzing/g2-sdk-go v0.7.0
 	github.com/senzing/g2-sdk-json-type-definition v0.1.1
 	github.com/senzing/go-common v0.3.0
