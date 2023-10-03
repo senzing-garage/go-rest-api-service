@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update dependencies
   - github.com/ogen-go/ogen v0.76.0
   - github.com/senzing/g2-sdk-go v0.7.0
-  - github.com/senzing/go-sdk-abstract-factory v0.3.3
+  - github.com/senzing/go-sdk-abstract-factory v0.4.0
   - go.opentelemetry.io/otel v1.19.0
   - go.opentelemetry.io/otel/metric v1.19.0
   - go.opentelemetry.io/otel/trace v1.19.0
