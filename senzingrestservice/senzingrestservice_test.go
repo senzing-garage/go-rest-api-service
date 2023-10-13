@@ -30,7 +30,7 @@ func getTestObject(ctx context.Context, test *testing.T) SenzingRestService {
 		senzingRestServiceSingleton = &SenzingRestServiceImpl{
 			SenzingEngineConfigurationJson: senzingEngineConfigurationJson,
 			SenzingModuleName:              "go-rest-api-service-test",
-			SenzingVerboseLogging:          0,
+			SenzingVerboseLogging:          int64(0),
 		}
 	}
 	return senzingRestServiceSingleton
