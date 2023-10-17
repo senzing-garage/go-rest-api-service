@@ -10,7 +10,7 @@ require (
 	github.com/senzing/g2-sdk-json-type-definition v0.1.1
 	github.com/senzing/go-common v0.3.0
 	github.com/senzing/go-logging v1.3.3
-	github.com/senzing/go-observing v0.2.7
+	github.com/senzing/go-observing v0.2.8
 	github.com/senzing/go-sdk-abstract-factory v0.4.1
 	github.com/stretchr/testify v1.8.4
 	go.opentelemetry.io/otel v1.19.0
