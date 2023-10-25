@@ -8,20 +8,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.0] - 2023-10-03
+## [0.1.0] - 2023-10-25
 
 ### Changed in 0.1.0
 
 - Supports SenzingAPI 3.8.0
+- Refactor to [template-go](https://github.com/Senzing/template-go)
 - Deprecated functions have been removed
 - Update dependencies
   - github.com/ogen-go/ogen v0.76.0
-  - github.com/senzing/g2-sdk-go v0.7.0
-  - github.com/senzing/go-sdk-abstract-factory v0.4.0
+  - github.com/senzing/g2-sdk-go v0.7.4
+  - github.com/senzing/go-common v0.3.1
+  - github.com/senzing/go-logging v1.3.3
+  - github.com/senzing/go-observing v0.2.8
+  - github.com/senzing/go-sdk-abstract-factory v0.4.2
   - go.opentelemetry.io/otel v1.19.0
   - go.opentelemetry.io/otel/metric v1.19.0
   - go.opentelemetry.io/otel/trace v1.19.0
-  - google.golang.org/grpc v1.58.2
+  - google.golang.org/grpc v1.59.0
 
 ## [0.0.6] - 2023-09-01
 
