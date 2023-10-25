@@ -11,15 +11,13 @@ env:
 
 jobs:
   go-test-linux:
-    runs-on: ubuntu-latest
-    env:
-      GO111MODULE: on
-      CGO_ENABLED: 1
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         go: ["1.21"]
-        senzingapi-version: ["staging"]
-    name: Go ${{ matrix.go }} using Senzing API ${{ matrix.senzingapi-version }} on linux
+        os: [ubuntu-latest]
+        senzingapi-version: [staging]
+    name: "go test with Senzing: ${{ matrix.senzingapi-version }}; OS: ${{ matrix.os }}; Go: ${{ matrix.go }}"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -34,7 +32,8 @@ jobs:
         with:
           senzingapi-version: ${{ matrix.senzingapi-version }}
       - name: Copy /etc files
-        run: sudo cp testdata/senzing-license/g2.lic /etc/opt/senzing
+        run: sudo cp testdata/senzing-license/g2.lic /etc/opt/senzing/g2.lic
       - name: Copy test database files
         run: mkdir /tmp/sqlite && cp testdata/sqlite/G2C.db /tmp/sqlite/G2C.db
-      - run: go test -v -p 1 ./...
+      - name: Run go test
+        run: go test -v -p 1 ./...
