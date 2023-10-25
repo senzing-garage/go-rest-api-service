@@ -24,18 +24,13 @@ PATH := $(MAKEFILE_DIRECTORY)/bin:$(PATH)
 
 # Recursive assignment ('=')
 
-CC = gcc
 GO_OSARCH = $(subst /, ,$@)
 GO_OS = $(word 1, $(GO_OSARCH))
 GO_ARCH = $(word 2, $(GO_OSARCH))
-SENZING_TOOLS_DATABASE_PATH=$(TARGET_DIRECTORY)/sqlite/G2C.db
 
 # Conditional assignment. ('?=')
 # Can be overridden with "export"
 # Example: "export LD_LIBRARY_PATH=/path/to/my/senzing/g2/lib"
-
-LD_LIBRARY_PATH ?= /opt/senzing/g2/lib
-SENZING_TOOLS_DATABASE_URL ?= sqlite3://na:na@$(SENZING_TOOLS_DATABASE_PATH)
 
 # Export environment variables.
 
@@ -55,6 +50,10 @@ default: help
 -include Makefile.$(OSTYPE)
 -include Makefile.$(OSTYPE)_$(OSARCH)
 
+
+.PHONY: hello-world
+hello-world: hello-world-osarch-specific
+
 # -----------------------------------------------------------------------------
 # Dependency management
 # -----------------------------------------------------------------------------
@@ -67,47 +66,39 @@ dependencies:
 
 # -----------------------------------------------------------------------------
 # Build
-#  - The "build" target is implemented in Makefile.OS.ARCH files.
-#  - docker-build: https://docs.docker.com/engine/reference/commandline/build/
 # -----------------------------------------------------------------------------
 
 PLATFORMS := darwin/amd64 linux/amd64 windows/amd64
 $(PLATFORMS):
 	@echo Building $(TARGET_DIRECTORY)/$(GO_OS)-$(GO_ARCH)/$(PROGRAM_NAME)
-	@mkdir -p $(TARGET_DIRECTORY)/$(GO_OS)-$(GO_ARCH) || true
 	@GOOS=$(GO_OS) GOARCH=$(GO_ARCH) go build -o $(TARGET_DIRECTORY)/$(GO_OS)-$(GO_ARCH)/$(PROGRAM_NAME)
 
 
-.PHONY: build-all $(PLATFORMS)
-build-all: $(PLATFORMS)
-	@mv $(TARGET_DIRECTORY)/windows-amd64/$(PROGRAM_NAME) $(TARGET_DIRECTORY)/windows-amd64/$(PROGRAM_NAME).exe
+.PHONY: build
+build: build-osarch-specific
 
 # -----------------------------------------------------------------------------
 # Test
-#  - The "test" target is implemented in Makefile.OS.ARCH files.
 # -----------------------------------------------------------------------------
 
+.PHONY: test
+test: test-osarch-specific
 
 # -----------------------------------------------------------------------------
 # Run
 # -----------------------------------------------------------------------------
 
 .PHONY: run
-run:
-	@go run main.go
+run: run-osarch-specific
 
 # -----------------------------------------------------------------------------
 # Utility targets
 # -----------------------------------------------------------------------------
 
 .PHONY: clean
-clean:
+clean: clean-osarch-specific
 	@go clean -cache
 	@go clean -testcache
-	@rm -rf $(TARGET_DIRECTORY) || true
-	@rm -f $(GOPATH)/bin/$(PROGRAM_NAME) || true
-	@rm -rf $(shell dirname $(SENZING_TOOLS_DATABASE_PATH))
-	@rm -rf /tmp/$(PROGRAM_NAME)
 
 
 .PHONY: help
@@ -125,9 +116,7 @@ print-make-variables:
 
 
 .PHONY: setup
-setup:
-	@mkdir -p $(shell dirname $(SENZING_TOOLS_DATABASE_PATH))
-	@if [ ! -f $(SENZING_TOOLS_DATABASE_PATH) ]; then cp testdata/sqlite/G2C.db $(SENZING_TOOLS_DATABASE_PATH); fi
+setup: setup-osarch-specific
 
 
 .PHONY: update-pkg-cache
