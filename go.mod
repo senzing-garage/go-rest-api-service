@@ -5,7 +5,7 @@ go 1.21
 require (
 	github.com/go-faster/errors v0.6.1
 	github.com/go-faster/jx v1.1.0
-	github.com/ogen-go/ogen v0.76.0
+	github.com/ogen-go/ogen v0.77.0
 	github.com/senzing/g2-sdk-go v0.7.4
 	github.com/senzing/g2-sdk-json-type-definition v0.1.1
 	github.com/senzing/go-common v0.3.1
@@ -29,7 +29,7 @@ require (
 	github.com/go-logr/logr v1.2.4 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
-	github.com/google/uuid v1.3.1 // indirect
+	github.com/google/uuid v1.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
