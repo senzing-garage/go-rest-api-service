@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2023-11-02
+
+### Changed in 0.1.1
+
+- Update dependencies
+  - github.com/ogen-go/ogen v0.77.0
+  - github.com/senzing/go-common v0.3.2-0.20231018174900-c1895fb44c30
+  - github.com/senzing/go-sdk-abstract-factory v0.4.3
+
 ## [0.1.0] - 2023-10-25
 
 ### Changed in 0.1.0
