@@ -13,9 +13,9 @@ require (
 	github.com/senzing/go-observing v0.2.8
 	github.com/senzing/go-sdk-abstract-factory v0.4.3
 	github.com/stretchr/testify v1.8.4
-	go.opentelemetry.io/otel v1.20.0
-	go.opentelemetry.io/otel/metric v1.20.0
-	go.opentelemetry.io/otel/trace v1.20.0
+	go.opentelemetry.io/otel v1.21.0
+	go.opentelemetry.io/otel/metric v1.21.0
+	go.opentelemetry.io/otel/trace v1.21.0
 	go.uber.org/multierr v1.11.0
 	google.golang.org/grpc v1.59.0
 )
