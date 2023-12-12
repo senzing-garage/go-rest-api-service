@@ -6,7 +6,7 @@ require (
 	github.com/go-faster/errors v0.7.0
 	github.com/go-faster/jx v1.1.0
 	github.com/ogen-go/ogen v0.80.1
-	github.com/senzing/g2-sdk-go v0.7.4
+	github.com/senzing/g2-sdk-go v0.7.6
 	github.com/senzing/g2-sdk-json-type-definition v0.1.1
 	github.com/senzing/go-common v0.3.2-0.20231018174900-c1895fb44c30
 	github.com/senzing/go-logging v1.3.3
@@ -29,22 +29,22 @@ require (
 	github.com/go-logr/logr v1.3.0 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
-	github.com/google/uuid v1.4.0 // indirect
+	github.com/google/uuid v1.5.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/segmentio/asm v1.2.0 // indirect
-	github.com/senzing/g2-sdk-go-base v0.3.3 // indirect
-	github.com/senzing/g2-sdk-go-grpc v0.4.3 // indirect
+	github.com/senzing/g2-sdk-go-base v0.3.4 // indirect
+	github.com/senzing/g2-sdk-go-grpc v0.4.4 // indirect
 	github.com/senzing/g2-sdk-proto/go v0.0.0-20231016131354-0d0fba649357 // indirect
 	github.com/senzing/go-messaging v1.3.3 // indirect
 	go.uber.org/zap v1.26.0 // indirect
-	golang.org/x/exp v0.0.0-20231006140011-7918f672742d // indirect
+	golang.org/x/exp v0.0.0-20231206192017-f3f8817b8deb // indirect
 	golang.org/x/net v0.19.0 // indirect
 	golang.org/x/sync v0.5.0 // indirect
 	golang.org/x/sys v0.15.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20231030173426-d783a09b4405 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20231212172506-995d672761c0 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
