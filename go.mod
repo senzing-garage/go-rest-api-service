@@ -34,7 +34,7 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/segmentio/asm v1.2.0 // indirect
-	github.com/senzing/g2-sdk-go-base v0.3.3 // indirect
+	github.com/senzing/g2-sdk-go-base v0.3.4 // indirect
 	github.com/senzing/g2-sdk-go-grpc v0.4.3 // indirect
 	github.com/senzing/g2-sdk-proto/go v0.0.0-20231016131354-0d0fba649357 // indirect
 	github.com/senzing/go-messaging v1.3.3 // indirect
