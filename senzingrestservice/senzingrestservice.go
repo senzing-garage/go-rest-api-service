@@ -9,13 +9,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/senzing/g2-sdk-go/g2api"
-	"github.com/senzing/g2-sdk-go/senzing"
-	"github.com/senzing/g2-sdk-json-type-definition/go/typedef"
-	"github.com/senzing/go-logging/logging"
-	"github.com/senzing/go-observing/observer"
-	api "github.com/senzing/go-rest-api-service/senzingrestapi"
-	"github.com/senzing/go-sdk-abstract-factory/factory"
+	"github.com/senzing-garage/g2-sdk-go/g2api"
+	"github.com/senzing-garage/g2-sdk-go/senzing"
+	"github.com/senzing-garage/g2-sdk-json-type-definition/go/typedef"
+	"github.com/senzing-garage/go-logging/logging"
+	"github.com/senzing-garage/go-observing/observer"
+	api "github.com/senzing-garage/go-rest-api-service/senzingrestapi"
+	"github.com/senzing-garage/go-sdk-abstract-factory/factory"
 	"google.golang.org/grpc"
 )
 
@@ -338,7 +338,7 @@ func getHostname(ctx context.Context) string {
 
 // ----------------------------------------------------------------------------
 // Interface methods
-// See https://github.com/senzing/go-rest-api-service/blob/main/senzingrestpapi/oas_unimplemented_gen.go
+// See https://github.com/senzing-garage/go-rest-api-service/blob/main/senzingrestpapi/oas_unimplemented_gen.go
 // ----------------------------------------------------------------------------
 
 func (restApiService *SenzingRestServiceImpl) AddDataSources(ctx context.Context, req api.AddDataSourcesReq, params api.AddDataSourcesParams) (r api.AddDataSourcesRes, _ error) {

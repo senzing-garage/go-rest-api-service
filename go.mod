@@ -1,4 +1,4 @@
-module github.com/senzing/go-rest-api-service
+module github.com/senzing-garage/go-rest-api-service
 
 go 1.21
 
@@ -6,12 +6,12 @@ require (
 	github.com/go-faster/errors v0.7.1
 	github.com/go-faster/jx v1.1.0
 	github.com/ogen-go/ogen v0.81.0
-	github.com/senzing/g2-sdk-go v0.7.6
-	github.com/senzing/g2-sdk-json-type-definition v0.1.1
-	github.com/senzing/go-common v0.3.2-0.20231018174900-c1895fb44c30
-	github.com/senzing/go-logging v1.3.3
-	github.com/senzing/go-observing v0.2.8
-	github.com/senzing/go-sdk-abstract-factory v0.4.3
+	github.com/senzing-garage/g2-sdk-go v0.7.6
+	github.com/senzing-garage/g2-sdk-json-type-definition v0.1.1
+	github.com/senzing-garage/go-common v0.3.2-0.20231018174900-c1895fb44c30
+	github.com/senzing-garage/go-logging v1.3.3
+	github.com/senzing-garage/go-observing v0.2.8
+	github.com/senzing-garage/go-sdk-abstract-factory v0.4.3
 	github.com/stretchr/testify v1.8.4
 	go.opentelemetry.io/otel v1.21.0
 	go.opentelemetry.io/otel/metric v1.21.0
@@ -34,10 +34,10 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/segmentio/asm v1.2.0 // indirect
-	github.com/senzing/g2-sdk-go-base v0.3.4 // indirect
-	github.com/senzing/g2-sdk-go-grpc v0.4.4 // indirect
-	github.com/senzing/g2-sdk-proto/go v0.0.0-20231016131354-0d0fba649357 // indirect
-	github.com/senzing/go-messaging v1.3.3 // indirect
+	github.com/senzing-garage/g2-sdk-go-base v0.3.4 // indirect
+	github.com/senzing-garage/g2-sdk-go-grpc v0.4.4 // indirect
+	github.com/senzing-garage/g2-sdk-proto/go v0.0.0-20231016131354-0d0fba649357 // indirect
+	github.com/senzing-garage/go-messaging v1.3.3 // indirect
 	go.uber.org/zap v1.26.0 // indirect
 	golang.org/x/exp v0.0.0-20231206192017-f3f8817b8deb // indirect
 	golang.org/x/net v0.19.0 // indirect

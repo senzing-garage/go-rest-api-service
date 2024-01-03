@@ -3,7 +3,7 @@ package senzingrestservice
 import (
 	_ "embed"
 
-	"github.com/senzing/go-rest-api-service/senzingrestapi"
+	"github.com/senzing-garage/go-rest-api-service/senzingrestapi"
 )
 
 // ----------------------------------------------------------------------------
