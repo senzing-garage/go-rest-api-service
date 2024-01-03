@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update dependencies
   - github.com/ogen-go/ogen v0.77.0
   - github.com/senzing-garage/go-common v0.3.2-0.20231018174900-c1895fb44c30
-  - github.com/senzing-garage/go-sdk-abstract-factory v0.4.3
+  - github.com/senzing/go-sdk-abstract-factory v0.4.3
 
 ## [0.1.0] - 2023-10-25
 
@@ -26,11 +26,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Deprecated functions have been removed
 - Update dependencies
   - github.com/ogen-go/ogen v0.76.0
-  - github.com/senzing-garage/g2-sdk-go v0.7.4
+  - github.com/senzing/g2-sdk-go v0.7.4
   - github.com/senzing-garage/go-common v0.3.1
   - github.com/senzing-garage/go-logging v1.3.3
   - github.com/senzing-garage/go-observing v0.2.8
-  - github.com/senzing-garage/go-sdk-abstract-factory v0.4.2
+  - github.com/senzing/go-sdk-abstract-factory v0.4.2
   - go.opentelemetry.io/otel v1.19.0
   - go.opentelemetry.io/otel/metric v1.19.0
   - go.opentelemetry.io/otel/trace v1.19.0
@@ -50,7 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update dependencies
   - github.com/go-faster/jx v1.1.0
   - github.com/ogen-go/ogen v0.72.1
-  - github.com/senzing-garage/g2-sdk-go v0.6.8
+  - github.com/senzing/g2-sdk-go v0.6.8
   - github.com/senzing-garage/go-common v0.2.11
   - github.com/senzing-garage/go-logging v1.3.2
   - github.com/senzing-garage/go-observing v0.2.7
@@ -72,11 +72,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update dependencies
   - github.com/ogen-go/ogen v0.71.0
-  - github.com/senzing-garage/g2-sdk-go v0.6.7
+  - github.com/senzing/g2-sdk-go v0.6.7
   - github.com/senzing-garage/g2-sdk-json-type-definition v0.1.1
   - github.com/senzing-garage/go-common v0.2.1
   - github.com/senzing-garage/go-logging v1.3.1
-  - github.com/senzing-garage/go-sdk-abstract-factory v0.3.1
+  - github.com/senzing/go-sdk-abstract-factory v0.3.1
   - google.golang.org/grpc v1.56.2
 
 ## [0.0.2] - 2023-06-16
@@ -85,7 +85,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update dependencies
   - github.com/ogen-go/ogen v0.69.1
-  - github.com/senzing-garage/g2-sdk-go v0.6.6
+  - github.com/senzing/g2-sdk-go v0.6.6
   - github.com/senzing-garage/go-common v0.1.4
   - github.com/senzing-garage/go-logging v1.2.6
   - github.com/senzing-garage/go-observing v0.2.6
