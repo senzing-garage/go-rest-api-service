@@ -8,6 +8,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2024-01-03
+
+### Changed in 0.2.0
+
+- Renamed module to `github.com/senzing-garage/go-rest-api-service`
+- Refactor to [template-go](https://github.com/senzing-garage/template-go)
+- Update dependencies
+  - github.com/go-faster/errors v0.7.1
+  - github.com/ogen-go/ogen v0.81.1
+  - github.com/senzing-garage/g2-sdk-json-type-definition v0.2.0
+  - github.com/senzing-garage/go-common v0.4.0
+  - github.com/senzing-garage/go-logging v1.4.0
+  - github.com/senzing-garage/go-observing v0.3.0
+  - github.com/senzing/g2-sdk-go v0.8.0
+  - github.com/senzing/go-sdk-abstract-factory v0.5.0
+  - go.opentelemetry.io/otel v1.21.0
+  - go.opentelemetry.io/otel/metric v1.21.0
+  - go.opentelemetry.io/otel/trace v1.21.0
+  - google.golang.org/grpc v1.60.1
+
 ## [0.1.1] - 2023-11-02
 
 ### Changed in 0.1.1
