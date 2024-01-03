@@ -1,56 +1,53 @@
-# Makefile extensions for darwin.
+# Makefile extensions for windows.
 
 # -----------------------------------------------------------------------------
 # Variables
 # -----------------------------------------------------------------------------
 
-SENZING_DIR ?= /opt/senzing/g2
-SENZING_TOOLS_SENZING_DIRECTORY ?= $(SENZING_DIR)
-
-LD_LIBRARY_PATH := $(SENZING_TOOLS_SENZING_DIRECTORY)/lib:$(SENZING_TOOLS_SENZING_DIRECTORY)/lib/macos
-DYLD_LIBRARY_PATH := $(LD_LIBRARY_PATH)
-SENZING_TOOLS_DATABASE_URL ?= sqlite3://na:na@/tmp/sqlite/G2C.db
+SENZING_TOOLS_DATABASE_URL ?= sqlite3://na:na@nowhere/C:\Temp\sqlite\G2C.db
 
 # -----------------------------------------------------------------------------
-# OS-ARCH specific targets
+# OS specific targets
 # -----------------------------------------------------------------------------
 
 .PHONY: build-osarch-specific
-build-osarch-specific: darwin/amd64
+build-osarch-specific: windows/amd64
+	@mv $(TARGET_DIRECTORY)/windows-amd64/$(PROGRAM_NAME) $(TARGET_DIRECTORY)/windows-amd64/$(PROGRAM_NAME).exe
 
 
 .PHONY: clean-osarch-specific
 clean-osarch-specific:
-	@rm -rf $(TARGET_DIRECTORY) || true
-	@rm -f $(GOPATH)/bin/$(PROGRAM_NAME) || true
-	@rm -rf /tmp/sqlite || true
+	del /F /S /Q $(TARGET_DIRECTORY)
+	del /F /S /Q $(GOPATH)/bin/$(PROGRAM_NAME)
+	del /F /S /Q C:\Temp\sqlite
 
 
 .PHONY: hello-world-osarch-specific
 hello-world-osarch-specific:
-	@echo "Hello World, from darwin."
+	@echo "Hello World, from windows."
 
 
 .PHONY: run-osarch-specific
 run-osarch-specific:
-	@go run -exec macos_exec_dyld.sh main.go
+	@go run main.go
 
 
 .PHONY: setup-osarch-specific
 setup-osarch-specific:
-	@mkdir /tmp/sqlite
-	@cp testdata/sqlite/G2C.db /tmp/sqlite/G2C.db
-	@mkdir -p $(TARGET_DIRECTORY)/$(GO_OS)-$(GO_ARCH) || true
+	@mkdir C:\Temp\sqlite
+	@copy testdata\sqlite\G2C.db C:\Temp\sqlite\G2C.db
+	@mkdir $(TARGET_DIRECTORY)\
+	@mkdir $(TARGET_DIRECTORY)\$(GO_OS)-$(GO_ARCH)	
 
 
 .PHONY: test-osarch-specific
 test-osarch-specific:
-	@go test -exec macos_exec_dyld.sh -v -p 1 ./...
+	@go test -v -p 1 ./...
 
 # -----------------------------------------------------------------------------
 # Makefile targets supported only by this platform.
 # -----------------------------------------------------------------------------
 
-.PHONY: only-darwin
-only-darwin:
-	@echo "Only darwin has this Makefile target."
+.PHONY: only-windows
+only-windows:
+	@echo "Only windows has this Makefile target."

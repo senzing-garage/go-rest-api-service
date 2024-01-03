@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/senzing/go-common/g2engineconfigurationjson"
-	api "github.com/senzing/go-rest-api-service/senzingrestapi"
+	"github.com/senzing-garage/go-common/g2engineconfigurationjson"
+	api "github.com/senzing-garage/go-rest-api-service/senzingrestapi"
 	"github.com/stretchr/testify/assert"
 )
 
