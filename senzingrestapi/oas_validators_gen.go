@@ -383,6 +383,10 @@ func (s SzAttributeNecessity) Validate() error {
 }
 
 func (s *SzAttributeSearchResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -427,6 +431,10 @@ func (s *SzAttributeSearchResponse) Validate() error {
 }
 
 func (s *SzAttributeSearchResponseData) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		var failures []validate.FieldError
@@ -460,6 +468,10 @@ func (s *SzAttributeSearchResponseData) Validate() error {
 }
 
 func (s *SzAttributeSearchResult) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		var failures []validate.FieldError
@@ -656,6 +668,10 @@ func (s SzAttributeSearchResultType) Validate() error {
 }
 
 func (s *SzAttributeType) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Necessity.Get(); ok {
@@ -700,6 +716,10 @@ func (s *SzAttributeType) Validate() error {
 }
 
 func (s *SzAttributeTypeResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -744,6 +764,10 @@ func (s *SzAttributeTypeResponse) Validate() error {
 }
 
 func (s *SzAttributeTypeResponseData) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.AttributeType.Get(); ok {
@@ -770,6 +794,10 @@ func (s *SzAttributeTypeResponseData) Validate() error {
 }
 
 func (s *SzAttributeTypesResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -814,6 +842,10 @@ func (s *SzAttributeTypesResponse) Validate() error {
 }
 
 func (s *SzAttributeTypesResponseData) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		var failures []validate.FieldError
@@ -847,6 +879,10 @@ func (s *SzAttributeTypesResponseData) Validate() error {
 }
 
 func (s *SzBaseResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -873,6 +909,10 @@ func (s *SzBaseResponse) Validate() error {
 }
 
 func (s *SzBulkDataAnalysis) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Status.Get(); ok {
@@ -899,6 +939,10 @@ func (s *SzBulkDataAnalysis) Validate() error {
 }
 
 func (s *SzBulkDataAnalysisResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -958,6 +1002,10 @@ func (s SzBulkDataStatus) Validate() error {
 }
 
 func (s *SzBulkLoadResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -1002,6 +1050,10 @@ func (s *SzBulkLoadResponse) Validate() error {
 }
 
 func (s *SzBulkLoadResult) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Status.Get(); ok {
@@ -1027,7 +1079,41 @@ func (s *SzBulkLoadResult) Validate() error {
 	return nil
 }
 
+func (s *SzConfigResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
+	var failures []validate.FieldError
+	if err := func() error {
+		if value, ok := s.Meta.Get(); ok {
+			if err := func() error {
+				if err := value.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "meta",
+			Error: err,
+		})
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+	return nil
+}
+
 func (s *SzDataSourceRecordSummary) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.TopRecordIds.Get(); ok {
@@ -1054,6 +1140,10 @@ func (s *SzDataSourceRecordSummary) Validate() error {
 }
 
 func (s *SzDataSourceResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -1080,6 +1170,10 @@ func (s *SzDataSourceResponse) Validate() error {
 }
 
 func (s *SzDataSourcesResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -1106,6 +1200,10 @@ func (s *SzDataSourcesResponse) Validate() error {
 }
 
 func (s *SzDeleteRecordResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -1151,6 +1249,10 @@ func (s SzDetailLevel) Validate() error {
 }
 
 func (s *SzDisclosedRelation) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Direction.Get(); ok {
@@ -1215,6 +1317,10 @@ func (s *SzDisclosedRelation) Validate() error {
 }
 
 func (s *SzEntityData) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.ResolvedEntity.Get(); ok {
@@ -1266,6 +1372,10 @@ func (s *SzEntityData) Validate() error {
 }
 
 func (s *SzEntityNetworkData) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		var failures []validate.FieldError
@@ -1324,6 +1434,10 @@ func (s *SzEntityNetworkData) Validate() error {
 }
 
 func (s *SzEntityNetworkResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -1368,6 +1482,10 @@ func (s *SzEntityNetworkResponse) Validate() error {
 }
 
 func (s *SzEntityPath) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.EntityIds.Get(); ok {
@@ -1394,6 +1512,10 @@ func (s *SzEntityPath) Validate() error {
 }
 
 func (s *SzEntityPathData) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.EntityPath.Get(); ok {
@@ -1445,6 +1567,10 @@ func (s *SzEntityPathData) Validate() error {
 }
 
 func (s *SzEntityPathResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -1489,6 +1615,10 @@ func (s *SzEntityPathResponse) Validate() error {
 }
 
 func (s *SzEntityRecord) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.FeatureReferences.Get(); ok {
@@ -1515,6 +1645,10 @@ func (s *SzEntityRecord) Validate() error {
 }
 
 func (s *SzEntityResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -1559,6 +1693,10 @@ func (s *SzEntityResponse) Validate() error {
 }
 
 func (s *SzErrorResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -1602,6 +1740,10 @@ func (s SzFeatureMode) Validate() error {
 }
 
 func (s *SzFeatureScore) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.ScoringBucket.Get(); ok {
@@ -1646,6 +1788,10 @@ func (s *SzFeatureScore) Validate() error {
 }
 
 func (s *SzHowEntityResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -1690,6 +1836,10 @@ func (s *SzHowEntityResponse) Validate() error {
 }
 
 func (s *SzHowEntityResult) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.ResolutionSteps.Get(); ok {
@@ -1738,6 +1888,10 @@ func (s SzHowEntityResultResolutionSteps) Validate() error {
 }
 
 func (s *SzHowMatchInfo) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.FeatureScores.Get(); ok {
@@ -1820,6 +1974,10 @@ func (s SzHttpMethod) Validate() error {
 }
 
 func (s *SzLicenseResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -1846,6 +2004,10 @@ func (s *SzLicenseResponse) Validate() error {
 }
 
 func (s *SzLoadRecordResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -1891,6 +2053,10 @@ func (s SzMatchLevel) Validate() error {
 }
 
 func (s *SzMatchedRecord) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.FeatureReferences.Get(); ok {
@@ -1917,6 +2083,10 @@ func (s *SzMatchedRecord) Validate() error {
 }
 
 func (s *SzMeta) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.HttpMethod.Get(); ok {
@@ -1943,6 +2113,10 @@ func (s *SzMeta) Validate() error {
 }
 
 func (s *SzRecordResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -1987,6 +2161,10 @@ func (s *SzRecordResponse) Validate() error {
 }
 
 func (s *SzRecordResponseData) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Record.Get(); ok {
@@ -2013,6 +2191,10 @@ func (s *SzRecordResponseData) Validate() error {
 }
 
 func (s *SzReevaluateResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -2039,6 +2221,10 @@ func (s *SzReevaluateResponse) Validate() error {
 }
 
 func (s *SzRelatedEntity) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		var failures []validate.FieldError
@@ -2194,6 +2380,10 @@ func (s SzRelationshipType) Validate() error {
 }
 
 func (s *SzResolutionStep) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.MatchInfo.Get(); ok {
@@ -2220,6 +2410,10 @@ func (s *SzResolutionStep) Validate() error {
 }
 
 func (s *SzResolvedEntity) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		var failures []validate.FieldError
@@ -2317,33 +2511,11 @@ func (s SzResolvedEntityFeatures) Validate() error {
 	return nil
 }
 
-func (s *SzResponseWithRawData) Validate() error {
-	var failures []validate.FieldError
-	if err := func() error {
-		if value, ok := s.Meta.Get(); ok {
-			if err := func() error {
-				if err := value.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return err
-			}
-		}
-		return nil
-	}(); err != nil {
-		failures = append(failures, validate.FieldError{
-			Name:  "meta",
-			Error: err,
-		})
-	}
-	if len(failures) > 0 {
-		return &validate.Error{Fields: failures}
-	}
-	return nil
-}
-
 func (s *SzScoringBehavior) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Frequency.Get(); ok {
@@ -2410,6 +2582,10 @@ func (s SzScoringFrequency) Validate() error {
 }
 
 func (s *SzServerInfoResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -2436,6 +2612,10 @@ func (s *SzServerInfoResponse) Validate() error {
 }
 
 func (s *SzVersionResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -2462,6 +2642,10 @@ func (s *SzVersionResponse) Validate() error {
 }
 
 func (s *SzVirtualEntityData) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.ResolvedEntity.Get(); ok {
@@ -2488,6 +2672,10 @@ func (s *SzVirtualEntityData) Validate() error {
 }
 
 func (s *SzVirtualEntityResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -2532,6 +2720,10 @@ func (s *SzVirtualEntityResponse) Validate() error {
 }
 
 func (s *SzWhyEntitiesResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -2576,6 +2768,10 @@ func (s *SzWhyEntitiesResponse) Validate() error {
 }
 
 func (s *SzWhyEntitiesResponseData) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.WhyResult.Get(); ok {
@@ -2627,6 +2823,10 @@ func (s *SzWhyEntitiesResponseData) Validate() error {
 }
 
 func (s *SzWhyEntitiesResult) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.MatchInfo.Get(); ok {
@@ -2653,6 +2853,10 @@ func (s *SzWhyEntitiesResult) Validate() error {
 }
 
 func (s *SzWhyEntityResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -2697,6 +2901,10 @@ func (s *SzWhyEntityResponse) Validate() error {
 }
 
 func (s *SzWhyEntityResponseData) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		var failures []validate.FieldError
@@ -2755,6 +2963,10 @@ func (s *SzWhyEntityResponseData) Validate() error {
 }
 
 func (s *SzWhyEntityResult) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.MatchInfo.Get(); ok {
@@ -2781,6 +2993,10 @@ func (s *SzWhyEntityResult) Validate() error {
 }
 
 func (s *SzWhyMatchInfo) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.MatchLevel.Get(); ok {
@@ -2939,6 +3155,10 @@ func (s SzWhyMatchInfoFeatureScores) Validate() error {
 }
 
 func (s *SzWhyRecordsResponse) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.Meta.Get(); ok {
@@ -2983,6 +3203,10 @@ func (s *SzWhyRecordsResponse) Validate() error {
 }
 
 func (s *SzWhyRecordsResponseData) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.WhyResult.Get(); ok {
@@ -3034,6 +3258,10 @@ func (s *SzWhyRecordsResponseData) Validate() error {
 }
 
 func (s *SzWhyRecordsResult) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
 	var failures []validate.FieldError
 	if err := func() error {
 		if value, ok := s.MatchInfo.Get(); ok {

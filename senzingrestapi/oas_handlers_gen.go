@@ -7,12 +7,14 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/go-faster/errors"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
 	"go.opentelemetry.io/otel/metric"
 	semconv "go.opentelemetry.io/otel/semconv/v1.19.0"
 	"go.opentelemetry.io/otel/trace"
 
+	ht "github.com/ogen-go/ogen/http"
 	"github.com/ogen-go/ogen/middleware"
 	"github.com/ogen-go/ogen/ogenerrors"
 	"github.com/ogen-go/ogen/otelogen"
@@ -100,10 +102,11 @@ func (s *Server) handleAddDataSourcesRequest(args [0]string, argsEscaped bool, w
 	var response AddDataSourcesRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "AddDataSources",
-			OperationID:   "addDataSources",
-			Body:          request,
+			Context:          ctx,
+			OperationName:    "AddDataSources",
+			OperationSummary: "Adds one or more new data sources to the current default configuration and reinitializes with the newly modified configuration.",
+			OperationID:      "addDataSources",
+			Body:             request,
 			Params: middleware.Parameters{
 				{
 					Name: "dataSource",
@@ -146,7 +149,9 @@ func (s *Server) handleAddDataSourcesRequest(args [0]string, argsEscaped bool, w
 
 	if err := encodeAddDataSourcesResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -237,10 +242,11 @@ func (s *Server) handleAddRecordRequest(args [2]string, argsEscaped bool, w http
 	var response AddRecordRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "AddRecord",
-			OperationID:   "addRecord",
-			Body:          request,
+			Context:          ctx,
+			OperationName:    "AddRecord",
+			OperationSummary: "Load a new record or replace a record in a data source with a specific record ID.",
+			OperationID:      "addRecord",
+			Body:             request,
 			Params: middleware.Parameters{
 				{
 					Name: "dataSourceCode",
@@ -295,7 +301,9 @@ func (s *Server) handleAddRecordRequest(args [2]string, argsEscaped bool, w http
 
 	if err := encodeAddRecordResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -386,10 +394,11 @@ func (s *Server) handleAddRecordWithReturnedRecordIdRequest(args [1]string, args
 	var response AddRecordWithReturnedRecordIdRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "AddRecordWithReturnedRecordId",
-			OperationID:   "addRecordWithReturnedRecordId",
-			Body:          request,
+			Context:          ctx,
+			OperationName:    "AddRecordWithReturnedRecordId",
+			OperationSummary: "Load a new record specified in a data source with either an auto-generated record ID or a `RECORD_ID` specified in the payload.",
+			OperationID:      "addRecordWithReturnedRecordId",
+			Body:             request,
 			Params: middleware.Parameters{
 				{
 					Name: "dataSourceCode",
@@ -440,7 +449,9 @@ func (s *Server) handleAddRecordWithReturnedRecordIdRequest(args [1]string, args
 
 	if err := encodeAddRecordWithReturnedRecordIdResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -557,10 +568,11 @@ func (s *Server) handleAnalyzeBulkRecordsRequest(args [0]string, argsEscaped boo
 	var response AnalyzeBulkRecordsRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "AnalyzeBulkRecords",
-			OperationID:   "analyzeBulkRecords",
-			Body:          request,
+			Context:          ctx,
+			OperationName:    "AnalyzeBulkRecords",
+			OperationSummary: "Analyze a bulk data set of records. (Supports SSE / Supports Web Sockets)",
+			OperationID:      "analyzeBulkRecords",
+			Body:             request,
 			Params: middleware.Parameters{
 				{
 					Name: "progressPeriod",
@@ -603,7 +615,9 @@ func (s *Server) handleAnalyzeBulkRecordsRequest(args [0]string, argsEscaped boo
 
 	if err := encodeAnalyzeBulkRecordsResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -672,10 +686,11 @@ func (s *Server) handleDeleteRecordRequest(args [2]string, argsEscaped bool, w h
 	var response DeleteRecordRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "DeleteRecord",
-			OperationID:   "deleteRecord",
-			Body:          nil,
+			Context:          ctx,
+			OperationName:    "DeleteRecord",
+			OperationSummary: "Delete a record given its data source and record ID.",
+			OperationID:      "deleteRecord",
+			Body:             nil,
 			Params: middleware.Parameters{
 				{
 					Name: "dataSourceCode",
@@ -730,7 +745,9 @@ func (s *Server) handleDeleteRecordRequest(args [2]string, argsEscaped bool, w h
 
 	if err := encodeDeleteRecordResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -804,10 +821,11 @@ func (s *Server) handleFindEntityNetworkRequest(args [0]string, argsEscaped bool
 	var response FindEntityNetworkRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "FindEntityNetwork",
-			OperationID:   "findEntityNetwork",
-			Body:          nil,
+			Context:          ctx,
+			OperationName:    "FindEntityNetwork",
+			OperationSummary: "Finds the entity network around one or more entities.",
+			OperationID:      "findEntityNetwork",
+			Body:             nil,
 			Params: middleware.Parameters{
 				{
 					Name: "maxDegrees",
@@ -878,7 +896,9 @@ func (s *Server) handleFindEntityNetworkRequest(args [0]string, argsEscaped bool
 
 	if err := encodeFindEntityNetworkResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -950,10 +970,11 @@ func (s *Server) handleFindEntityPathRequest(args [0]string, argsEscaped bool, w
 	var response FindEntityPathRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "FindEntityPath",
-			OperationID:   "findEntityPath",
-			Body:          nil,
+			Context:          ctx,
+			OperationName:    "FindEntityPath",
+			OperationSummary: "Finds a path between two entities identified by entity ID or by data sources and record IDs of constituent records.",
+			OperationID:      "findEntityPath",
+			Body:             nil,
 			Params: middleware.Parameters{
 				{
 					Name: "maxDegrees",
@@ -1024,7 +1045,9 @@ func (s *Server) handleFindEntityPathRequest(args [0]string, argsEscaped bool, w
 
 	if err := encodeFindEntityPathResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -1075,12 +1098,13 @@ func (s *Server) handleGetActiveConfigRequest(args [0]string, argsEscaped bool, 
 	var response GetActiveConfigRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "GetActiveConfig",
-			OperationID:   "getActiveConfig",
-			Body:          nil,
-			Params:        middleware.Parameters{},
-			Raw:           r,
+			Context:          ctx,
+			OperationName:    "GetActiveConfig",
+			OperationSummary: "Gets the current active configuration as raw JSON, no interpretation.",
+			OperationID:      "getActiveConfig",
+			Body:             nil,
+			Params:           middleware.Parameters{},
+			Raw:              r,
 		}
 
 		type (
@@ -1112,7 +1136,9 @@ func (s *Server) handleGetActiveConfigRequest(args [0]string, argsEscaped bool, 
 
 	if err := encodeGetActiveConfigResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -1174,10 +1200,11 @@ func (s *Server) handleGetAttributeTypeRequest(args [1]string, argsEscaped bool,
 	var response GetAttributeTypeRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "GetAttributeType",
-			OperationID:   "getAttributeType",
-			Body:          nil,
+			Context:          ctx,
+			OperationName:    "GetAttributeType",
+			OperationSummary: "Get the attribute type identified by the attribute code.",
+			OperationID:      "getAttributeType",
+			Body:             nil,
 			Params: middleware.Parameters{
 				{
 					Name: "attributeCode",
@@ -1220,7 +1247,9 @@ func (s *Server) handleGetAttributeTypeRequest(args [1]string, argsEscaped bool,
 
 	if err := encodeGetAttributeTypeResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -1283,10 +1312,11 @@ func (s *Server) handleGetAttributeTypesRequest(args [0]string, argsEscaped bool
 	var response GetAttributeTypesRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "GetAttributeTypes",
-			OperationID:   "getAttributeTypes",
-			Body:          nil,
+			Context:          ctx,
+			OperationName:    "GetAttributeTypes",
+			OperationSummary: "Get a list of configured attribute types.",
+			OperationID:      "getAttributeTypes",
+			Body:             nil,
 			Params: middleware.Parameters{
 				{
 					Name: "withInternal",
@@ -1337,7 +1367,9 @@ func (s *Server) handleGetAttributeTypesRequest(args [0]string, argsEscaped bool
 
 	if err := encodeGetAttributeTypesResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -1399,10 +1431,11 @@ func (s *Server) handleGetDataSourceRequest(args [1]string, argsEscaped bool, w 
 	var response GetDataSourceRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "GetDataSource",
-			OperationID:   "getDataSource",
-			Body:          nil,
+			Context:          ctx,
+			OperationName:    "GetDataSource",
+			OperationSummary: "Gets the details on the specified data source.",
+			OperationID:      "getDataSource",
+			Body:             nil,
 			Params: middleware.Parameters{
 				{
 					Name: "dataSourceCode",
@@ -1445,7 +1478,9 @@ func (s *Server) handleGetDataSourceRequest(args [1]string, argsEscaped bool, w 
 
 	if err := encodeGetDataSourceResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -1507,10 +1542,11 @@ func (s *Server) handleGetDataSourcesRequest(args [0]string, argsEscaped bool, w
 	var response GetDataSourcesRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "GetDataSources",
-			OperationID:   "getDataSources",
-			Body:          nil,
+			Context:          ctx,
+			OperationName:    "GetDataSources",
+			OperationSummary: "Get a list of configured data sources.",
+			OperationID:      "getDataSources",
+			Body:             nil,
 			Params: middleware.Parameters{
 				{
 					Name: "withRaw",
@@ -1549,7 +1585,9 @@ func (s *Server) handleGetDataSourcesRequest(args [0]string, argsEscaped bool, w
 
 	if err := encodeGetDataSourcesResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -1616,10 +1654,11 @@ func (s *Server) handleGetEntityByEntityIdRequest(args [1]string, argsEscaped bo
 	var response GetEntityByEntityIdRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "GetEntityByEntityId",
-			OperationID:   "getEntityByEntityId",
-			Body:          nil,
+			Context:          ctx,
+			OperationName:    "GetEntityByEntityId",
+			OperationSummary: "Get a resolved entity by entity ID.",
+			OperationID:      "getEntityByEntityId",
+			Body:             nil,
 			Params: middleware.Parameters{
 				{
 					Name: "entityId",
@@ -1686,7 +1725,9 @@ func (s *Server) handleGetEntityByEntityIdRequest(args [1]string, argsEscaped bo
 
 	if err := encodeGetEntityByEntityIdResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -1749,10 +1790,11 @@ func (s *Server) handleGetEntityByRecordIdRequest(args [2]string, argsEscaped bo
 	var response GetEntityByRecordIdRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "GetEntityByRecordId",
-			OperationID:   "getEntityByRecordId",
-			Body:          nil,
+			Context:          ctx,
+			OperationName:    "GetEntityByRecordId",
+			OperationSummary: "Get a resolved entity by data source and record ID.",
+			OperationID:      "getEntityByRecordId",
+			Body:             nil,
 			Params: middleware.Parameters{
 				{
 					Name: "dataSourceCode",
@@ -1823,7 +1865,9 @@ func (s *Server) handleGetEntityByRecordIdRequest(args [2]string, argsEscaped bo
 
 	if err := encodeGetEntityByRecordIdResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -1885,10 +1929,11 @@ func (s *Server) handleGetRecordRequest(args [2]string, argsEscaped bool, w http
 	var response GetRecordRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "GetRecord",
-			OperationID:   "getRecord",
-			Body:          nil,
+			Context:          ctx,
+			OperationName:    "GetRecord",
+			OperationSummary: "Get an entity record by data source and record ID.",
+			OperationID:      "getRecord",
+			Body:             nil,
 			Params: middleware.Parameters{
 				{
 					Name: "dataSourceCode",
@@ -1935,7 +1980,9 @@ func (s *Server) handleGetRecordRequest(args [2]string, argsEscaped bool, w http
 
 	if err := encodeGetRecordResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -1986,12 +2033,13 @@ func (s *Server) handleGetServerInfoRequest(args [0]string, argsEscaped bool, w 
 	var response GetServerInfoRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "GetServerInfo",
-			OperationID:   "getServerInfo",
-			Body:          nil,
-			Params:        middleware.Parameters{},
-			Raw:           r,
+			Context:          ctx,
+			OperationName:    "GetServerInfo",
+			OperationSummary: "Get info regarding the server's state and supported features.",
+			OperationID:      "getServerInfo",
+			Body:             nil,
+			Params:           middleware.Parameters{},
+			Raw:              r,
 		}
 
 		type (
@@ -2023,7 +2071,9 @@ func (s *Server) handleGetServerInfoRequest(args [0]string, argsEscaped bool, w 
 
 	if err := encodeGetServerInfoResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -2076,12 +2126,13 @@ func (s *Server) handleGetTemplateConfigRequest(args [0]string, argsEscaped bool
 	var response GetTemplateConfigRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "GetTemplateConfig",
-			OperationID:   "getTemplateConfig",
-			Body:          nil,
-			Params:        middleware.Parameters{},
-			Raw:           r,
+			Context:          ctx,
+			OperationName:    "GetTemplateConfig",
+			OperationSummary: "Gets the base template configuration as raw JSON, no interpretation. This is the initial configuration for a new repository.",
+			OperationID:      "getTemplateConfig",
+			Body:             nil,
+			Params:           middleware.Parameters{},
+			Raw:              r,
 		}
 
 		type (
@@ -2113,7 +2164,9 @@ func (s *Server) handleGetTemplateConfigRequest(args [0]string, argsEscaped bool
 
 	if err := encodeGetTemplateConfigResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -2177,10 +2230,11 @@ func (s *Server) handleGetVirtualEntityByRecordIdsRequest(args [0]string, argsEs
 	var response GetVirtualEntityByRecordIdsRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "GetVirtualEntityByRecordIds",
-			OperationID:   "getVirtualEntityByRecordIds",
-			Body:          nil,
+			Context:          ctx,
+			OperationName:    "GetVirtualEntityByRecordIds",
+			OperationSummary: "Builds a virtual entity by simulating the resolution of the records identified by the specified record ID parameters.",
+			OperationID:      "getVirtualEntityByRecordIds",
+			Body:             nil,
 			Params: middleware.Parameters{
 				{
 					Name: "detailLevel",
@@ -2239,7 +2293,9 @@ func (s *Server) handleGetVirtualEntityByRecordIdsRequest(args [0]string, argsEs
 
 	if err := encodeGetVirtualEntityByRecordIdsResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -2289,12 +2345,13 @@ func (s *Server) handleHeartbeatRequest(args [0]string, argsEscaped bool, w http
 	var response *SzBaseResponse
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "Heartbeat",
-			OperationID:   "heartbeat",
-			Body:          nil,
-			Params:        middleware.Parameters{},
-			Raw:           r,
+			Context:          ctx,
+			OperationName:    "Heartbeat",
+			OperationSummary: "Gets a heartbeat from the server to make sure it is up and running.  The response will include the current timestamp.",
+			OperationID:      "heartbeat",
+			Body:             nil,
+			Params:           middleware.Parameters{},
+			Raw:              r,
 		}
 
 		type (
@@ -2326,7 +2383,9 @@ func (s *Server) handleHeartbeatRequest(args [0]string, argsEscaped bool, w http
 
 	if err := encodeHeartbeatResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -2394,10 +2453,11 @@ func (s *Server) handleHowEntityByEntityIDRequest(args [1]string, argsEscaped bo
 	var response HowEntityByEntityIDRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "HowEntityByEntityID",
-			OperationID:   "howEntityByEntityID",
-			Body:          nil,
+			Context:          ctx,
+			OperationName:    "HowEntityByEntityID",
+			OperationSummary: "Returns an analysis of how the entity for the respective entity ID resolved.",
+			OperationID:      "howEntityByEntityID",
+			Body:             nil,
 			Params: middleware.Parameters{
 				{
 					Name: "entityId",
@@ -2440,7 +2500,9 @@ func (s *Server) handleHowEntityByEntityIDRequest(args [1]string, argsEscaped bo
 
 	if err := encodeHowEntityByEntityIDResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -2503,10 +2565,11 @@ func (s *Server) handleHowEntityByRecordIDRequest(args [2]string, argsEscaped bo
 	var response HowEntityByRecordIDRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "HowEntityByRecordID",
-			OperationID:   "howEntityByRecordID",
-			Body:          nil,
+			Context:          ctx,
+			OperationName:    "HowEntityByRecordID",
+			OperationSummary: "Returns an analysis of how the entity for the record with the respective data source code and record ID resolved.",
+			OperationID:      "howEntityByRecordID",
+			Body:             nil,
 			Params: middleware.Parameters{
 				{
 					Name: "dataSourceCode",
@@ -2553,7 +2616,9 @@ func (s *Server) handleHowEntityByRecordIDRequest(args [2]string, argsEscaped bo
 
 	if err := encodeHowEntityByRecordIDResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -2615,10 +2680,11 @@ func (s *Server) handleLicenseRequest(args [0]string, argsEscaped bool, w http.R
 	var response LicenseRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "License",
-			OperationID:   "license",
-			Body:          nil,
+			Context:          ctx,
+			OperationName:    "License",
+			OperationSummary: "Get the license information.",
+			OperationID:      "license",
+			Body:             nil,
 			Params: middleware.Parameters{
 				{
 					Name: "withRaw",
@@ -2657,7 +2723,9 @@ func (s *Server) handleLicenseRequest(args [0]string, argsEscaped bool, w http.R
 
 	if err := encodeLicenseResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -2774,10 +2842,11 @@ func (s *Server) handleLoadBulkRecordsRequest(args [0]string, argsEscaped bool, 
 	var response LoadBulkRecordsRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "LoadBulkRecords",
-			OperationID:   "loadBulkRecords",
-			Body:          request,
+			Context:          ctx,
+			OperationName:    "LoadBulkRecords",
+			OperationSummary: "Load the records in the provided bulk data set. (Supports SSE / Supports Web Sockets)",
+			OperationID:      "loadBulkRecords",
+			Body:             request,
 			Params: middleware.Parameters{
 				{
 					Name: "dataSource",
@@ -2836,7 +2905,9 @@ func (s *Server) handleLoadBulkRecordsRequest(args [0]string, argsEscaped bool, 
 
 	if err := encodeLoadBulkRecordsResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -2887,12 +2958,13 @@ func (s *Server) handleOpenApiSpecificationRequest(args [0]string, argsEscaped b
 	var response OpenApiSpecificationOKDefault
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "OpenApiSpecification",
-			OperationID:   "openApiSpecification",
-			Body:          nil,
-			Params:        middleware.Parameters{},
-			Raw:           r,
+			Context:          ctx,
+			OperationName:    "OpenApiSpecification",
+			OperationSummary: "Gets this Open API specification to describe the API.",
+			OperationID:      "openApiSpecification",
+			Body:             nil,
+			Params:           middleware.Parameters{},
+			Raw:              r,
 		}
 
 		type (
@@ -2924,7 +2996,9 @@ func (s *Server) handleOpenApiSpecificationRequest(args [0]string, argsEscaped b
 
 	if err := encodeOpenApiSpecificationResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -2996,10 +3070,11 @@ func (s *Server) handleReevaluateEntityRequest(args [0]string, argsEscaped bool,
 	var response ReevaluateEntityRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "ReevaluateEntity",
-			OperationID:   "reevaluateEntity",
-			Body:          nil,
+			Context:          ctx,
+			OperationName:    "ReevaluateEntity",
+			OperationSummary: "Reevaluate an entity identified by its entity ID.",
+			OperationID:      "reevaluateEntity",
+			Body:             nil,
 			Params: middleware.Parameters{
 				{
 					Name: "entityId",
@@ -3046,7 +3121,9 @@ func (s *Server) handleReevaluateEntityRequest(args [0]string, argsEscaped bool,
 
 	if err := encodeReevaluateEntityResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -3115,10 +3192,11 @@ func (s *Server) handleReevaluateRecordRequest(args [2]string, argsEscaped bool,
 	var response ReevaluateRecordRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "ReevaluateRecord",
-			OperationID:   "reevaluateRecord",
-			Body:          nil,
+			Context:          ctx,
+			OperationName:    "ReevaluateRecord",
+			OperationSummary: "Reevaluate a record identified by a data source and record ID.",
+			OperationID:      "reevaluateRecord",
+			Body:             nil,
 			Params: middleware.Parameters{
 				{
 					Name: "dataSourceCode",
@@ -3169,7 +3247,9 @@ func (s *Server) handleReevaluateRecordRequest(args [2]string, argsEscaped bool,
 
 	if err := encodeReevaluateRecordResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -3219,12 +3299,13 @@ func (s *Server) handleRootRequest(args [0]string, argsEscaped bool, w http.Resp
 	var response *SzBaseResponse
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "Root",
-			OperationID:   "root",
-			Body:          nil,
-			Params:        middleware.Parameters{},
-			Raw:           r,
+			Context:          ctx,
+			OperationName:    "Root",
+			OperationSummary: "Gets a root-level response from the server.  This returns the same as the `GET /heartbeat` endpoint for now, but may change in the future to provide additional information.",
+			OperationID:      "root",
+			Body:             nil,
+			Params:           middleware.Parameters{},
+			Raw:              r,
 		}
 
 		type (
@@ -3256,7 +3337,9 @@ func (s *Server) handleRootRequest(args [0]string, argsEscaped bool, w http.Resp
 
 	if err := encodeRootResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -3332,10 +3415,11 @@ func (s *Server) handleSearchEntitiesByGetRequest(args [0]string, argsEscaped bo
 	var response SearchEntitiesByGetRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "SearchEntitiesByGet",
-			OperationID:   "searchEntitiesByGet",
-			Body:          nil,
+			Context:          ctx,
+			OperationName:    "SearchEntitiesByGet",
+			OperationSummary: "Search for entities that would resolve to or relate to the provided entity features.",
+			OperationID:      "searchEntitiesByGet",
+			Body:             nil,
 			Params: middleware.Parameters{
 				{
 					Name: "attrs",
@@ -3410,7 +3494,9 @@ func (s *Server) handleSearchEntitiesByGetRequest(args [0]string, argsEscaped bo
 
 	if err := encodeSearchEntitiesByGetResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -3501,10 +3587,11 @@ func (s *Server) handleSearchEntitiesByPostRequest(args [0]string, argsEscaped b
 	var response SearchEntitiesByPostRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "SearchEntitiesByPost",
-			OperationID:   "searchEntitiesByPost",
-			Body:          request,
+			Context:          ctx,
+			OperationName:    "SearchEntitiesByPost",
+			OperationSummary: "Search for entities that would match or relate to the provided entity features.  This is similar to `GET /entities` except it requires the caller to specify the search criteria as JSON in the request body.",
+			OperationID:      "searchEntitiesByPost",
+			Body:             request,
 			Params: middleware.Parameters{
 				{
 					Name: "includeOnly",
@@ -3571,7 +3658,9 @@ func (s *Server) handleSearchEntitiesByPostRequest(args [0]string, argsEscaped b
 
 	if err := encodeSearchEntitiesByPostResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -3634,10 +3723,11 @@ func (s *Server) handleVersionRequest(args [0]string, argsEscaped bool, w http.R
 	var response VersionRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "Version",
-			OperationID:   "version",
-			Body:          nil,
+			Context:          ctx,
+			OperationName:    "Version",
+			OperationSummary: "Get the full version information.",
+			OperationID:      "version",
+			Body:             nil,
 			Params: middleware.Parameters{
 				{
 					Name: "withRaw",
@@ -3676,7 +3766,9 @@ func (s *Server) handleVersionRequest(args [0]string, argsEscaped bool, w http.R
 
 	if err := encodeVersionResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -3747,10 +3839,11 @@ func (s *Server) handleWhyEntitiesRequest(args [0]string, argsEscaped bool, w ht
 	var response WhyEntitiesRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "WhyEntities",
-			OperationID:   "whyEntities",
-			Body:          nil,
+			Context:          ctx,
+			OperationName:    "WhyEntities",
+			OperationSummary: "Returns an analysis of why the two entities related, did not relate, or did not resolve.",
+			OperationID:      "whyEntities",
+			Body:             nil,
 			Params: middleware.Parameters{
 				{
 					Name: "entity1",
@@ -3821,7 +3914,9 @@ func (s *Server) handleWhyEntitiesRequest(args [0]string, argsEscaped bool, w ht
 
 	if err := encodeWhyEntitiesResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -3889,10 +3984,11 @@ func (s *Server) handleWhyEntityByEntityIDRequest(args [1]string, argsEscaped bo
 	var response WhyEntityByEntityIDRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "WhyEntityByEntityID",
-			OperationID:   "whyEntityByEntityID",
-			Body:          nil,
+			Context:          ctx,
+			OperationName:    "WhyEntityByEntityID",
+			OperationSummary: "Returns an analysis of why the entity for the respective entity ID resolved.",
+			OperationID:      "whyEntityByEntityID",
+			Body:             nil,
 			Params: middleware.Parameters{
 				{
 					Name: "entityId",
@@ -3959,7 +4055,9 @@ func (s *Server) handleWhyEntityByEntityIDRequest(args [1]string, argsEscaped bo
 
 	if err := encodeWhyEntityByEntityIDResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -4022,10 +4120,11 @@ func (s *Server) handleWhyEntityByRecordIDRequest(args [2]string, argsEscaped bo
 	var response WhyEntityByRecordIDRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "WhyEntityByRecordID",
-			OperationID:   "whyEntityByRecordID",
-			Body:          nil,
+			Context:          ctx,
+			OperationName:    "WhyEntityByRecordID",
+			OperationSummary: "Returns an analysis of why the entity for the record with the respective data source code and record ID resolved.",
+			OperationID:      "whyEntityByRecordID",
+			Body:             nil,
 			Params: middleware.Parameters{
 				{
 					Name: "dataSourceCode",
@@ -4096,7 +4195,9 @@ func (s *Server) handleWhyEntityByRecordIDRequest(args [2]string, argsEscaped bo
 
 	if err := encodeWhyEntityByRecordIDResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
@@ -4159,10 +4260,11 @@ func (s *Server) handleWhyRecordsRequest(args [0]string, argsEscaped bool, w htt
 	var response WhyRecordsRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
-			Context:       ctx,
-			OperationName: "WhyRecords",
-			OperationID:   "whyRecords",
-			Body:          nil,
+			Context:          ctx,
+			OperationName:    "WhyRecords",
+			OperationSummary: "Returns an analysis of why the records identified by the data source and record ID's in the query parameters resolved or did not resolve.",
+			OperationID:      "whyRecords",
+			Body:             nil,
 			Params: middleware.Parameters{
 				{
 					Name: "dataSource1",
@@ -4241,7 +4343,9 @@ func (s *Server) handleWhyRecordsRequest(args [0]string, argsEscaped bool, w htt
 
 	if err := encodeWhyRecordsResponse(response, w, span); err != nil {
 		recordError("EncodeResponse", err)
-		s.cfg.ErrorHandler(ctx, w, r, err)
+		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
+			s.cfg.ErrorHandler(ctx, w, r, err)
+		}
 		return
 	}
 }
