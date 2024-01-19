@@ -25,6 +25,9 @@ const ComponentId = 9999
 // Log message prefix.
 const Prefix = "go-rest-api-service.senzingrestservice."
 
+const ApiServerVersion = "0.0.1"
+const RestApiVersion = "3.4.1"
+
 // ----------------------------------------------------------------------------
 // Variables
 // ----------------------------------------------------------------------------

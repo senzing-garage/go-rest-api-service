@@ -1,7 +1,6 @@
 package senzingrestservice
 
 import (
-	"bytes"
 	"context"
 	_ "embed"
 	"fmt"
@@ -32,6 +31,8 @@ type SenzingRestServiceImpl struct {
 	g2configmgrSyncOnce            sync.Once
 	g2configSingleton              g2api.G2config
 	g2configSyncOnce               sync.Once
+	g2engineSingleton              g2api.G2engine
+	g2engineSyncOnce               sync.Once
 	g2productSingleton             g2api.G2product
 	g2productSyncOnce              sync.Once
 	GrpcDialOptions                []grpc.DialOption
@@ -166,6 +167,25 @@ func (restApiService *SenzingRestServiceImpl) getG2configmgr(ctx context.Context
 	return restApiService.g2configmgrSingleton
 }
 
+// Singleton pattern for g2engine.
+// See https://medium.com/golang-issue/how-singleton-pattern-works-with-golang-2fdd61cd5a7f
+func (restApiService *SenzingRestServiceImpl) getG2engine(ctx context.Context) g2api.G2engine {
+	var err error = nil
+	restApiService.g2engineSyncOnce.Do(func() {
+		restApiService.g2engineSingleton, err = restApiService.getAbstractFactory().GetG2engine(ctx)
+		if err != nil {
+			panic(err)
+		}
+		if restApiService.g2engineSingleton.GetSdkId(ctx) == factory.ImplementedByBase {
+			err = restApiService.g2engineSingleton.Init(ctx, restApiService.SenzingModuleName, restApiService.SenzingEngineConfigurationJson, restApiService.SenzingVerboseLogging)
+			if err != nil {
+				panic(err)
+			}
+		}
+	})
+	return restApiService.g2engineSingleton
+}
+
 // Singleton pattern for g2product.
 // See https://medium.com/golang-issue/how-singleton-pattern-works-with-golang-2fdd61cd5a7f
 func (restApiService *SenzingRestServiceImpl) getG2product(ctx context.Context) g2api.G2product {
@@ -183,49 +203,6 @@ func (restApiService *SenzingRestServiceImpl) getG2product(ctx context.Context) 
 		}
 	})
 	return restApiService.g2productSingleton
-}
-
-// --- Misc -------------------------------------------------------------------
-
-func (restApiService *SenzingRestServiceImpl) getOptSzLinks(ctx context.Context, uriPath string) api.OptSzLinks {
-	var result api.OptSzLinks
-	szLinks := api.SzLinks{
-		Self:                 api.NewOptString(fmt.Sprintf("http://%s/%s/%s", getHostname(ctx), restApiService.UrlRoutePrefix, uriPath)),
-		OpenApiSpecification: api.NewOptString(fmt.Sprintf("http://%s/%s/swagger_spec", getHostname(ctx), restApiService.UrlRoutePrefix)),
-	}
-	result = api.NewOptSzLinks(szLinks)
-	return result
-}
-
-func (restApiService *SenzingRestServiceImpl) getOptSzMeta(ctx context.Context, httpMethod api.SzHttpMethod, httpStatusCode int16) api.OptSzMeta {
-	var result api.OptSzMeta
-
-	senzingVersion, err := restApiService.getSenzingVersion(ctx)
-	if err != nil {
-		panic(err)
-	}
-
-	nativeApiBuildDate, err := time.Parse("2006-01-02", senzingVersion.BuildDate)
-	if err != nil {
-		panic(err)
-	}
-
-	szMeta := api.SzMeta{
-		Server:                     api.NewOptString("Senzing REST API Server - go"),
-		HttpMethod:                 api.NewOptSzHttpMethod(httpMethod),
-		HttpStatusCode:             api.NewOptInt16(httpStatusCode),
-		Timestamp:                  api.NewOptDateTime(time.Now().UTC()),
-		Version:                    api.NewOptString("0.0.0"),
-		RestApiVersion:             api.NewOptString("3.4.1"),
-		NativeApiVersion:           api.NewOptString(senzingVersion.Version),
-		NativeApiBuildVersion:      api.NewOptString(senzingVersion.BuildVersion),
-		NativeApiBuildNumber:       api.NewOptString(senzingVersion.BuildNumber),
-		NativeApiBuildDate:         api.NewOptDateTime(nativeApiBuildDate),
-		ConfigCompatibilityVersion: api.NewOptString(senzingVersion.CompatibilityVersion.ConfigVersion),
-		Timings:                    api.NewOptNilSzMetaTimings(map[string]int64{}),
-	}
-	result = api.NewOptSzMeta(szMeta)
-	return result
 }
 
 // --- Senzing convenience ----------------------------------------------------
@@ -483,6 +460,16 @@ func (restApiService *SenzingRestServiceImpl) AddDataSources(ctx context.Context
 	return r, err
 }
 
+func (restApiService *SenzingRestServiceImpl) GetServerInfo(ctx context.Context) (r api.GetServerInfoRes, _ error) {
+	var err error = nil
+	r = &api.SzServerInfoResponse{
+		Links: restApiService.getOptSzLinks(ctx, "server-info"),
+		Meta:  restApiService.getOptSzMeta(ctx, api.SzHttpMethodGET, http.StatusOK),
+		Data:  restApiService.getServerInfoData(ctx),
+	}
+	return r, err
+}
+
 func (restApiService *SenzingRestServiceImpl) Heartbeat(ctx context.Context) (r *api.SzBaseResponse, _ error) {
 	var err error = nil
 	r = &api.SzBaseResponse{
@@ -493,44 +480,12 @@ func (restApiService *SenzingRestServiceImpl) Heartbeat(ctx context.Context) (r 
 }
 
 func (restApiService *SenzingRestServiceImpl) License(ctx context.Context, params api.LicenseParams) (r api.LicenseRes, _ error) {
-	response, err := restApiService.getG2product(ctx).License(ctx)
-	if err != nil {
-		return nil, err
-	}
-	parsedResponse, err := senzing.UnmarshalProductLicenseResponse(ctx, response)
-	if err != nil {
-		return nil, err
-	}
-	issueDate, err := time.Parse("2006-01-02", parsedResponse.IssueDate)
-	if err != nil {
-		panic(err)
-	}
-	expireDate, err := time.Parse("2006-01-02", parsedResponse.ExpireDate)
-	if err != nil {
-		panic(err)
-	}
+	license, err := restApiService.getG2product(ctx).License(ctx)
 	r = &api.SzLicenseResponse{
 		Links:   restApiService.getOptSzLinks(ctx, "license"),
 		Meta:    restApiService.getOptSzMeta(ctx, api.SzHttpMethodGET, http.StatusOK),
-		RawData: api.OptNilSzLicenseResponseRawData{},
-		Data: api.OptSzLicenseResponseData{
-			Set: true,
-			Value: api.SzLicenseResponseData{
-				License: api.OptSzLicenseInfo{
-					Set: true,
-					Value: api.SzLicenseInfo{
-						Customer:       api.NewOptString(parsedResponse.Customer),
-						Contract:       api.NewOptString(parsedResponse.Contract),
-						LicenseType:    api.NewOptString(parsedResponse.LicenseType),
-						LicenseLevel:   api.NewOptString(parsedResponse.LicenseLevel),
-						Billing:        api.NewOptString(parsedResponse.Billing),
-						IssuanceDate:   api.NewOptDateTime(issueDate),
-						ExpirationDate: api.NewOptDateTime(expireDate),
-						RecordLimit:    api.NewOptInt64(parsedResponse.RecordLimit),
-					},
-				},
-			},
-		},
+		RawData: api.OptNilSzLicenseResponseRawData{Set: true, Value: api.SzLicenseResponseRawData{}},
+		Data:    licenseData(ctx, license),
 	}
 	return r, err
 }
@@ -540,35 +495,27 @@ func (restApiService *SenzingRestServiceImpl) OpenApiSpecification(ctx context.C
 	r = api.OpenApiSpecificationOKDefault{
 		// Links: restApiService.getOptSzLinks(ctx, "specifications/open-api"),
 		// Meta:  restApiService.getOptSzMeta(ctx, api.SzHttpMethodGET, http.StatusOK),
-		Data: bytes.NewReader(restApiService.OpenApiSpecificationSpec),
+		Data: restApiService.openApiSpecificationData(ctx),
+	}
+	return r, err
+}
+
+func (restApiService *SenzingRestServiceImpl) SearchEntitiesByGet(ctx context.Context, params api.SearchEntitiesByGetParams) (r api.SearchEntitiesByGetRes, _ error) {
+	response, err := restApiService.getG2engine(ctx).SearchByAttributes(ctx, params.Attrs.Value)
+	r = &api.SearchEntitiesByGetOKDefault{
+		// Links: restApiService.getOptSzLinks(ctx, "license"),
+		// Meta:  restApiService.getOptSzMeta(ctx, api.SzHttpMethodGET, http.StatusOK),
+		Data: restApiService.searchEntitiesByGetData(ctx, response),
 	}
 	return r, err
 }
 
 func (restApiService *SenzingRestServiceImpl) Version(ctx context.Context, params api.VersionParams) (r api.VersionRes, _ error) {
-	parsedResponse, err := restApiService.getSenzingVersion(ctx)
-	if err != nil {
-		panic(err)
-	}
-	nativeApiBuildDate, err := time.Parse("2006-01-02", parsedResponse.BuildDate)
-	if err != nil {
-		panic(err)
-	}
+	response, err := restApiService.getG2product(ctx).Version(ctx)
 	r = &api.SzVersionResponse{
 		Links: restApiService.getOptSzLinks(ctx, "version"),
 		Meta:  restApiService.getOptSzMeta(ctx, api.SzHttpMethodGET, http.StatusOK),
-		Data: api.OptSzVersionInfo{
-			Set: true,
-			Value: api.SzVersionInfo{
-				ApiServerVersion:           api.NewOptString("0.0.0"),
-				RestApiVersion:             api.NewOptString("3.4.1"),
-				NativeApiVersion:           api.NewOptString(parsedResponse.Version),
-				NativeApiBuildVersion:      api.NewOptString(parsedResponse.BuildVersion),
-				NativeApiBuildNumber:       api.NewOptString(parsedResponse.BuildVersion),
-				NativeApiBuildDate:         api.NewOptDateTime(nativeApiBuildDate),
-				ConfigCompatibilityVersion: api.NewOptString(parsedResponse.CompatibilityVersion.ConfigVersion),
-			},
-		},
+		Data:  versionData(ctx, response),
 	}
 	return r, err
 }
