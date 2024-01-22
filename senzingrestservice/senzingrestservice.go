@@ -465,7 +465,7 @@ func (restApiService *SenzingRestServiceImpl) GetServerInfo(ctx context.Context)
 	r = &api.SzServerInfoResponse{
 		Links: restApiService.getOptSzLinks(ctx, "server-info"),
 		Meta:  restApiService.getOptSzMeta(ctx, api.SzHttpMethodGET, http.StatusOK),
-		Data:  restApiService.getServerInfoData(ctx),
+		Data:  restApiService.getOptSzServerInfo(ctx),
 	}
 	return r, err
 }

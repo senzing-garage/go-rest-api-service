@@ -11,6 +11,7 @@ import (
 	"time"
 
 	api "github.com/senzing-garage/go-rest-api-service/senzingrestapi"
+	"github.com/senzing-garage/go-rest-api-service/senzingresttypedef"
 	"github.com/senzing/g2-sdk-go/senzing"
 )
 
@@ -110,6 +111,31 @@ func (restApiService *SenzingRestServiceImpl) getSzMeta(ctx context.Context, htt
 	}
 }
 
+func (restApiService *SenzingRestServiceImpl) getMeta(ctx context.Context, httpMethod string, httpStatusCode int32) senzingresttypedef.Meta {
+	senzingVersion, err := restApiService.getSenzingVersion(ctx)
+	if err != nil {
+		panic(err)
+	}
+	nativeApiBuildDate, err := time.Parse("2006-01-02", senzingVersion.BuildDate)
+	if err != nil {
+		panic(err)
+	}
+	return senzingresttypedef.Meta{
+		Server:                     "Senzing REST API Server - go",
+		HTTPMethod:                 httpMethod,
+		HTTPStatusCode:             httpStatusCode,
+		Timestamp:                  time.Now().UTC().String(),
+		Version:                    "0.0.0",
+		RestAPIVersion:             "3.4.1",
+		NativeAPIVersion:           senzingVersion.Version,
+		NativeAPIBuildVersion:      senzingVersion.BuildVersion,
+		NativeAPIBuildNumber:       senzingVersion.BuildNumber,
+		NativeAPIBuildDate:         nativeApiBuildDate.String(),
+		ConfigCompatibilityVersion: senzingVersion.CompatibilityVersion.ConfigVersion,
+		Timings:                    senzingresttypedef.Timings{},
+	}
+}
+
 func (restApiService *SenzingRestServiceImpl) getOptSzLinks(ctx context.Context, uriPath string) api.OptSzLinks {
 	var result api.OptSzLinks
 	szLinks := api.SzLinks{
@@ -120,11 +146,18 @@ func (restApiService *SenzingRestServiceImpl) getOptSzLinks(ctx context.Context,
 	return result
 }
 
+func (restApiService *SenzingRestServiceImpl) getLinks(ctx context.Context, uriPath string) senzingresttypedef.Links {
+	return senzingresttypedef.Links{
+		Self:                 fmt.Sprintf("http://%s/%s/%s", getHostname(ctx), restApiService.UrlRoutePrefix, uriPath),
+		OpenAPISpecification: fmt.Sprintf("http://%s/%s/swagger_spec", getHostname(ctx), restApiService.UrlRoutePrefix),
+	}
+}
+
 func (restApiService *SenzingRestServiceImpl) getOptSzMeta(ctx context.Context, httpMethod api.SzHttpMethod, httpStatusCode int16) api.OptSzMeta {
 	return api.NewOptSzMeta(restApiService.getSzMeta(ctx, httpMethod, httpStatusCode))
 }
 
-func (restApiService *SenzingRestServiceImpl) getServerInfoData(ctx context.Context) api.OptSzServerInfo {
+func (restApiService *SenzingRestServiceImpl) getOptSzServerInfo(ctx context.Context) api.OptSzServerInfo {
 	return api.OptSzServerInfo{
 		Set: true,
 		Value: api.SzServerInfo{
@@ -144,13 +177,18 @@ func (restApiService *SenzingRestServiceImpl) openApiSpecificationData(ctx conte
 }
 
 func (restApiService *SenzingRestServiceImpl) searchEntitiesByGetData(ctx context.Context, input string) io.Reader {
-	resultStruct := GenericSenzingResult{
-		Meta:  restApiService.getOptSzMeta(ctx, api.SzHttpMethodGET, http.StatusOK),
-		Links: restApiService.getOptSzLinks(ctx, "license"),
-		Data:  input,
+
+	data := senzingresttypedef.SearchResultsData{
+		SearchResults: []senzingresttypedef.SearchResult{senzingresttypedef.SearchResult{AddressData: []string{"Bob was here"}}},
 	}
 
-	fmt.Print(input)
+	// append(data.SearchResults, senzingresttypedef.SearchResult{AddressData: []string{"Bob was here"}})
+
+	resultStruct := senzingresttypedef.SearchEntitiesByGetResponse{
+		Meta:  restApiService.getMeta(ctx, "GET", http.StatusOK),
+		Links: restApiService.getLinks(ctx, "license"),
+		Data:  data,
+	}
 
 	resultBytes, err := json.Marshal(resultStruct)
 	if err != nil {
