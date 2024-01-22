@@ -1,29 +1,17 @@
 {
     "definitions": {
-        "AddressData": {
+        "addressData": {
             "elements": {
                 "type": "string"
             }
         },
-        "CharacteristicData": {
+        "characteristicData": {
             "elements": {
                 "type": "string"
             }
         },
-        "Feature": {
+        "feature": {
             "properties": {
-                "PrimaryId": {
-                    "metadata": {
-                        "goType": "int64"
-                    },
-                    "type": "int32"
-                },
-                "PrimaryValue": {
-                    "type": "string"
-                },
-                "UsageType": {
-                    "type": "string"
-                },
                 "duplicateValues": {
                     "elements": {
                         "type": "string"
@@ -31,17 +19,29 @@
                 },
                 "featureDetails": {
                     "elements": {
-                        "ref": "FeatureDetail"
+                        "ref": "featureDetail"
                     }
+                },
+                "primaryId": {
+                    "metadata": {
+                        "goType": "int64"
+                    },
+                    "type": "int32"
+                },
+                "primaryValue": {
+                    "type": "string"
+                },
+                "usageType": {
+                    "type": "string"
                 }
             }
         },
-        "FeatureDetail": {
+        "featureDetail": {
             "properties": {
-                "FeatureValue": {
+                "featureValue": {
                     "type": "string"
                 },
-                "InternalId": {
+                "internalId": {
                     "metadata": {
                         "goType": "int64"
                     },
@@ -49,289 +49,289 @@
                 }
             }
         },
-        "Features": {},
-        "FeatureScores": {},
-        "FeatureScoreDetails": {
+        "featureScoreDetails": {
             "properties": {
-                "Score": {
+                "candidateFeature": {
+                    "type": "string"
+                },
+                "featureType": {
+                    "type": "string"
+                },
+                "inboundFeature": {
+                    "type": "string"
+                },
+                "nameScoringDetails": {
+                    "ref": "nameScoringDetails"
+                },
+                "score": {
+                    "metadata": {
+                        "goType": "int64"
+                    },
+                    "type": "int32"
+                }
+            }
+        },
+        "featureScores": {},
+        "features": {},
+        "identifierData": {
+            "elements": {
+                "type": "string"
+            }
+        },
+        "links": {
+            "properties": {
+                "openApiSpecification": {
+                    "type": "string"
+                },
+                "self": {
+                    "type": "string"
+                }
+            }
+        },
+        "meta": {
+            "properties": {
+                "configCompatibilityVersion": {
+                    "type": "string"
+                },
+                "httpMethod": {
+                    "type": "string"
+                },
+                "httpStatusCode": {
+                    "type": "int32"
+                },
+                "nativeApiBuildDate": {
+                    "type": "string"
+                },
+                "nativeApiBuildNumber": {
+                    "type": "string"
+                },
+                "nativeApiBuildVersion": {
+                    "type": "string"
+                },
+                "nativeApiVersion": {
+                    "type": "string"
+                },
+                "pocApiVersion": {
+                    "type": "string"
+                },
+                "pocServerVersion": {
+                    "type": "string"
+                },
+                "restApiVersion": {
+                    "type": "string"
+                },
+                "server": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "string"
+                },
+                "timings": {
+                    "ref": "timings"
+                },
+                "version": {
+                    "type": "string"
+                }
+            }
+        },
+        "nameData": {
+            "elements": {
+                "type": "string"
+            }
+        },
+        "nameScoringDetails": {
+            "properties": {
+                "httpSFullNameScore": {
+                    "type": "int32"
+                }
+            }
+        },
+        "otherData": {
+            "elements": {
+                "type": "string"
+            }
+        },
+        "phoneData": {
+            "elements": {
+                "type": "string"
+            }
+        },
+        "record": {
+            "properties": {
+                "addressData": {
+                    "ref": "addressData"
+                },
+                "characteristicData": {
+                    "ref": "characteristicData"
+                },
+                "dataSource": {
+                    "type": "string"
+                },
+                "identifierData": {
+                    "ref": "identifierData"
+                },
+                "lastSeenTimestamp": {
+                    "type": "string"
+                },
+                "matchKey": {
+                    "type": "string"
+                },
+                "matchLevel": {
+                    "type": "int32"
+                },
+                "nameData": {
+                    "ref": "nameData"
+                },
+                "originalSourceData": {},
+                "otherData": {
+                    "ref": "otherData"
+                },
+                "phoneData": {
+                    "ref": "phoneData"
+                },
+                "recordId": {
+                    "type": "string"
+                },
+                "resolutionRuleCode": {
+                    "type": "string"
+                }
+            }
+        },
+        "recordSummeries": {
+            "elements": {
+                "ref": "recordSummery"
+            }
+        },
+        "recordSummery": {
+            "properties": {
+                "dataSource": {
+                    "type": "string"
+                },
+                "recordCount": {
                     "metadata": {
                         "goType": "int64"
                     },
                     "type": "int32"
                 },
-                "FeatureType": {
-                    "type": "string"
-                },
-                "InboundFeature": {
-                    "type": "string"
-                },
-                "CandidateFeature": {
-                    "type": "string"
-                },
-                "NameScoringDetails": {
-                    "ref": "NameScoringDetails"
-                }
-            }
-        },
-        "IdentifierData": {
-            "elements": {
-                "type": "string"
-            }
-        },
-        "Links": {
-            "properties": {
-                "OpenApiSpecification": {
-                    "type": "string"
-                },
-                "Self": {
-                    "type": "string"
-                }
-            }
-        },
-        "Meta": {
-            "properties": {
-                "ConfigCompatibilityVersion": {
-                    "type": "string"
-                },
-                "HttpMethod": {
-                    "type": "string"
-                },
-                "HttpStatusCode": {
-                    "type": "int32"
-                },
-                "NativeApiBuildDate": {
-                    "type": "string"
-                },
-                "NativeApiBuildNumber": {
-                    "type": "string"
-                },
-                "NativeApiBuildVersion": {
-                    "type": "string"
-                },
-                "NativeApiVersion": {
-                    "type": "string"
-                },
-                "PocApiVersion": {
-                    "type": "string"
-                },
-                "PocServerVersion": {
-                    "type": "string"
-                },
-                "RestApiVersion": {
-                    "type": "string"
-                },
-                "Server": {
-                    "type": "string"
-                },
-                "Timestamp": {
-                    "type": "string"
-                },
-                "Timings": {
-                    "ref": "Timings"
-                },
-                "Version": {
-                    "type": "string"
-                }
-            }
-        },
-        "NameData": {
-            "elements": {
-                "type": "string"
-            }
-        },
-        "NameScoringDetails": {
-            "properties": {
-                "HttpSFullNameScore": {
-                    "type": "int32"
-                }
-            }
-        },
-        "OtherData": {
-            "elements": {
-                "type": "string"
-            }
-        },
-        "PhoneData": {
-            "elements": {
-                "type": "string"
-            }
-        },
-        "Record": {
-            "properties": {
-                "AddressData": {
-                    "ref": "AddressData"
-                },
-                "CharacteristicData": {
-                    "ref": "CharacteristicData"
-                },
-                "DataSource": {
-                    "type": "string"
-                },
-                "IdentifierData": {
-                    "ref": "IdentifierData"
-                },
-                "LastSeenTimestamp": {
-                    "type": "string"
-                },
-                "MatchKey": {
-                    "type": "string"
-                },
-                "MatchLevel": {
-                    "type": "int32"
-                },
-                "NameData": {
-                    "ref": "NameData"
-                },
-                "OriginalSourceData": {},
-                "OtherData": {
-                    "ref": "OtherData"
-                },
-                "PhoneData": {
-                    "ref": "PhoneData"
-                },
-                "RecordId": {
-                    "type": "string"
-                },
-                "ResolutionRuleCode": {
-                    "type": "string"
-                }
-            }
-        },
-        "RecordSummeries": {
-            "elements": {
-                "ref": "RecordSummery"
-            }
-        },
-        "RecordSummery": {
-            "properties": {
-                "DataSource": {
-                    "type": "string"
-                },
-                "RecordCount": {
-                    "metadata": {
-                        "goType": "int64"
-                    },
-                    "type": "int32"
-                },
-                "TopRecordIds": {
+                "topRecordIds": {
                     "elements": {
                         "type": "string"
                     }
                 }
             }
         },
-        "Records": {
+        "records": {
             "elements": {
-                "ref": "Record"
+                "ref": "record"
             }
         },
-        "SearchEntitiesByGetResponse": {
+        "searchEntitiesByGetResponse": {
             "properties": {
-                "Data": {
-                    "ref": "SearchResultsData"
+                "data": {
+                    "ref": "searchResultsData"
                 },
-                "Links": {
-                    "ref": "Links"
+                "links": {
+                    "ref": "links"
                 },
-                "Meta": {
-                    "ref": "Meta"
+                "meta": {
+                    "ref": "meta"
                 }
             }
         },
-        "SearchResult": {
+        "searchResult": {
             "properties": {
-                "AddressData": {
-                    "ref": "AddressData"
+                "addressData": {
+                    "ref": "addressData"
                 },
-                "BestNameScore": {
+                "bestNameScore": {
                     "type": "int32"
                 },
-                "CharacteristicData": {
-                    "ref": "CharacteristicData"
+                "characteristicData": {
+                    "ref": "characteristicData"
                 },
-                "EntityId": {
+                "entityId": {
                     "type": "string"
                 },
-                "EntityName": {
+                "entityName": {
                     "type": "string"
                 },
-                "FeatureScores": {
-                    "ref": "FeatureScores"
+                "featureScores": {
+                    "ref": "featureScores"
                 },
-                "Features": {
-                    "ref": "Features"
+                "features": {
+                    "ref": "features"
                 },
-                "IdentifierData": {
-                    "ref": "IdentifierData"
+                "identifierData": {
+                    "ref": "identifierData"
                 },
-                "LastSeenTimestamp": {
+                "lastSeenTimestamp": {
                     "type": "string"
                 },
-                "MatchKey": {
+                "matchKey": {
                     "type": "string"
                 },
-                "MatchLevel": {
+                "matchLevel": {
                     "type": "int32"
                 },
-                "NameData": {
-                    "ref": "NameData"
+                "nameData": {
+                    "ref": "nameData"
                 },
-                "OtherData": {
-                    "ref": "OtherData"
+                "otherData": {
+                    "ref": "otherData"
                 },
-                "Partial": {
+                "partial": {
                     "type": "boolean"
                 },
-                "PhoneData": {
-                    "ref": "PhoneData"
+                "phoneData": {
+                    "ref": "phoneData"
                 },
-                "RecordSummeries": {
-                    "ref": "RecordSummeries"
+                "recordSummeries": {
+                    "ref": "recordSummeries"
                 },
-                "Records": {
-                    "ref": "Records"
+                "records": {
+                    "ref": "records"
                 },
-                "ResolutionRuleCode": {
+                "resolutionRuleCode": {
                     "type": "string"
                 },
-                "ResultType": {
+                "resultType": {
                     "type": "string"
                 }
             }
         },
-        "SearchResults": {
+        "searchResults": {
             "elements": {
-                "ref": "SearchResult"
+                "ref": "searchResult"
             }
         },
-        "SearchResultsData": {
+        "searchResultsData": {
             "properties": {
-                "SearchResults": {
-                    "ref": "SearchResults"
+                "searchResults": {
+                    "ref": "searchResults"
                 }
             }
         },
-        "Timings": {
+        "timings": {
             "properties": {
-                "Enqueued": {
+                "enqueued": {
                     "metadata": {
                         "goType": "int64"
                     },
                     "type": "int32"
                 },
-                "NativeAPI": {
+                "nativeAPI": {
                     "metadata": {
                         "goType": "int64"
                     },
                     "type": "int32"
                 },
-                "Overall": {
+                "overall": {
                     "metadata": {
                         "goType": "int64"
                     },
                     "type": "int32"
                 },
-                "ProcessRawData": {
+                "processRawData": {
                     "metadata": {
                         "goType": "int64"
                     },
