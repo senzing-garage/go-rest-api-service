@@ -31,7 +31,7 @@
                 },
                 "featureDetails": {
                     "elements": {
-                        "ref": "featureDetail"
+                        "ref": "FeatureDetail"
                     }
                 }
             }
@@ -50,6 +50,29 @@
             }
         },
         "Features": {},
+        "FeatureScores": {},
+        "FeatureScoreDetails": {
+            "properties": {
+                "Score": {
+                    "metadata": {
+                        "goType": "int64"
+                    },
+                    "type": "int32"
+                },
+                "FeatureType": {
+                    "type": "string"
+                },
+                "InboundFeature": {
+                    "type": "string"
+                },
+                "CandidateFeature": {
+                    "type": "string"
+                },
+                "NameScoringDetails": {
+                    "ref": "NameScoringDetails"
+                }
+            }
+        },
         "IdentifierData": {
             "elements": {
                 "type": "string"
@@ -116,6 +139,13 @@
                 "type": "string"
             }
         },
+        "NameScoringDetails": {
+            "properties": {
+                "HttpSFullNameScore": {
+                    "type": "int32"
+                }
+            }
+        },
         "OtherData": {
             "elements": {
                 "type": "string"
@@ -147,7 +177,7 @@
                     "type": "string"
                 },
                 "MatchLevel": {
-                    "type": "in32"
+                    "type": "int32"
                 },
                 "NameData": {
                     "ref": "NameData"
@@ -214,7 +244,7 @@
                     "ref": "AddressData"
                 },
                 "BestNameScore": {
-                    "type": "in32"
+                    "type": "int32"
                 },
                 "CharacteristicData": {
                     "ref": "CharacteristicData"
@@ -241,7 +271,7 @@
                     "type": "string"
                 },
                 "MatchLevel": {
-                    "type": "in32"
+                    "type": "int32"
                 },
                 "NameData": {
                     "ref": "NameData"

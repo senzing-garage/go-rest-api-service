@@ -67,6 +67,22 @@ pretty-print:
 	@./bin/pretty_print.py
 
 # -----------------------------------------------------------------------------
+# Generate code
+# -----------------------------------------------------------------------------
+
+.PHONY: generate-code
+generate-code: generate-go
+
+
+.PHONY: generate-go
+generate-go:
+	jtd-codegen \
+		--go-out ./senzingresttypedef \
+		--go-package senzingresttypedef \
+		--root-name SenzingRestApiTypedef \
+		rest-api-service-RFC8927.json
+
+# -----------------------------------------------------------------------------
 # Dependency management
 # -----------------------------------------------------------------------------
 
