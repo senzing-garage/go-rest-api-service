@@ -5,7 +5,7 @@ go 1.21
 require (
 	github.com/go-faster/errors v0.7.1
 	github.com/go-faster/jx v1.1.0
-	github.com/ogen-go/ogen v0.81.1
+	github.com/ogen-go/ogen v0.81.2
 	github.com/senzing-garage/g2-sdk-json-type-definition v0.2.0
 	github.com/senzing-garage/go-common v0.4.0
 	github.com/senzing-garage/go-logging v1.4.0
@@ -40,9 +40,9 @@ require (
 	github.com/senzing/g2-sdk-proto/go v0.0.0-20231016131354-0d0fba649357 // indirect
 	go.uber.org/zap v1.26.0 // indirect
 	golang.org/x/exp v0.0.0-20240103183307-be819d1f06fc // indirect
-	golang.org/x/net v0.19.0 // indirect
-	golang.org/x/sync v0.5.0 // indirect
-	golang.org/x/sys v0.15.0 // indirect
+	golang.org/x/net v0.20.0 // indirect
+	golang.org/x/sync v0.6.0 // indirect
+	golang.org/x/sys v0.16.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240102182953-50ed04b92917 // indirect
 	google.golang.org/protobuf v1.32.0 // indirect
