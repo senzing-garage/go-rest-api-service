@@ -40,7 +40,9 @@ type FeatureScoreDetails struct {
 
 type FeatureScores = interface{}
 
-type Features = interface{}
+type Features struct {
+	DefaultName Feature `json:"*"`
+}
 
 type IdentifierData = []string
 

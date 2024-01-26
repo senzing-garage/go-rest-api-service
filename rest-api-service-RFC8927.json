@@ -72,7 +72,14 @@
             }
         },
         "featureScores": {},
-        "features": {},
+        "features": {
+            "additionalProperties": true,
+            "properties": {
+                "*": {
+                    "ref": "feature"
+                }
+            }
+        },
         "identifierData": {
             "elements": {
                 "type": "string"
