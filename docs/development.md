@@ -64,7 +64,7 @@ Instructions are at
     ```
 
 1. Down latest version of
-   [senzing-rest-api.yaml](https://raw.githubusercontent.com/Senzing/senzing-rest-api-specification/main/senzing-rest-api.yaml)
+   [senzing-rest-api.yaml](https://raw.githubusercontent.com/senzing-garage/senzing-rest-api-specification/main/senzing-rest-api.yaml)
    to
    [restapiservice/openapi.yaml](https://github.com/senzing-garage/go-rest-api-service/blob/main/restapiservice/openapi.yaml).
 
