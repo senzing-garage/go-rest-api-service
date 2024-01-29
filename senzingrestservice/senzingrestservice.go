@@ -9,13 +9,13 @@ import (
 	"sync"
 	"time"
 
+	"github.com/senzing-garage/g2-sdk-go/g2api"
+	"github.com/senzing-garage/g2-sdk-go/senzing"
 	"github.com/senzing-garage/g2-sdk-json-type-definition/go/typedef"
 	"github.com/senzing-garage/go-logging/logging"
 	"github.com/senzing-garage/go-observing/observer"
 	api "github.com/senzing-garage/go-rest-api-service/senzingrestapi"
-	"github.com/senzing/g2-sdk-go/g2api"
-	"github.com/senzing/g2-sdk-go/senzing"
-	"github.com/senzing/go-sdk-abstract-factory/factory"
+	"github.com/senzing-garage/go-sdk-abstract-factory/factory"
 	"google.golang.org/grpc"
 )
 
