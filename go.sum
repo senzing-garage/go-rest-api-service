@@ -50,8 +50,8 @@ github.com/senzing-garage/g2-sdk-go-base v0.5.0 h1:qyf7vkncP7UCmpQqnDth0zErbLE2O
 github.com/senzing-garage/g2-sdk-go-base v0.5.0/go.mod h1:ohjqSwsrzQJC9ugLwF7QB96UgT+4cqE9fHgOHqELkc0=
 github.com/senzing-garage/g2-sdk-go-grpc v0.6.0 h1:fhJTOLDg3cIt8ImY/x2ZD2wpA/V0zxHf4yrM+WoHL90=
 github.com/senzing-garage/g2-sdk-go-grpc v0.6.0/go.mod h1:DyOK3ZS/GsO1YOtgh19P/D1JaeEqIMCimZa//OJZQsk=
-github.com/senzing-garage/g2-sdk-json-type-definition v0.2.0 h1:3lTvJshOrT3hk3c9YlMHu0h0eZg3nY4he3Ial2oeB5A=
-github.com/senzing-garage/g2-sdk-json-type-definition v0.2.0/go.mod h1:tL1JoqR3GiwiPUrSm1is/sPBwHmYlxz9Jsv/3yHINqM=
+github.com/senzing-garage/g2-sdk-json-type-definition v0.2.1 h1:K+q65qpUEU1Pmq57husgt4u3Hp/aX5QuX1kNeqcpjvM=
+github.com/senzing-garage/g2-sdk-json-type-definition v0.2.1/go.mod h1:tL1JoqR3GiwiPUrSm1is/sPBwHmYlxz9Jsv/3yHINqM=
 github.com/senzing-garage/g2-sdk-proto/go v0.0.0-20240126210601-d02d3beb81d4 h1:G++g9Eky1SrzDQzruhkG9MwWBlscc9RlAzWZScXMdcc=
 github.com/senzing-garage/g2-sdk-proto/go v0.0.0-20240126210601-d02d3beb81d4/go.mod h1:Wc4apKs4NfTnCewdQZqS+KCO1BoxabG4DR/CTGA0968=
 github.com/senzing-garage/go-common v0.4.0 h1:/6/5yNY80udkbOzSAX0Vvx2+0kD9JF7fhqNUlRj2Vho=
