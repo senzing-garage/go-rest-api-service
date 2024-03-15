@@ -1,8 +1,8 @@
 module github.com/senzing-garage/go-rest-api-service
 
-go 1.22
+go 1.21.0
 
-toolchain go1.22.1
+toolchain go1.22.0
 
 require (
 	github.com/go-faster/errors v0.7.1
