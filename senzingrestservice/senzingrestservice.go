@@ -275,12 +275,12 @@ func (restApiService *SenzingRestServiceImpl) persistConfiguration(ctx context.C
 	return err
 }
 
-func (restApiService *SenzingRestServiceImpl) getSenzingVersion(ctx context.Context) (*typedef.ProductVersionResponse, error) {
+func (restApiService *SenzingRestServiceImpl) getSenzingVersion(ctx context.Context) (*typedef.G2productVersionResponse, error) {
 	response, err := restApiService.getG2product(ctx).Version(ctx)
 	if err != nil {
 		return nil, err
 	}
-	return senzing.UnmarshalProductVersionResponse(ctx, response)
+	return senzing.UnmarshalG2productVersionResponse(ctx, response)
 }
 
 // --- Debug ------------------------------------------------------------------
@@ -497,7 +497,7 @@ func (restApiService *SenzingRestServiceImpl) License(ctx context.Context, param
 	if err != nil {
 		return nil, err
 	}
-	parsedResponse, err := senzing.UnmarshalProductLicenseResponse(ctx, response)
+	parsedResponse, err := senzing.UnmarshalG2productLicenseResponse(ctx, response)
 	if err != nil {
 		return nil, err
 	}
