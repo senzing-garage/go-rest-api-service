@@ -8,6 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.2] - 2024-03-15
+
+### Changed in 0.9.2
+
+- Update dependencies
+  - github.com/ogen-go/ogen v1.0.0
+  - github.com/senzing-garage/g2-sdk-go v0.10.1
+  - github.com/senzing-garage/g2-sdk-json-type-definition v0.2.1
+  - github.com/senzing-garage/go-sdk-abstract-factory v0.7.0
+  - github.com/stretchr/testify v1.9.0
+  - go.opentelemetry.io/otel v1.24.0
+  - go.opentelemetry.io/otel/metric v1.24.0
+  - go.opentelemetry.io/otel/trace v1.24.0
+  - google.golang.org/grpc v1.62.1
+
 ## [0.9.1] - 2024-01-30
 
 ### Changed in 0.9.1
