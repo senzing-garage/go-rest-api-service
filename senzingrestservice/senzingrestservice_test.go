@@ -22,6 +22,7 @@ var (
 // ----------------------------------------------------------------------------
 
 func getTestObject(ctx context.Context, test *testing.T) SenzingRestService {
+	_ = ctx
 	if senzingRestServiceSingleton == nil {
 		senzingEngineConfigurationJson, err := g2engineconfigurationjson.BuildSimpleSystemConfigurationJsonUsingEnvVars()
 		if err != nil {
@@ -37,6 +38,7 @@ func getTestObject(ctx context.Context, test *testing.T) SenzingRestService {
 }
 
 func testError(test *testing.T, ctx context.Context, err error) {
+	_ = ctx
 	if err != nil {
 		test.Log("Error:", err.Error())
 		assert.FailNow(test, err.Error())
@@ -126,6 +128,6 @@ func TestSenzingRestServiceImpl_Version(test *testing.T) {
 	switch responseTyped := response.(type) {
 	case *api.SzVersionResponse:
 		apiServerVersion, _ := responseTyped.Data.Value.ApiServerVersion.Get()
-		assert.Equal(test, "0.0.0", apiServerVersion)
+		assert.Equal(test, "0.0.1", apiServerVersion)
 	}
 }
