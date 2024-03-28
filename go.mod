@@ -9,7 +9,7 @@ require (
 	github.com/go-faster/jx v1.1.0
 	github.com/ogen-go/ogen v1.0.0
 	github.com/senzing-garage/g2-sdk-go v0.10.1
-	github.com/senzing-garage/g2-sdk-json-type-definition v0.2.1
+	github.com/senzing-garage/g2-sdk-json-type-definition v0.2.2
 	github.com/senzing-garage/go-common v0.4.0
 	github.com/senzing-garage/go-logging v1.4.0
 	github.com/senzing-garage/go-observing v0.3.0
