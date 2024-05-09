@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/senzing-garage/go-common/g2engineconfigurationjson"
+	"github.com/senzing-garage/go-helpers/engineconfigurationjson"
 	api "github.com/senzing-garage/go-rest-api-service/senzingrestapi"
 	"github.com/stretchr/testify/assert"
 )
@@ -22,8 +22,9 @@ var (
 // ----------------------------------------------------------------------------
 
 func getTestObject(ctx context.Context, test *testing.T) SenzingRestService {
+	_ = ctx
 	if senzingRestServiceSingleton == nil {
-		senzingEngineConfigurationJson, err := g2engineconfigurationjson.BuildSimpleSystemConfigurationJsonUsingEnvVars()
+		senzingEngineConfigurationJson, err := engineconfigurationjson.BuildSimpleSystemConfigurationJsonUsingEnvVars()
 		if err != nil {
 			test.Errorf("Error: %s", err)
 		}
@@ -37,6 +38,7 @@ func getTestObject(ctx context.Context, test *testing.T) SenzingRestService {
 }
 
 func testError(test *testing.T, ctx context.Context, err error) {
+	_ = ctx
 	if err != nil {
 		test.Log("Error:", err.Error())
 		assert.FailNow(test, err.Error())
