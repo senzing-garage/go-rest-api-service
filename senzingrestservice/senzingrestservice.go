@@ -9,13 +9,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/senzing-garage/g2-sdk-go/g2api"
-	"github.com/senzing-garage/g2-sdk-go/senzing"
-	"github.com/senzing-garage/g2-sdk-json-type-definition/go/typedef"
 	"github.com/senzing-garage/go-logging/logging"
 	"github.com/senzing-garage/go-observing/observer"
 	api "github.com/senzing-garage/go-rest-api-service/senzingrestapi"
-	"github.com/senzing-garage/go-sdk-abstract-factory/factory"
+	"github.com/senzing-garage/go-sdk-abstract-factory/szfactorycreator"
+	"github.com/senzing-garage/sz-sdk-go/senzing"
+	"github.com/senzing-garage/sz-sdk-go/sz"
+	"github.com/senzing-garage/sz-sdk-json-type-definition/go/typedef"
 	"google.golang.org/grpc"
 )
 
@@ -25,15 +25,9 @@ import (
 
 // SenzingRestServiceImpl is...
 type SenzingRestServiceImpl struct {
+	abstractFactory         sz.SzAbstractFactory
+	abstractFactorySyncOnce sync.Once
 	api.UnimplementedHandler
-	abstractFactory                factory.SdkAbstractFactory
-	abstractFactorySyncOnce        sync.Once
-	g2configmgrSingleton           g2api.G2configmgr
-	g2configmgrSyncOnce            sync.Once
-	g2configSingleton              g2api.G2config
-	g2configSyncOnce               sync.Once
-	g2productSingleton             g2api.G2product
-	g2productSyncOnce              sync.Once
 	GrpcDialOptions                []grpc.DialOption
 	GrpcTarget                     string
 	isTrace                        bool
@@ -46,6 +40,12 @@ type SenzingRestServiceImpl struct {
 	SenzingEngineConfigurationJson string
 	SenzingModuleName              string
 	SenzingVerboseLogging          int64
+	szConfigManagerSingleton       sz.SzConfigManager
+	szConfigManagerSyncOnce        sync.Once
+	szConfigSingleton              sz.SzConfig
+	szConfigSyncOnce               sync.Once
+	szProductSingleton             sz.SzProduct
+	szProductSyncOnce              sync.Once
 	UrlRoutePrefix                 string
 }
 
@@ -112,16 +112,22 @@ func (restApiService *SenzingRestServiceImpl) error(messageNumber int, details .
 
 // --- Services ---------------------------------------------------------------
 
-func (restApiService *SenzingRestServiceImpl) getAbstractFactory() factory.SdkAbstractFactory {
+func (restApiService *SenzingRestServiceImpl) getAbstractFactory(ctx context.Context) sz.SzAbstractFactory {
+	var err error = nil
 	restApiService.abstractFactorySyncOnce.Do(func() {
 		if len(restApiService.GrpcTarget) == 0 {
-			restApiService.abstractFactory = &factory.SdkAbstractFactoryImpl{}
+			restApiService.abstractFactory, err = szfactorycreator.CreateCoreAbstractFactory(restApiService.SenzingModuleName, restApiService.SenzingEngineConfigurationJson, restApiService.SenzingVerboseLogging, sz.SZ_INITIALIZE_WITH_DEFAULT_CONFIGURATION)
+			if err != nil {
+				panic(err)
+			}
 		} else {
-			restApiService.abstractFactory = &factory.SdkAbstractFactoryImpl{
-				GrpcDialOptions: restApiService.GrpcDialOptions,
-				GrpcTarget:      restApiService.GrpcTarget,
-				ObserverOrigin:  restApiService.ObserverOrigin,
-				Observers:       restApiService.Observers,
+			grpcConnection, err := grpc.DialContext(ctx, restApiService.GrpcTarget, restApiService.GrpcDialOptions...)
+			if err != nil {
+				panic(err)
+			}
+			restApiService.abstractFactory, err = szfactorycreator.CreateGrpcAbstractFactory(grpcConnection)
+			if err != nil {
+				panic(err)
 			}
 		}
 	})
@@ -130,59 +136,43 @@ func (restApiService *SenzingRestServiceImpl) getAbstractFactory() factory.SdkAb
 
 // Singleton pattern for g2config.
 // See https://medium.com/golang-issue/how-singleton-pattern-works-with-golang-2fdd61cd5a7f
-func (restApiService *SenzingRestServiceImpl) getG2config(ctx context.Context) g2api.G2config {
+func (restApiService *SenzingRestServiceImpl) getG2config(ctx context.Context) sz.SzConfig {
 	var err error = nil
-	restApiService.g2configSyncOnce.Do(func() {
-		restApiService.g2configSingleton, err = restApiService.getAbstractFactory().GetG2config(ctx)
+	restApiService.szConfigSyncOnce.Do(func() {
+		restApiService.szConfigSingleton, err = restApiService.getAbstractFactory(ctx).CreateSzConfig(ctx)
 		if err != nil {
 			panic(err)
 		}
-		if restApiService.g2configSingleton.GetSdkId(ctx) == factory.ImplementedByBase {
-			err = restApiService.g2configSingleton.Init(ctx, restApiService.SenzingModuleName, restApiService.SenzingEngineConfigurationJson, restApiService.SenzingVerboseLogging)
-			if err != nil {
-				panic(err)
-			}
-		}
 	})
-	return restApiService.g2configSingleton
+	return restApiService.szConfigSingleton
 }
 
 // Singleton pattern for g2config.
 // See https://medium.com/golang-issue/how-singleton-pattern-works-with-golang-2fdd61cd5a7f
-func (restApiService *SenzingRestServiceImpl) getG2configmgr(ctx context.Context) g2api.G2configmgr {
+func (restApiService *SenzingRestServiceImpl) getG2configmgr(ctx context.Context) sz.SzConfigManager {
 	var err error = nil
-	restApiService.g2configmgrSyncOnce.Do(func() {
-		restApiService.g2configmgrSingleton, err = restApiService.getAbstractFactory().GetG2configmgr(ctx)
+	restApiService.szConfigManagerSyncOnce.Do(func() {
+		restApiService.szConfigManagerSingleton, err = restApiService.getAbstractFactory(ctx).CreateSzConfigManager(ctx)
 		if err != nil {
 			panic(err)
 		}
-		if restApiService.g2configmgrSingleton.GetSdkId(ctx) == factory.ImplementedByBase {
-			err = restApiService.g2configmgrSingleton.Init(ctx, restApiService.SenzingModuleName, restApiService.SenzingEngineConfigurationJson, restApiService.SenzingVerboseLogging)
-			if err != nil {
-				panic(err)
-			}
-		}
+
 	})
-	return restApiService.g2configmgrSingleton
+	return restApiService.szConfigManagerSingleton
 }
 
 // Singleton pattern for g2product.
 // See https://medium.com/golang-issue/how-singleton-pattern-works-with-golang-2fdd61cd5a7f
-func (restApiService *SenzingRestServiceImpl) getG2product(ctx context.Context) g2api.G2product {
+func (restApiService *SenzingRestServiceImpl) getG2product(ctx context.Context) sz.SzProduct {
 	var err error = nil
-	restApiService.g2productSyncOnce.Do(func() {
-		restApiService.g2productSingleton, err = restApiService.getAbstractFactory().GetG2product(ctx)
+	restApiService.szProductSyncOnce.Do(func() {
+		restApiService.szProductSingleton, err = restApiService.getAbstractFactory(ctx).CreateSzProduct(ctx)
 		if err != nil {
 			panic(err)
 		}
-		if restApiService.g2productSingleton.GetSdkId(ctx) == factory.ImplementedByBase {
-			err = restApiService.g2productSingleton.Init(ctx, restApiService.SenzingModuleName, restApiService.SenzingEngineConfigurationJson, restApiService.SenzingVerboseLogging)
-			if err != nil {
-				panic(err)
-			}
-		}
+
 	})
-	return restApiService.g2productSingleton
+	return restApiService.szProductSingleton
 }
 
 // --- Misc -------------------------------------------------------------------
@@ -235,20 +225,20 @@ func (restApiService *SenzingRestServiceImpl) getConfigurationHandle(ctx context
 	var err error = nil
 	var result uintptr
 	var configurationString string
-	g2Config := restApiService.getG2config(ctx)
-	g2Configmgr := restApiService.getG2configmgr(ctx)
-	configID, err := g2Configmgr.GetDefaultConfigID(ctx)
+	szConfig := restApiService.getG2config(ctx)
+	szConfigManager := restApiService.getG2configmgr(ctx)
+	configId, err := szConfigManager.GetDefaultConfigId(ctx)
 	if err != nil {
 		return result, err
 	}
-	if configID == 0 {
-		return g2Config.Create(ctx)
+	if configId == 0 {
+		return szConfig.CreateConfig(ctx)
 	}
-	configurationString, err = g2Configmgr.GetConfig(ctx, configID)
+	configurationString, err = szConfigManager.GetConfig(ctx, configId)
 	if err != nil {
 		return result, err
 	}
-	result, err = g2Config.Load(ctx, configurationString)
+	result, err = szConfig.ImportConfig(ctx, configurationString)
 	if err != nil {
 		return result, err
 	}
@@ -258,29 +248,29 @@ func (restApiService *SenzingRestServiceImpl) getConfigurationHandle(ctx context
 // Persist in-memory Senzing Configuration to Senzing database SYS_CFG table.
 func (restApiService *SenzingRestServiceImpl) persistConfiguration(ctx context.Context, configurationHandle uintptr) error {
 	var err error = nil
-	g2Config := restApiService.getG2config(ctx)
-	g2Configmgr := restApiService.getG2configmgr(ctx)
-	newConfigurationString, err := g2Config.Save(ctx, configurationHandle)
+	szConfig := restApiService.getG2config(ctx)
+	szConfigManager := restApiService.getG2configmgr(ctx)
+	newConfigurationString, err := szConfig.ExportConfig(ctx, configurationHandle)
 	if err != nil {
 		return err
 	}
-	newConfigId, err := g2Configmgr.AddConfig(ctx, newConfigurationString, "FIXME: description")
+	newConfigId, err := szConfigManager.AddConfig(ctx, newConfigurationString, "FIXME: description")
 	if err != nil {
 		return err
 	}
-	err = g2Configmgr.SetDefaultConfigID(ctx, newConfigId)
+	err = szConfigManager.SetDefaultConfigId(ctx, newConfigId)
 	if err != nil {
 		return err
 	}
 	return err
 }
 
-func (restApiService *SenzingRestServiceImpl) getSenzingVersion(ctx context.Context) (*typedef.G2productVersionResponse, error) {
-	response, err := restApiService.getG2product(ctx).Version(ctx)
+func (restApiService *SenzingRestServiceImpl) getSenzingVersion(ctx context.Context) (*typedef.SzProductGetVersionResponse, error) {
+	response, err := restApiService.getG2product(ctx).GetVersion(ctx)
 	if err != nil {
 		return nil, err
 	}
-	return senzing.UnmarshalG2productVersionResponse(ctx, response)
+	return senzing.UnmarshalSzProductGetVersionResponse(ctx, response)
 }
 
 // --- Debug ------------------------------------------------------------------
@@ -356,7 +346,7 @@ func (restApiService *SenzingRestServiceImpl) AddDataSources(ctx context.Context
 
 	// Get Senzing resources.
 
-	g2Config := restApiService.getG2config(ctx)
+	szConfig := restApiService.getG2config(ctx)
 
 	// Get current configuration from database into memory.
 
@@ -369,8 +359,7 @@ func (restApiService *SenzingRestServiceImpl) AddDataSources(ctx context.Context
 
 	sdkResponses := []string{}
 	for _, dataSource := range params.DataSource {
-		sdkRequest := fmt.Sprintf(`{"DSRC_CODE": "%s"}`, dataSource)
-		sdkResponse, err := g2Config.AddDataSource(ctx, configurationHandle, sdkRequest)
+		sdkResponse, err := szConfig.AddDataSource(ctx, configurationHandle, dataSource)
 		if err != nil {
 			return r, err
 		}
@@ -395,7 +384,7 @@ func (restApiService *SenzingRestServiceImpl) AddDataSources(ctx context.Context
 
 	// fmt.Printf(">>>>>> ListDataSources: %s\n", rawData)
 
-	err = g2Config.Close(ctx, configurationHandle)
+	err = szConfig.CloseConfig(ctx, configurationHandle)
 
 	fmt.Println(sdkResponses)
 
@@ -493,11 +482,11 @@ func (restApiService *SenzingRestServiceImpl) Heartbeat(ctx context.Context) (r 
 }
 
 func (restApiService *SenzingRestServiceImpl) License(ctx context.Context, params api.LicenseParams) (r api.LicenseRes, _ error) {
-	response, err := restApiService.getG2product(ctx).License(ctx)
+	response, err := restApiService.getG2product(ctx).GetLicense(ctx)
 	if err != nil {
 		return nil, err
 	}
-	parsedResponse, err := senzing.UnmarshalG2productLicenseResponse(ctx, response)
+	parsedResponse, err := senzing.UnmarshalSzProductGetLicenseResponse(ctx, response)
 	if err != nil {
 		return nil, err
 	}
