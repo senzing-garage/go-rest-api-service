@@ -156,7 +156,6 @@ func (restApiService *SenzingRestServiceImpl) getG2configmgr(ctx context.Context
 		if err != nil {
 			panic(err)
 		}
-
 	})
 	return restApiService.szConfigManagerSingleton
 }
@@ -170,7 +169,6 @@ func (restApiService *SenzingRestServiceImpl) getG2product(ctx context.Context) 
 		if err != nil {
 			panic(err)
 		}
-
 	})
 	return restApiService.szProductSingleton
 }
