@@ -56,8 +56,8 @@ github.com/senzing-garage/sz-sdk-go-core v0.7.1 h1:J1qAXrMxhYIStEdc7r4+RnPR9W13x
 github.com/senzing-garage/sz-sdk-go-core v0.7.1/go.mod h1:+WbyXc3vgmGaYO5tbHSFAxfTfiart5g/ljR+I0g8b7s=
 github.com/senzing-garage/sz-sdk-go-grpc v0.7.1 h1:MzxEUojOBboNvWFUE6wo8cs6g8FpnHDGGLuA44CiSLA=
 github.com/senzing-garage/sz-sdk-go-grpc v0.7.1/go.mod h1:nD9wzF3CpUGQAnbGiR1UDVM0t8KQHBG9cd75NArJBtI=
-github.com/senzing-garage/sz-sdk-json-type-definition v0.2.4 h1:mM3yu8Ntbupl92I78Z1VzOMguL7/4oI/0LmfB8pLifM=
-github.com/senzing-garage/sz-sdk-json-type-definition v0.2.4/go.mod h1:UlKL1vflvcE8rNOpbptlNiw57SixFAUWk5ftu5gHL9Y=
+github.com/senzing-garage/sz-sdk-json-type-definition v0.2.5 h1:IBB/WwY52j4PVQpw3Cj/gGZkHtyPa2HUZYJkEUr22jQ=
+github.com/senzing-garage/sz-sdk-json-type-definition v0.2.5/go.mod h1:UlKL1vflvcE8rNOpbptlNiw57SixFAUWk5ftu5gHL9Y=
 github.com/senzing-garage/sz-sdk-proto v0.7.5 h1:XDEVh9gsB1DRSE/O/bb9fYIoror3K8NNNbTzDHaFvPo=
 github.com/senzing-garage/sz-sdk-proto v0.7.5/go.mod h1:Volu1U+jmQZKA3XkcyRgj9VpKVLmsdjhVBGSwWS+bvs=
 github.com/stretchr/testify v1.9.0 h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsTg=
