@@ -7,7 +7,7 @@ toolchain go1.22.0
 require (
 	github.com/go-faster/errors v0.7.1
 	github.com/go-faster/jx v1.1.0
-	github.com/ogen-go/ogen v1.1.0
+	github.com/ogen-go/ogen v1.1.1
 	github.com/senzing-garage/go-helpers v0.5.1
 	github.com/senzing-garage/go-logging v1.4.1
 	github.com/senzing-garage/go-observing v0.3.1
