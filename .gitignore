@@ -32,3 +32,4 @@ go.work
 target/
 .coverage
 coverage.html
+rest-api-service-RFC8927-pretty.json

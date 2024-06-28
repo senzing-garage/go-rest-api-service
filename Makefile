@@ -58,6 +58,34 @@ default: help
 hello-world: hello-world-osarch-specific
 
 # -----------------------------------------------------------------------------
+# Analyze
+# -----------------------------------------------------------------------------
+
+.PHONY: analyze
+analyze:
+	@./bin/analyze_rfc8927.py
+
+.PHONY: pretty-print
+pretty-print:
+	@./bin/pretty_print.py
+
+# -----------------------------------------------------------------------------
+# Generate code
+# -----------------------------------------------------------------------------
+
+.PHONY: generate-code
+generate-code: generate-go
+
+
+.PHONY: generate-go
+generate-go:
+	jtd-codegen \
+		--go-out ./senzingresttypedef \
+		--go-package senzingresttypedef \
+		--root-name SenzingRestApiTypedef \
+		rest-api-service-RFC8927.json
+
+# -----------------------------------------------------------------------------
 # Dependency management
 # -----------------------------------------------------------------------------
 

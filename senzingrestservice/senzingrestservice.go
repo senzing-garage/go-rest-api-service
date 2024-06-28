@@ -46,6 +46,9 @@ type BasicSenzingRestService struct {
 	szProductSingleton       senzing.SzProduct
 	szProductSyncOnce        sync.Once
 	URLRoutePrefix           string
+
+	g2engineSingleton senzing.SzEngine
+	g2engineSyncOnce  sync.Once
 }
 
 // ----------------------------------------------------------------------------
@@ -196,6 +199,16 @@ func (restApiService *BasicSenzingRestService) AddDataSources(ctx context.Contex
 	return r, err
 }
 
+func (restApiService *BasicSenzingRestService) GetServerInfo(ctx context.Context) (r senzingrestapi.GetServerInfoRes, _ error) {
+	var err error
+	r = &senzingrestapi.SzServerInfoResponse{
+		Links: restApiService.getOptSzLinks(ctx, "server-info"),
+		Meta:  restApiService.getOptSzMeta(ctx, senzingrestapi.SzHttpMethodGET, http.StatusOK),
+		Data:  restApiService.getOptSzServerInfo(ctx),
+	}
+	return r, err
+}
+
 func (restApiService *BasicSenzingRestService) Heartbeat(ctx context.Context) (r *senzingrestapi.SzBaseResponse, _ error) {
 	var err error
 	r = &senzingrestapi.SzBaseResponse{
@@ -252,6 +265,18 @@ func (restApiService *BasicSenzingRestService) OpenAPISpecification(ctx context.
 		// Links: restApiService.getOptSzLinks(ctx, "specifications/open-api"),
 		// Meta:  restApiService.getOptSzMeta(ctx, api.SzHttpMethodGET, http.StatusOK),
 		Data: bytes.NewReader(restApiService.OpenAPISpecificationSpec),
+	}
+	return r, err
+}
+
+func (restApiService *BasicSenzingRestService) SearchEntitiesByGet(ctx context.Context, params senzingrestapi.SearchEntitiesByGetParams) (r senzingrestapi.SearchEntitiesByGetRes, _ error) {
+	_ = ctx
+	_ = params
+	response, err := restApiService.getG2engine(ctx).SearchByAttributes(ctx, "", "", 0) // TODO: Fix parameters
+	r = &senzingrestapi.SearchEntitiesByGetOKDefault{
+		// Links: restApiService.getOptSzLinks(ctx, "license"),
+		// Meta:  restApiService.getOptSzMeta(ctx, api.SzHttpMethodGET, http.StatusOK),
+		Data: restApiService.searchEntitiesByGetData(ctx, response),
 	}
 	return r, err
 }
@@ -370,6 +395,17 @@ func (restApiService *BasicSenzingRestService) getSzConfigmgr(ctx context.Contex
 	return restApiService.szConfigManagerSingleton
 }
 
+// Singleton pattern for g2engine.
+// See https://medium.com/golang-issue/how-singleton-pattern-works-with-golang-2fdd61cd5a7f
+func (restApiService *BasicSenzingRestService) getG2engine(ctx context.Context) senzing.SzEngine {
+	var err error
+	restApiService.g2engineSyncOnce.Do(func() {
+		restApiService.g2engineSingleton, err = restApiService.getAbstractFactory(ctx).CreateSzEngine(ctx)
+		panicOnError(err)
+	})
+	return restApiService.g2engineSingleton
+}
+
 // Singleton pattern for g2product.
 // See https://medium.com/golang-issue/how-singleton-pattern-works-with-golang-2fdd61cd5a7f
 func (restApiService *BasicSenzingRestService) getG2product(ctx context.Context) senzing.SzProduct {
@@ -383,39 +419,33 @@ func (restApiService *BasicSenzingRestService) getG2product(ctx context.Context)
 
 // --- Misc -------------------------------------------------------------------
 
-func (restApiService *BasicSenzingRestService) getOptSzLinks(ctx context.Context, uriPath string) senzingrestapi.OptSzLinks {
-	var result senzingrestapi.OptSzLinks
-	szLinks := senzingrestapi.SzLinks{
-		Self:                 senzingrestapi.NewOptString(fmt.Sprintf("http://%s/%s/%s", getHostname(ctx), restApiService.URLRoutePrefix, uriPath)),
-		OpenApiSpecification: senzingrestapi.NewOptString(fmt.Sprintf("http://%s/%s/swagger_spec", getHostname(ctx), restApiService.URLRoutePrefix)),
-	}
-	result = senzingrestapi.NewOptSzLinks(szLinks)
-	return result
+func (restApiService *BasicSenzingRestService) getOptSzMeta(ctx context.Context, httpMethod senzingrestapi.SzHttpMethod, httpStatusCode int16) senzingrestapi.OptSzMeta {
+	return senzingrestapi.NewOptSzMeta(restApiService.getSzMeta(ctx, httpMethod, httpStatusCode))
 }
 
-func (restApiService *BasicSenzingRestService) getOptSzMeta(ctx context.Context, httpMethod senzingrestapi.SzHttpMethod, httpStatusCode int16) senzingrestapi.OptSzMeta {
-	var result senzingrestapi.OptSzMeta
-	senzingVersion, err := restApiService.getSenzingVersion(ctx)
-	panicOnError(err)
-	nativeAPIBuildDate, err := time.Parse("2006-01-02", senzingVersion.BuildDate)
-	panicOnError(err)
-	szMeta := senzingrestapi.SzMeta{
-		Server:                     senzingrestapi.NewOptString("Senzing REST API Server - go"),
-		HttpMethod:                 senzingrestapi.NewOptSzHttpMethod(httpMethod),
-		HttpStatusCode:             senzingrestapi.NewOptInt16(httpStatusCode),
-		Timestamp:                  senzingrestapi.NewOptDateTime(time.Now().UTC()),
-		Version:                    senzingrestapi.NewOptString("0.0.0"),
-		RestApiVersion:             senzingrestapi.NewOptString("3.4.1"),
-		NativeApiVersion:           senzingrestapi.NewOptString(senzingVersion.Version),
-		NativeApiBuildVersion:      senzingrestapi.NewOptString(senzingVersion.BuildVersion),
-		NativeApiBuildNumber:       senzingrestapi.NewOptString(senzingVersion.BuildNumber),
-		NativeApiBuildDate:         senzingrestapi.NewOptDateTime(nativeAPIBuildDate),
-		ConfigCompatibilityVersion: senzingrestapi.NewOptString(senzingVersion.CompatibilityVersion.ConfigVersion),
-		Timings:                    senzingrestapi.NewOptNilSzMetaTimings(map[string]int64{}),
-	}
-	result = senzingrestapi.NewOptSzMeta(szMeta)
-	return result
-}
+// func (restApiService *BasicSenzingRestService) getOptSzMetaOldXX(ctx context.Context, httpMethod senzingrestapi.SzHttpMethod, httpStatusCode int16) senzingrestapi.OptSzMeta {
+// 	var result senzingrestapi.OptSzMeta
+// 	senzingVersion, err := restApiService.getSenzingVersion(ctx)
+// 	panicOnError(err)
+// 	nativeAPIBuildDate, err := time.Parse("2006-01-02", senzingVersion.BuildDate)
+// 	panicOnError(err)
+// 	szMeta := senzingrestapi.SzMeta{
+// 		Server:                     senzingrestapi.NewOptString("Senzing REST API Server - go"),
+// 		HttpMethod:                 senzingrestapi.NewOptSzHttpMethod(httpMethod),
+// 		HttpStatusCode:             senzingrestapi.NewOptInt16(httpStatusCode),
+// 		Timestamp:                  senzingrestapi.NewOptDateTime(time.Now().UTC()),
+// 		Version:                    senzingrestapi.NewOptString("0.0.0"),
+// 		RestApiVersion:             senzingrestapi.NewOptString("3.4.1"),
+// 		NativeApiVersion:           senzingrestapi.NewOptString(senzingVersion.Version),
+// 		NativeApiBuildVersion:      senzingrestapi.NewOptString(senzingVersion.BuildVersion),
+// 		NativeApiBuildNumber:       senzingrestapi.NewOptString(senzingVersion.BuildNumber),
+// 		NativeApiBuildDate:         senzingrestapi.NewOptDateTime(nativeAPIBuildDate),
+// 		ConfigCompatibilityVersion: senzingrestapi.NewOptString(senzingVersion.CompatibilityVersion.ConfigVersion),
+// 		Timings:                    senzingrestapi.NewOptNilSzMetaTimings(map[string]int64{}),
+// 	}
+// 	result = senzingrestapi.NewOptSzMeta(szMeta)
+// 	return result
+// }
 
 // --- Senzing convenience ----------------------------------------------------
 

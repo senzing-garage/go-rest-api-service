@@ -1,0 +1,350 @@
+{
+    "definitions": {
+        "addressData": {
+            "elements": {
+                "type": "string"
+            }
+        },
+        "characteristicData": {
+            "elements": {
+                "type": "string"
+            }
+        },
+        "feature": {
+            "properties": {
+                "duplicateValues": {
+                    "elements": {
+                        "type": "string"
+                    }
+                },
+                "featureDetails": {
+                    "elements": {
+                        "ref": "featureDetail"
+                    }
+                },
+                "primaryId": {
+                    "metadata": {
+                        "goType": "int64"
+                    },
+                    "type": "int32"
+                },
+                "primaryValue": {
+                    "type": "string"
+                },
+                "usageType": {
+                    "type": "string"
+                }
+            }
+        },
+        "featureDetail": {
+            "properties": {
+                "featureValue": {
+                    "type": "string"
+                },
+                "internalId": {
+                    "metadata": {
+                        "goType": "int64"
+                    },
+                    "type": "int32"
+                }
+            }
+        },
+        "featureScoreDetails": {
+            "properties": {
+                "candidateFeature": {
+                    "type": "string"
+                },
+                "featureType": {
+                    "type": "string"
+                },
+                "inboundFeature": {
+                    "type": "string"
+                },
+                "nameScoringDetails": {
+                    "ref": "nameScoringDetails"
+                },
+                "score": {
+                    "metadata": {
+                        "goType": "int64"
+                    },
+                    "type": "int32"
+                }
+            }
+        },
+        "featureScores": {},
+        "features": {
+            "additionalProperties": true,
+            "properties": {
+                "*": {
+                    "ref": "feature"
+                }
+            }
+        },
+        "identifierData": {
+            "elements": {
+                "type": "string"
+            }
+        },
+        "links": {
+            "properties": {
+                "openApiSpecification": {
+                    "type": "string"
+                },
+                "self": {
+                    "type": "string"
+                }
+            }
+        },
+        "meta": {
+            "properties": {
+                "configCompatibilityVersion": {
+                    "type": "string"
+                },
+                "httpMethod": {
+                    "type": "string"
+                },
+                "httpStatusCode": {
+                    "type": "int32"
+                },
+                "nativeApiBuildDate": {
+                    "type": "string"
+                },
+                "nativeApiBuildNumber": {
+                    "type": "string"
+                },
+                "nativeApiBuildVersion": {
+                    "type": "string"
+                },
+                "nativeApiVersion": {
+                    "type": "string"
+                },
+                "pocApiVersion": {
+                    "type": "string"
+                },
+                "pocServerVersion": {
+                    "type": "string"
+                },
+                "restApiVersion": {
+                    "type": "string"
+                },
+                "server": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "string"
+                },
+                "timings": {
+                    "ref": "timings"
+                },
+                "version": {
+                    "type": "string"
+                }
+            }
+        },
+        "nameData": {
+            "elements": {
+                "type": "string"
+            }
+        },
+        "nameScoringDetails": {
+            "properties": {
+                "httpSFullNameScore": {
+                    "type": "int32"
+                }
+            }
+        },
+        "otherData": {
+            "elements": {
+                "type": "string"
+            }
+        },
+        "phoneData": {
+            "elements": {
+                "type": "string"
+            }
+        },
+        "record": {
+            "properties": {
+                "addressData": {
+                    "ref": "addressData"
+                },
+                "characteristicData": {
+                    "ref": "characteristicData"
+                },
+                "dataSource": {
+                    "type": "string"
+                },
+                "identifierData": {
+                    "ref": "identifierData"
+                },
+                "lastSeenTimestamp": {
+                    "type": "string"
+                },
+                "matchKey": {
+                    "type": "string"
+                },
+                "matchLevel": {
+                    "type": "int32"
+                },
+                "nameData": {
+                    "ref": "nameData"
+                },
+                "originalSourceData": {},
+                "otherData": {
+                    "ref": "otherData"
+                },
+                "phoneData": {
+                    "ref": "phoneData"
+                },
+                "recordId": {
+                    "type": "string"
+                },
+                "resolutionRuleCode": {
+                    "type": "string"
+                }
+            }
+        },
+        "recordSummeries": {
+            "elements": {
+                "ref": "recordSummery"
+            }
+        },
+        "recordSummery": {
+            "properties": {
+                "dataSource": {
+                    "type": "string"
+                },
+                "recordCount": {
+                    "metadata": {
+                        "goType": "int64"
+                    },
+                    "type": "int32"
+                },
+                "topRecordIds": {
+                    "elements": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "records": {
+            "elements": {
+                "ref": "record"
+            }
+        },
+        "searchEntitiesByGetResponse": {
+            "properties": {
+                "data": {
+                    "ref": "searchResultsData"
+                },
+                "links": {
+                    "ref": "links"
+                },
+                "meta": {
+                    "ref": "meta"
+                }
+            }
+        },
+        "searchResult": {
+            "properties": {
+                "addressData": {
+                    "ref": "addressData"
+                },
+                "bestNameScore": {
+                    "type": "int32"
+                },
+                "characteristicData": {
+                    "ref": "characteristicData"
+                },
+                "entityId": {
+                    "type": "string"
+                },
+                "entityName": {
+                    "type": "string"
+                },
+                "featureScores": {
+                    "ref": "featureScores"
+                },
+                "features": {
+                    "ref": "features"
+                },
+                "identifierData": {
+                    "ref": "identifierData"
+                },
+                "lastSeenTimestamp": {
+                    "type": "string"
+                },
+                "matchKey": {
+                    "type": "string"
+                },
+                "matchLevel": {
+                    "type": "int32"
+                },
+                "nameData": {
+                    "ref": "nameData"
+                },
+                "otherData": {
+                    "ref": "otherData"
+                },
+                "partial": {
+                    "type": "boolean"
+                },
+                "phoneData": {
+                    "ref": "phoneData"
+                },
+                "recordSummeries": {
+                    "ref": "recordSummeries"
+                },
+                "records": {
+                    "ref": "records"
+                },
+                "resolutionRuleCode": {
+                    "type": "string"
+                },
+                "resultType": {
+                    "type": "string"
+                }
+            }
+        },
+        "searchResults": {
+            "elements": {
+                "ref": "searchResult"
+            }
+        },
+        "searchResultsData": {
+            "properties": {
+                "searchResults": {
+                    "ref": "searchResults"
+                }
+            }
+        },
+        "timings": {
+            "properties": {
+                "enqueued": {
+                    "metadata": {
+                        "goType": "int64"
+                    },
+                    "type": "int32"
+                },
+                "nativeAPI": {
+                    "metadata": {
+                        "goType": "int64"
+                    },
+                    "type": "int32"
+                },
+                "overall": {
+                    "metadata": {
+                        "goType": "int64"
+                    },
+                    "type": "int32"
+                },
+                "processRawData": {
+                    "metadata": {
+                        "goType": "int64"
+                    },
+                    "type": "int32"
+                }
+            }
+        }
+    }
+}
