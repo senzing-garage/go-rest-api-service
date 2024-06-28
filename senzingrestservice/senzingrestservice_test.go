@@ -101,11 +101,11 @@ func TestSenzingRestServiceImpl_License(test *testing.T) {
 	}
 }
 
-func TestSenzingRestServiceImpl_OpenApiSpecification(test *testing.T) {
+func TestSenzingRestServiceImpl_OpenAPISpecification(test *testing.T) {
 	ctx := context.TODO()
 	testObject := getTestObject(ctx, test)
 	var openAPISpecificationBytes []byte
-	response, err := testObject.OpenApiSpecification(ctx)
+	response, err := testObject.OpenAPISpecification(ctx)
 	require.NoError(test, err)
 	numBytes, _ := response.Data.Read(openAPISpecificationBytes)
 	// testError(test, ctx, err)

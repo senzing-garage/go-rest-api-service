@@ -25,7 +25,7 @@ func encodeAddDataSourcesRequest(
 		return nil
 	case *AddDataSourcesReqApplicationJSON:
 		const contentType = "application/json"
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		{
 			req.Encode(e)
 		}
@@ -47,7 +47,7 @@ func encodeAddRecordRequest(
 	r *http.Request,
 ) error {
 	const contentType = "application/json"
-	e := jx.GetEncoder()
+	e := new(jx.Encoder)
 	{
 		req.Encode(e)
 	}
@@ -61,7 +61,7 @@ func encodeAddRecordWithReturnedRecordIdRequest(
 	r *http.Request,
 ) error {
 	const contentType = "application/json"
-	e := jx.GetEncoder()
+	e := new(jx.Encoder)
 	{
 		req.Encode(e)
 	}
@@ -77,7 +77,7 @@ func encodeAnalyzeBulkRecordsRequest(
 	switch req := req.(type) {
 	case *AnalyzeBulkRecordsReqApplicationJSON:
 		const contentType = "application/json"
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		{
 			req.Encode(e)
 		}
@@ -93,7 +93,7 @@ func encodeAnalyzeBulkRecordsRequest(
 		const contentType = "multipart/form-data"
 		request := req
 
-		q := uri.NewQueryEncoder()
+		q := uri.NewFormEncoder(map[string]string{})
 		body, boundary := ht.CreateMultipartBody(func(w *multipart.Writer) error {
 			if val, ok := request.Body.Get(); ok {
 				if err := val.WriteMultipart("body", w); err != nil {
@@ -129,7 +129,7 @@ func encodeLoadBulkRecordsRequest(
 	switch req := req.(type) {
 	case *LoadBulkRecordsReqApplicationJSON:
 		const contentType = "application/json"
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		{
 			req.Encode(e)
 		}
@@ -145,7 +145,7 @@ func encodeLoadBulkRecordsRequest(
 		const contentType = "multipart/form-data"
 		request := req
 
-		q := uri.NewQueryEncoder()
+		q := uri.NewFormEncoder(map[string]string{})
 		body, boundary := ht.CreateMultipartBody(func(w *multipart.Writer) error {
 			if val, ok := request.Body.Get(); ok {
 				if err := val.WriteMultipart("body", w); err != nil {
@@ -179,7 +179,7 @@ func encodeSearchEntitiesByPostRequest(
 	r *http.Request,
 ) error {
 	const contentType = "application/json"
-	e := jx.GetEncoder()
+	e := new(jx.Encoder)
 	{
 		req.Encode(e)
 	}

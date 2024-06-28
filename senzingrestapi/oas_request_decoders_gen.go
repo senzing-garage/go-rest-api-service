@@ -317,6 +317,7 @@ func (s *Server) decodeAnalyzeBulkRecordsRequest(r *http.Request) (
 				request.Body.SetTo(ht.MultipartFile{
 					Name:   fh.Filename,
 					File:   f,
+					Size:   fh.Size,
 					Header: fh.Header,
 				})
 				return nil
@@ -433,6 +434,7 @@ func (s *Server) decodeLoadBulkRecordsRequest(r *http.Request) (
 				request.Body.SetTo(ht.MultipartFile{
 					Name:   fh.Filename,
 					File:   f,
+					Size:   fh.Size,
 					Header: fh.Header,
 				})
 				return nil
