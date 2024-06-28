@@ -8,35 +8,17 @@ import (
 	"time"
 
 	"github.com/senzing-garage/go-helpers/settings"
-	api "github.com/senzing-garage/go-rest-api-service/senzingrestapi"
+	"github.com/senzing-garage/go-rest-api-service/senzingrestapi"
+	"github.com/senzing-garage/sz-sdk-go-core/helper"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
 var (
-	senzingRestServiceSingleton SenzingRestService
+	senzingRestServiceSingleton *BasicSenzingRestService
 	debug                       bool
+	logLevel                    = helper.GetEnv("SENZING_LOG_LEVEL", "INFO")
 )
-
-// ----------------------------------------------------------------------------
-// Internal functions
-// ----------------------------------------------------------------------------
-
-func getTestObject(ctx context.Context, test *testing.T) SenzingRestService {
-	_ = ctx
-	if senzingRestServiceSingleton == nil {
-		settings, err := settings.BuildSimpleSettingsUsingEnvVars()
-		if err != nil {
-			test.Errorf("Error: %s", err)
-		}
-		senzingRestServiceSingleton = &BasicSenzingRestService{
-			Settings:              settings,
-			SenzingInstanceName:   "go-rest-api-service-test",
-			SenzingVerboseLogging: int64(0),
-		}
-	}
-	return senzingRestServiceSingleton
-}
 
 // ----------------------------------------------------------------------------
 // Test interface functions
@@ -46,14 +28,14 @@ func TestSenzingRestServiceImpl_AddDataSources(test *testing.T) {
 	ctx := context.TODO()
 	dataSourceName := fmt.Sprintf("DS-%d", time.Now().Unix())
 	testObject := getTestObject(ctx, test)
-	request := &api.AddDataSourcesReqApplicationJSON{}
-	params := api.AddDataSourcesParams{
+	request := &senzingrestapi.AddDataSourcesReqApplicationJSON{}
+	params := senzingrestapi.AddDataSourcesParams{
 		DataSource: []string{dataSourceName},
 	}
 	response, err := testObject.AddDataSources(ctx, request, params)
 	require.NoError(test, err)
 	switch responseTyped := response.(type) {
-	case *api.SzDataSourcesResponse:
+	case *senzingrestapi.SzDataSourcesResponse:
 		if debug {
 			drillDown := []interface{}{
 				response,
@@ -88,13 +70,13 @@ func TestSenzingRestServiceImpl_Heartbeat(test *testing.T) {
 func TestSenzingRestServiceImpl_License(test *testing.T) {
 	ctx := context.TODO()
 	testObject := getTestObject(ctx, test)
-	params := api.LicenseParams{
-		WithRaw: api.NewOptBool(false),
+	params := senzingrestapi.LicenseParams{
+		WithRaw: senzingrestapi.NewOptBool(false),
 	}
 	response, err := testObject.License(ctx, params)
 	require.NoError(test, err)
 	switch responseTyped := response.(type) {
-	case *api.SzLicenseResponse:
+	case *senzingrestapi.SzLicenseResponse:
 		recordLimit, _ := responseTyped.Data.Value.License.Value.RecordLimit.Get()
 		assert.Equal(test, int64(50000), recordLimit)
 	default:
@@ -108,6 +90,8 @@ func TestSenzingRestServiceImpl_OpenAPISpecification(test *testing.T) {
 	response, err := testObject.OpenAPISpecification(ctx)
 	require.NoError(test, err)
 	numBytes, _ := response.Data.Read(openAPISpecificationBytes)
+	require.NoError(test, err)
+
 	// testError(test, ctx, err)
 	test.Logf(">>>>> %d;  %v\n", numBytes, openAPISpecificationBytes)
 }
@@ -115,15 +99,34 @@ func TestSenzingRestServiceImpl_OpenAPISpecification(test *testing.T) {
 func TestSenzingRestServiceImpl_Version(test *testing.T) {
 	ctx := context.TODO()
 	testObject := getTestObject(ctx, test)
-	params := api.VersionParams{
-		WithRaw: api.NewOptBool(false),
+	params := senzingrestapi.VersionParams{
+		WithRaw: senzingrestapi.NewOptBool(false),
 	}
 	response, err := testObject.Version(ctx, params)
 	require.NoError(test, err)
 	switch responseTyped := response.(type) {
-	case *api.SzVersionResponse:
+	case *senzingrestapi.SzVersionResponse:
 		apiServerVersion, _ := responseTyped.Data.Value.ApiServerVersion.Get()
 		assert.Equal(test, "0.0.0", apiServerVersion)
 	default:
 	}
+}
+
+// ----------------------------------------------------------------------------
+// Internal functions
+// ----------------------------------------------------------------------------
+
+func getTestObject(ctx context.Context, test *testing.T) SenzingRestService {
+	if senzingRestServiceSingleton == nil {
+		settings, err := settings.BuildSimpleSettingsUsingEnvVars()
+		require.NoError(test, err)
+		senzingRestServiceSingleton = &BasicSenzingRestService{
+			Settings:              settings,
+			SenzingInstanceName:   "go-rest-api-service-test",
+			SenzingVerboseLogging: int64(0),
+		}
+		err = senzingRestServiceSingleton.SetLogLevel(ctx, logLevel)
+		require.NoError(test, err)
+	}
+	return senzingRestServiceSingleton
 }

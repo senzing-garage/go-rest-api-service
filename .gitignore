@@ -31,3 +31,4 @@ go.work
 # Makefile
 target/
 .coverage
+coverage.html

@@ -15,15 +15,15 @@ local-prefix: "github.com/org/project"
 threshold:
   # (optional; default 0)
   # The minimum coverage that each file should have
-  file: 70
+  file: 80
 
   # (optional; default 0)
   # The minimum coverage that each package should have
-  package: 70
+  package: 80
 
   # (optional; default 0)
   # The minimum total coverage project should have
-  total: 70
+  total: 80
 # Holds regexp rules which will override thresholds for matched files or packages
 # using their paths.
 #
@@ -44,6 +44,25 @@ threshold:
 #  - \.pb\.go$    # excludes all protobuf generated files
 #  - ^pkg/bar     # exclude package `pkg/bar`
 
+exclude:
+  paths:
+    - senzingrestapis/oas_cfg_gen.go
+    - senzingrestapis/oas_client_gen.go
+    - senzingrestapis/oas_handlers_gen.go
+    - senzingrestapis/oas_interfaces_gen.go
+    - senzingrestapis/oas_json_gen.go
+    - senzingrestapis/oas_labeler_gen.go
+    - senzingrestapis/oas_middleware_gen.go
+    - senzingrestapis/oas_parameters_gen.go
+    - senzingrestapis/oas_request_decoders_gen.go
+    - senzingrestapis/oas_request_encoders_gen.go
+    - senzingrestapis/oas_response_decoders_gen.go
+    - senzingrestapis/oas_response_encoders_gen.go
+    - senzingrestapis/oas_router_gen.go
+    - senzingrestapis/oas_schemas_gen.go
+    - senzingrestapis/oas_server_gen.go
+    - senzingrestapis/oas_unimplemented_gen.go
+    - senzingrestapis/oas_validators_gen.go
 # NOTES:
 # - symbol `/` in all path regexps will be replaced by current OS file path separator
 #   to properly work on Windows
