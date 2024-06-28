@@ -48,6 +48,15 @@ func decodeAddDataSourcesResponse(resp *http.Response) (res AddDataSourcesRes, _
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -92,6 +101,15 @@ func decodeAddDataSourcesResponse(resp *http.Response) (res AddDataSourcesRes, _
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -135,6 +153,15 @@ func decodeAddDataSourcesResponse(resp *http.Response) (res AddDataSourcesRes, _
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -186,6 +213,15 @@ func decodeAddRecordResponse(resp *http.Response) (res AddRecordRes, _ error) {
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -229,6 +265,15 @@ func decodeAddRecordResponse(resp *http.Response) (res AddRecordRes, _ error) {
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -274,6 +319,15 @@ func decodeAddRecordResponse(resp *http.Response) (res AddRecordRes, _ error) {
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -318,6 +372,15 @@ func decodeAddRecordResponse(resp *http.Response) (res AddRecordRes, _ error) {
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -361,6 +424,15 @@ func decodeAddRecordResponse(resp *http.Response) (res AddRecordRes, _ error) {
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -412,6 +484,15 @@ func decodeAddRecordWithReturnedRecordIdResponse(resp *http.Response) (res AddRe
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -455,6 +536,15 @@ func decodeAddRecordWithReturnedRecordIdResponse(resp *http.Response) (res AddRe
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -500,6 +590,15 @@ func decodeAddRecordWithReturnedRecordIdResponse(resp *http.Response) (res AddRe
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -544,6 +643,15 @@ func decodeAddRecordWithReturnedRecordIdResponse(resp *http.Response) (res AddRe
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -587,6 +695,15 @@ func decodeAddRecordWithReturnedRecordIdResponse(resp *http.Response) (res AddRe
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -638,6 +755,15 @@ func decodeAnalyzeBulkRecordsResponse(resp *http.Response) (res AnalyzeBulkRecor
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -681,6 +807,15 @@ func decodeAnalyzeBulkRecordsResponse(resp *http.Response) (res AnalyzeBulkRecor
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -732,6 +867,15 @@ func decodeDeleteRecordResponse(resp *http.Response) (res DeleteRecordRes, _ err
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -776,6 +920,15 @@ func decodeDeleteRecordResponse(resp *http.Response) (res DeleteRecordRes, _ err
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -819,6 +972,15 @@ func decodeDeleteRecordResponse(resp *http.Response) (res DeleteRecordRes, _ err
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -870,6 +1032,15 @@ func decodeFindEntityNetworkResponse(resp *http.Response) (res FindEntityNetwork
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -914,6 +1085,15 @@ func decodeFindEntityNetworkResponse(resp *http.Response) (res FindEntityNetwork
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -957,6 +1137,15 @@ func decodeFindEntityNetworkResponse(resp *http.Response) (res FindEntityNetwork
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -1008,6 +1197,15 @@ func decodeFindEntityPathResponse(resp *http.Response) (res FindEntityPathRes, _
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -1051,6 +1249,15 @@ func decodeFindEntityPathResponse(resp *http.Response) (res FindEntityPathRes, _
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -1096,6 +1303,15 @@ func decodeFindEntityPathResponse(resp *http.Response) (res FindEntityPathRes, _
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -1129,7 +1345,7 @@ func decodeGetActiveConfigResponse(resp *http.Response) (res GetActiveConfigRes,
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SzResponseWithRawData
+			var response SzConfigResponse
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -1145,6 +1361,15 @@ func decodeGetActiveConfigResponse(resp *http.Response) (res GetActiveConfigRes,
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -1189,6 +1414,15 @@ func decodeGetActiveConfigResponse(resp *http.Response) (res GetActiveConfigRes,
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -1240,6 +1474,15 @@ func decodeGetAttributeTypeResponse(resp *http.Response) (res GetAttributeTypeRe
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -1284,6 +1527,15 @@ func decodeGetAttributeTypeResponse(resp *http.Response) (res GetAttributeTypeRe
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -1327,6 +1579,15 @@ func decodeGetAttributeTypeResponse(resp *http.Response) (res GetAttributeTypeRe
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -1378,6 +1639,15 @@ func decodeGetAttributeTypesResponse(resp *http.Response) (res GetAttributeTypes
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -1421,6 +1691,15 @@ func decodeGetAttributeTypesResponse(resp *http.Response) (res GetAttributeTypes
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -1472,6 +1751,15 @@ func decodeGetDataSourceResponse(resp *http.Response) (res GetDataSourceRes, _ e
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -1515,6 +1803,15 @@ func decodeGetDataSourceResponse(resp *http.Response) (res GetDataSourceRes, _ e
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -1566,6 +1863,15 @@ func decodeGetDataSourcesResponse(resp *http.Response) (res GetDataSourcesRes, _
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -1609,6 +1915,15 @@ func decodeGetDataSourcesResponse(resp *http.Response) (res GetDataSourcesRes, _
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -1660,6 +1975,15 @@ func decodeGetEntityByEntityIdResponse(resp *http.Response) (res GetEntityByEnti
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -1704,6 +2028,15 @@ func decodeGetEntityByEntityIdResponse(resp *http.Response) (res GetEntityByEnti
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -1747,6 +2080,15 @@ func decodeGetEntityByEntityIdResponse(resp *http.Response) (res GetEntityByEnti
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -1798,6 +2140,15 @@ func decodeGetEntityByRecordIdResponse(resp *http.Response) (res GetEntityByReco
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -1842,6 +2193,15 @@ func decodeGetEntityByRecordIdResponse(resp *http.Response) (res GetEntityByReco
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -1885,6 +2245,15 @@ func decodeGetEntityByRecordIdResponse(resp *http.Response) (res GetEntityByReco
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -1936,6 +2305,15 @@ func decodeGetRecordResponse(resp *http.Response) (res GetRecordRes, _ error) {
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -1980,6 +2358,15 @@ func decodeGetRecordResponse(resp *http.Response) (res GetRecordRes, _ error) {
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -2023,6 +2410,15 @@ func decodeGetRecordResponse(resp *http.Response) (res GetRecordRes, _ error) {
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -2074,6 +2470,15 @@ func decodeGetServerInfoResponse(resp *http.Response) (res GetServerInfoRes, _ e
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -2107,7 +2512,7 @@ func decodeGetTemplateConfigResponse(resp *http.Response) (res GetTemplateConfig
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SzResponseWithRawData
+			var response SzConfigResponse
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -2123,6 +2528,15 @@ func decodeGetTemplateConfigResponse(resp *http.Response) (res GetTemplateConfig
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -2167,6 +2581,15 @@ func decodeGetTemplateConfigResponse(resp *http.Response) (res GetTemplateConfig
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -2218,6 +2641,15 @@ func decodeGetVirtualEntityByRecordIdsResponse(resp *http.Response) (res GetVirt
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -2262,6 +2694,15 @@ func decodeGetVirtualEntityByRecordIdsResponse(resp *http.Response) (res GetVirt
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -2305,6 +2746,15 @@ func decodeGetVirtualEntityByRecordIdsResponse(resp *http.Response) (res GetVirt
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -2356,6 +2806,15 @@ func decodeHeartbeatResponse(resp *http.Response) (res *SzBaseResponse, _ error)
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -2396,6 +2855,15 @@ func decodeHowEntityByEntityIDResponse(resp *http.Response) (res HowEntityByEnti
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -2441,6 +2909,15 @@ func decodeHowEntityByEntityIDResponse(resp *http.Response) (res HowEntityByEnti
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -2484,6 +2961,15 @@ func decodeHowEntityByEntityIDResponse(resp *http.Response) (res HowEntityByEnti
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -2535,6 +3021,15 @@ func decodeHowEntityByRecordIDResponse(resp *http.Response) (res HowEntityByReco
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -2579,6 +3074,15 @@ func decodeHowEntityByRecordIDResponse(resp *http.Response) (res HowEntityByReco
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -2622,6 +3126,15 @@ func decodeHowEntityByRecordIDResponse(resp *http.Response) (res HowEntityByReco
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -2673,6 +3186,15 @@ func decodeLicenseResponse(resp *http.Response) (res LicenseRes, _ error) {
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -2723,6 +3245,15 @@ func decodeLoadBulkRecordsResponse(resp *http.Response) (res LoadBulkRecordsRes,
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -2766,6 +3297,15 @@ func decodeLoadBulkRecordsResponse(resp *http.Response) (res LoadBulkRecordsRes,
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -2811,6 +3351,15 @@ func decodeLoadBulkRecordsResponse(resp *http.Response) (res LoadBulkRecordsRes,
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -2828,7 +3377,7 @@ func decodeLoadBulkRecordsResponse(resp *http.Response) (res LoadBulkRecordsRes,
 	return res, validate.UnexpectedStatusCode(resp.StatusCode)
 }
 
-func decodeOpenApiSpecificationResponse(resp *http.Response) (res OpenApiSpecificationOKDefault, _ error) {
+func decodeOpenAPISpecificationResponse(resp *http.Response) (res OpenAPISpecificationOKDefault, _ error) {
 	switch resp.StatusCode {
 	case 200:
 		// Code 200.
@@ -2844,7 +3393,7 @@ func decodeOpenApiSpecificationResponse(resp *http.Response) (res OpenApiSpecifi
 				return res, err
 			}
 
-			response := OpenApiSpecificationOKDefault{Data: bytes.NewReader(b)}
+			response := OpenAPISpecificationOKDefault{Data: bytes.NewReader(b)}
 			return response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -2885,6 +3434,15 @@ func decodeReevaluateEntityResponse(resp *http.Response) (res ReevaluateEntityRe
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -2930,6 +3488,15 @@ func decodeReevaluateEntityResponse(resp *http.Response) (res ReevaluateEntityRe
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -2973,6 +3540,15 @@ func decodeReevaluateEntityResponse(resp *http.Response) (res ReevaluateEntityRe
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -3024,6 +3600,15 @@ func decodeReevaluateRecordResponse(resp *http.Response) (res ReevaluateRecordRe
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -3068,6 +3653,15 @@ func decodeReevaluateRecordResponse(resp *http.Response) (res ReevaluateRecordRe
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -3111,6 +3705,15 @@ func decodeReevaluateRecordResponse(resp *http.Response) (res ReevaluateRecordRe
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -3162,6 +3765,15 @@ func decodeRootResponse(resp *http.Response) (res *SzBaseResponse, _ error) {
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -3202,6 +3814,15 @@ func decodeSearchEntitiesByGetResponse(resp *http.Response) (res SearchEntitiesB
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -3247,6 +3868,15 @@ func decodeSearchEntitiesByGetResponse(resp *http.Response) (res SearchEntitiesB
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -3290,6 +3920,15 @@ func decodeSearchEntitiesByGetResponse(resp *http.Response) (res SearchEntitiesB
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -3341,6 +3980,15 @@ func decodeSearchEntitiesByPostResponse(resp *http.Response) (res SearchEntities
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -3385,6 +4033,15 @@ func decodeSearchEntitiesByPostResponse(resp *http.Response) (res SearchEntities
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -3428,6 +4085,15 @@ func decodeSearchEntitiesByPostResponse(resp *http.Response) (res SearchEntities
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -3479,6 +4145,15 @@ func decodeVersionResponse(resp *http.Response) (res VersionRes, _ error) {
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -3529,6 +4204,15 @@ func decodeWhyEntitiesResponse(resp *http.Response) (res WhyEntitiesRes, _ error
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -3573,6 +4257,15 @@ func decodeWhyEntitiesResponse(resp *http.Response) (res WhyEntitiesRes, _ error
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -3616,6 +4309,15 @@ func decodeWhyEntitiesResponse(resp *http.Response) (res WhyEntitiesRes, _ error
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -3667,6 +4369,15 @@ func decodeWhyEntityByEntityIDResponse(resp *http.Response) (res WhyEntityByEnti
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -3711,6 +4422,15 @@ func decodeWhyEntityByEntityIDResponse(resp *http.Response) (res WhyEntityByEnti
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -3754,6 +4474,15 @@ func decodeWhyEntityByEntityIDResponse(resp *http.Response) (res WhyEntityByEnti
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -3805,6 +4534,15 @@ func decodeWhyEntityByRecordIDResponse(resp *http.Response) (res WhyEntityByReco
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -3849,6 +4587,15 @@ func decodeWhyEntityByRecordIDResponse(resp *http.Response) (res WhyEntityByReco
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -3892,6 +4639,15 @@ func decodeWhyEntityByRecordIDResponse(resp *http.Response) (res WhyEntityByReco
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":
@@ -3943,6 +4699,15 @@ func decodeWhyRecordsResponse(resp *http.Response) (res WhyRecordsRes, _ error) 
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -3987,6 +4752,15 @@ func decodeWhyRecordsResponse(resp *http.Response) (res WhyRecordsRes, _ error) 
 				}
 				return res, err
 			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
+			}
 			return &response, nil
 		case ct == "default":
 			reader := resp.Body
@@ -4030,6 +4804,15 @@ func decodeWhyRecordsResponse(resp *http.Response) (res WhyRecordsRes, _ error) 
 					Err:         err,
 				}
 				return res, err
+			}
+			// Validate response.
+			if err := func() error {
+				if err := response.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "validate")
 			}
 			return &response, nil
 		case ct == "default":

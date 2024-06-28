@@ -112,7 +112,7 @@ paths:
         response (i.e.: a response with a `meta`, `links` and `data` field) or
         as raw format where the root JSON document is the Open API specification
         JSON.
-      operationId: openApiSpecification
+      operationId: openAPISpecification
       responses:
         "200":
           description: Successful response

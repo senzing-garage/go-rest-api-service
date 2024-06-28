@@ -15,15 +15,16 @@ import (
 func encodeAddDataSourcesResponse(response AddDataSourcesRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzDataSourcesResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *AddDataSourcesOKDefault:
@@ -35,18 +36,20 @@ func encodeAddDataSourcesResponse(response AddDataSourcesRes, w http.ResponseWri
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *AddDataSourcesApplicationJSONForbidden:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(403)
 		span.SetStatus(codes.Error, http.StatusText(403))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *AddDataSourcesForbiddenDefault:
@@ -58,18 +61,20 @@ func encodeAddDataSourcesResponse(response AddDataSourcesRes, w http.ResponseWri
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *AddDataSourcesApplicationJSONInternalServerError:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -81,6 +86,7 @@ func encodeAddDataSourcesResponse(response AddDataSourcesRes, w http.ResponseWri
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -91,15 +97,16 @@ func encodeAddDataSourcesResponse(response AddDataSourcesRes, w http.ResponseWri
 func encodeAddRecordResponse(response AddRecordRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzLoadRecordResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *AddRecordOKDefault:
@@ -111,18 +118,20 @@ func encodeAddRecordResponse(response AddRecordRes, w http.ResponseWriter, span 
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *AddRecordApplicationJSONBadRequest:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 		span.SetStatus(codes.Error, http.StatusText(400))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *AddRecordBadRequestDefault:
@@ -134,18 +143,20 @@ func encodeAddRecordResponse(response AddRecordRes, w http.ResponseWriter, span 
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *AddRecordApplicationJSONForbidden:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(403)
 		span.SetStatus(codes.Error, http.StatusText(403))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *AddRecordForbiddenDefault:
@@ -157,18 +168,20 @@ func encodeAddRecordResponse(response AddRecordRes, w http.ResponseWriter, span 
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *AddRecordApplicationJSONNotFound:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 		span.SetStatus(codes.Error, http.StatusText(404))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *AddRecordNotFoundDefault:
@@ -180,18 +193,20 @@ func encodeAddRecordResponse(response AddRecordRes, w http.ResponseWriter, span 
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *AddRecordApplicationJSONInternalServerError:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -203,6 +218,7 @@ func encodeAddRecordResponse(response AddRecordRes, w http.ResponseWriter, span 
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -213,15 +229,16 @@ func encodeAddRecordResponse(response AddRecordRes, w http.ResponseWriter, span 
 func encodeAddRecordWithReturnedRecordIdResponse(response AddRecordWithReturnedRecordIdRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzLoadRecordResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *AddRecordWithReturnedRecordIdOKDefault:
@@ -233,18 +250,20 @@ func encodeAddRecordWithReturnedRecordIdResponse(response AddRecordWithReturnedR
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *AddRecordWithReturnedRecordIdApplicationJSONBadRequest:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 		span.SetStatus(codes.Error, http.StatusText(400))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *AddRecordWithReturnedRecordIdBadRequestDefault:
@@ -256,18 +275,20 @@ func encodeAddRecordWithReturnedRecordIdResponse(response AddRecordWithReturnedR
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *AddRecordWithReturnedRecordIdApplicationJSONForbidden:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(403)
 		span.SetStatus(codes.Error, http.StatusText(403))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *AddRecordWithReturnedRecordIdForbiddenDefault:
@@ -279,18 +300,20 @@ func encodeAddRecordWithReturnedRecordIdResponse(response AddRecordWithReturnedR
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *AddRecordWithReturnedRecordIdApplicationJSONNotFound:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 		span.SetStatus(codes.Error, http.StatusText(404))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *AddRecordWithReturnedRecordIdNotFoundDefault:
@@ -302,18 +325,20 @@ func encodeAddRecordWithReturnedRecordIdResponse(response AddRecordWithReturnedR
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *AddRecordWithReturnedRecordIdApplicationJSONInternalServerError:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -325,6 +350,7 @@ func encodeAddRecordWithReturnedRecordIdResponse(response AddRecordWithReturnedR
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -335,15 +361,16 @@ func encodeAddRecordWithReturnedRecordIdResponse(response AddRecordWithReturnedR
 func encodeAnalyzeBulkRecordsResponse(response AnalyzeBulkRecordsRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzBulkDataAnalysisResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *AnalyzeBulkRecordsOKDefault:
@@ -355,18 +382,20 @@ func encodeAnalyzeBulkRecordsResponse(response AnalyzeBulkRecordsRes, w http.Res
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *SzErrorResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -378,6 +407,7 @@ func encodeAnalyzeBulkRecordsResponse(response AnalyzeBulkRecordsRes, w http.Res
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -388,15 +418,16 @@ func encodeAnalyzeBulkRecordsResponse(response AnalyzeBulkRecordsRes, w http.Res
 func encodeDeleteRecordResponse(response DeleteRecordRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzDeleteRecordResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *DeleteRecordOKDefault:
@@ -408,18 +439,20 @@ func encodeDeleteRecordResponse(response DeleteRecordRes, w http.ResponseWriter,
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *DeleteRecordApplicationJSONNotFound:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 		span.SetStatus(codes.Error, http.StatusText(404))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *DeleteRecordNotFoundDefault:
@@ -431,18 +464,20 @@ func encodeDeleteRecordResponse(response DeleteRecordRes, w http.ResponseWriter,
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *DeleteRecordApplicationJSONInternalServerError:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -454,6 +489,7 @@ func encodeDeleteRecordResponse(response DeleteRecordRes, w http.ResponseWriter,
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -464,15 +500,16 @@ func encodeDeleteRecordResponse(response DeleteRecordRes, w http.ResponseWriter,
 func encodeFindEntityNetworkResponse(response FindEntityNetworkRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzEntityNetworkResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *FindEntityNetworkOKDefault:
@@ -484,18 +521,20 @@ func encodeFindEntityNetworkResponse(response FindEntityNetworkRes, w http.Respo
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *FindEntityNetworkApplicationJSONBadRequest:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 		span.SetStatus(codes.Error, http.StatusText(400))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *FindEntityNetworkBadRequestDefault:
@@ -507,18 +546,20 @@ func encodeFindEntityNetworkResponse(response FindEntityNetworkRes, w http.Respo
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *FindEntityNetworkApplicationJSONInternalServerError:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -530,6 +571,7 @@ func encodeFindEntityNetworkResponse(response FindEntityNetworkRes, w http.Respo
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -540,15 +582,16 @@ func encodeFindEntityNetworkResponse(response FindEntityNetworkRes, w http.Respo
 func encodeFindEntityPathResponse(response FindEntityPathRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzEntityPathResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *FindEntityPathOKDefault:
@@ -560,18 +603,20 @@ func encodeFindEntityPathResponse(response FindEntityPathRes, w http.ResponseWri
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *FindEntityPathApplicationJSONBadRequest:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 		span.SetStatus(codes.Error, http.StatusText(400))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *FindEntityPathBadRequestDefault:
@@ -583,18 +628,20 @@ func encodeFindEntityPathResponse(response FindEntityPathRes, w http.ResponseWri
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *FindEntityPathApplicationJSONInternalServerError:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -606,6 +653,7 @@ func encodeFindEntityPathResponse(response FindEntityPathRes, w http.ResponseWri
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -615,16 +663,17 @@ func encodeFindEntityPathResponse(response FindEntityPathRes, w http.ResponseWri
 
 func encodeGetActiveConfigResponse(response GetActiveConfigRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
-	case *SzResponseWithRawData:
-		w.Header().Set("Content-Type", "application/json")
+	case *SzConfigResponse:
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetActiveConfigOKDefault:
@@ -636,18 +685,20 @@ func encodeGetActiveConfigResponse(response GetActiveConfigRes, w http.ResponseW
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *SzErrorResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -659,6 +710,7 @@ func encodeGetActiveConfigResponse(response GetActiveConfigRes, w http.ResponseW
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -669,15 +721,16 @@ func encodeGetActiveConfigResponse(response GetActiveConfigRes, w http.ResponseW
 func encodeGetAttributeTypeResponse(response GetAttributeTypeRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzAttributeTypeResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetAttributeTypeOKDefault:
@@ -689,18 +742,20 @@ func encodeGetAttributeTypeResponse(response GetAttributeTypeRes, w http.Respons
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetAttributeTypeApplicationJSONNotFound:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 		span.SetStatus(codes.Error, http.StatusText(404))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetAttributeTypeNotFoundDefault:
@@ -712,18 +767,20 @@ func encodeGetAttributeTypeResponse(response GetAttributeTypeRes, w http.Respons
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetAttributeTypeApplicationJSONInternalServerError:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -735,6 +792,7 @@ func encodeGetAttributeTypeResponse(response GetAttributeTypeRes, w http.Respons
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -745,15 +803,16 @@ func encodeGetAttributeTypeResponse(response GetAttributeTypeRes, w http.Respons
 func encodeGetAttributeTypesResponse(response GetAttributeTypesRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzAttributeTypesResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetAttributeTypesOKDefault:
@@ -765,18 +824,20 @@ func encodeGetAttributeTypesResponse(response GetAttributeTypesRes, w http.Respo
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *SzErrorResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -788,6 +849,7 @@ func encodeGetAttributeTypesResponse(response GetAttributeTypesRes, w http.Respo
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -798,15 +860,16 @@ func encodeGetAttributeTypesResponse(response GetAttributeTypesRes, w http.Respo
 func encodeGetDataSourceResponse(response GetDataSourceRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzDataSourceResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetDataSourceOKDefault:
@@ -818,18 +881,20 @@ func encodeGetDataSourceResponse(response GetDataSourceRes, w http.ResponseWrite
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *SzErrorResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -841,6 +906,7 @@ func encodeGetDataSourceResponse(response GetDataSourceRes, w http.ResponseWrite
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -851,15 +917,16 @@ func encodeGetDataSourceResponse(response GetDataSourceRes, w http.ResponseWrite
 func encodeGetDataSourcesResponse(response GetDataSourcesRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzDataSourcesResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetDataSourcesOKDefault:
@@ -871,18 +938,20 @@ func encodeGetDataSourcesResponse(response GetDataSourcesRes, w http.ResponseWri
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *SzErrorResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -894,6 +963,7 @@ func encodeGetDataSourcesResponse(response GetDataSourcesRes, w http.ResponseWri
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -904,15 +974,16 @@ func encodeGetDataSourcesResponse(response GetDataSourcesRes, w http.ResponseWri
 func encodeGetEntityByEntityIdResponse(response GetEntityByEntityIdRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzEntityResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetEntityByEntityIdOKDefault:
@@ -924,18 +995,20 @@ func encodeGetEntityByEntityIdResponse(response GetEntityByEntityIdRes, w http.R
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetEntityByEntityIdApplicationJSONNotFound:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 		span.SetStatus(codes.Error, http.StatusText(404))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetEntityByEntityIdNotFoundDefault:
@@ -947,18 +1020,20 @@ func encodeGetEntityByEntityIdResponse(response GetEntityByEntityIdRes, w http.R
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetEntityByEntityIdApplicationJSONInternalServerError:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -970,6 +1045,7 @@ func encodeGetEntityByEntityIdResponse(response GetEntityByEntityIdRes, w http.R
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -980,15 +1056,16 @@ func encodeGetEntityByEntityIdResponse(response GetEntityByEntityIdRes, w http.R
 func encodeGetEntityByRecordIdResponse(response GetEntityByRecordIdRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzEntityResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetEntityByRecordIdOKDefault:
@@ -1000,18 +1077,20 @@ func encodeGetEntityByRecordIdResponse(response GetEntityByRecordIdRes, w http.R
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetEntityByRecordIdApplicationJSONNotFound:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 		span.SetStatus(codes.Error, http.StatusText(404))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetEntityByRecordIdNotFoundDefault:
@@ -1023,18 +1102,20 @@ func encodeGetEntityByRecordIdResponse(response GetEntityByRecordIdRes, w http.R
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetEntityByRecordIdApplicationJSONInternalServerError:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -1046,6 +1127,7 @@ func encodeGetEntityByRecordIdResponse(response GetEntityByRecordIdRes, w http.R
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -1056,15 +1138,16 @@ func encodeGetEntityByRecordIdResponse(response GetEntityByRecordIdRes, w http.R
 func encodeGetRecordResponse(response GetRecordRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzRecordResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetRecordOKDefault:
@@ -1076,18 +1159,20 @@ func encodeGetRecordResponse(response GetRecordRes, w http.ResponseWriter, span 
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetRecordApplicationJSONNotFound:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 		span.SetStatus(codes.Error, http.StatusText(404))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetRecordNotFoundDefault:
@@ -1099,18 +1184,20 @@ func encodeGetRecordResponse(response GetRecordRes, w http.ResponseWriter, span 
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetRecordApplicationJSONInternalServerError:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -1122,6 +1209,7 @@ func encodeGetRecordResponse(response GetRecordRes, w http.ResponseWriter, span 
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -1132,15 +1220,16 @@ func encodeGetRecordResponse(response GetRecordRes, w http.ResponseWriter, span 
 func encodeGetServerInfoResponse(response GetServerInfoRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzServerInfoResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetServerInfoOKDefault:
@@ -1152,6 +1241,7 @@ func encodeGetServerInfoResponse(response GetServerInfoRes, w http.ResponseWrite
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -1161,16 +1251,17 @@ func encodeGetServerInfoResponse(response GetServerInfoRes, w http.ResponseWrite
 
 func encodeGetTemplateConfigResponse(response GetTemplateConfigRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
-	case *SzResponseWithRawData:
-		w.Header().Set("Content-Type", "application/json")
+	case *SzConfigResponse:
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetTemplateConfigOKDefault:
@@ -1182,18 +1273,20 @@ func encodeGetTemplateConfigResponse(response GetTemplateConfigRes, w http.Respo
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *SzErrorResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -1205,6 +1298,7 @@ func encodeGetTemplateConfigResponse(response GetTemplateConfigRes, w http.Respo
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -1215,15 +1309,16 @@ func encodeGetTemplateConfigResponse(response GetTemplateConfigRes, w http.Respo
 func encodeGetVirtualEntityByRecordIdsResponse(response GetVirtualEntityByRecordIdsRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzVirtualEntityResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetVirtualEntityByRecordIdsOKDefault:
@@ -1235,18 +1330,20 @@ func encodeGetVirtualEntityByRecordIdsResponse(response GetVirtualEntityByRecord
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetVirtualEntityByRecordIdsApplicationJSONBadRequest:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 		span.SetStatus(codes.Error, http.StatusText(400))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetVirtualEntityByRecordIdsBadRequestDefault:
@@ -1258,18 +1355,20 @@ func encodeGetVirtualEntityByRecordIdsResponse(response GetVirtualEntityByRecord
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *GetVirtualEntityByRecordIdsApplicationJSONInternalServerError:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -1281,6 +1380,7 @@ func encodeGetVirtualEntityByRecordIdsResponse(response GetVirtualEntityByRecord
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -1289,30 +1389,32 @@ func encodeGetVirtualEntityByRecordIdsResponse(response GetVirtualEntityByRecord
 }
 
 func encodeHeartbeatResponse(response *SzBaseResponse, w http.ResponseWriter, span trace.Span) error {
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(200)
 	span.SetStatus(codes.Ok, http.StatusText(200))
 
-	e := jx.GetEncoder()
+	e := new(jx.Encoder)
 	response.Encode(e)
 	if _, err := e.WriteTo(w); err != nil {
 		return errors.Wrap(err, "write")
 	}
+
 	return nil
 }
 
 func encodeHowEntityByEntityIDResponse(response HowEntityByEntityIDRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzHowEntityResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *HowEntityByEntityIDOKDefault:
@@ -1324,18 +1426,20 @@ func encodeHowEntityByEntityIDResponse(response HowEntityByEntityIDRes, w http.R
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *HowEntityByEntityIDApplicationJSONNotFound:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 		span.SetStatus(codes.Error, http.StatusText(404))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *HowEntityByEntityIDNotFoundDefault:
@@ -1347,18 +1451,20 @@ func encodeHowEntityByEntityIDResponse(response HowEntityByEntityIDRes, w http.R
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *HowEntityByEntityIDApplicationJSONInternalServerError:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -1370,6 +1476,7 @@ func encodeHowEntityByEntityIDResponse(response HowEntityByEntityIDRes, w http.R
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -1380,15 +1487,16 @@ func encodeHowEntityByEntityIDResponse(response HowEntityByEntityIDRes, w http.R
 func encodeHowEntityByRecordIDResponse(response HowEntityByRecordIDRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzHowEntityResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *HowEntityByRecordIDOKDefault:
@@ -1400,18 +1508,20 @@ func encodeHowEntityByRecordIDResponse(response HowEntityByRecordIDRes, w http.R
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *HowEntityByRecordIDApplicationJSONNotFound:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 		span.SetStatus(codes.Error, http.StatusText(404))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *HowEntityByRecordIDNotFoundDefault:
@@ -1423,18 +1533,20 @@ func encodeHowEntityByRecordIDResponse(response HowEntityByRecordIDRes, w http.R
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *HowEntityByRecordIDApplicationJSONInternalServerError:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -1446,6 +1558,7 @@ func encodeHowEntityByRecordIDResponse(response HowEntityByRecordIDRes, w http.R
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -1456,15 +1569,16 @@ func encodeHowEntityByRecordIDResponse(response HowEntityByRecordIDRes, w http.R
 func encodeLicenseResponse(response LicenseRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzLicenseResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *LicenseOKDefault:
@@ -1476,6 +1590,7 @@ func encodeLicenseResponse(response LicenseRes, w http.ResponseWriter, span trac
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -1486,15 +1601,16 @@ func encodeLicenseResponse(response LicenseRes, w http.ResponseWriter, span trac
 func encodeLoadBulkRecordsResponse(response LoadBulkRecordsRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzBulkLoadResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *LoadBulkRecordsOKDefault:
@@ -1506,18 +1622,20 @@ func encodeLoadBulkRecordsResponse(response LoadBulkRecordsRes, w http.ResponseW
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *LoadBulkRecordsApplicationJSONForbidden:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(403)
 		span.SetStatus(codes.Error, http.StatusText(403))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *LoadBulkRecordsForbiddenDefault:
@@ -1529,18 +1647,20 @@ func encodeLoadBulkRecordsResponse(response LoadBulkRecordsRes, w http.ResponseW
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *LoadBulkRecordsApplicationJSONInternalServerError:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -1552,6 +1672,7 @@ func encodeLoadBulkRecordsResponse(response LoadBulkRecordsRes, w http.ResponseW
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -1559,7 +1680,7 @@ func encodeLoadBulkRecordsResponse(response LoadBulkRecordsRes, w http.ResponseW
 	}
 }
 
-func encodeOpenApiSpecificationResponse(response OpenApiSpecificationOKDefault, w http.ResponseWriter, span trace.Span) error {
+func encodeOpenAPISpecificationResponse(response OpenAPISpecificationOKDefault, w http.ResponseWriter, span trace.Span) error {
 	w.Header().Set("Content-Type", "default")
 	w.WriteHeader(200)
 	span.SetStatus(codes.Ok, http.StatusText(200))
@@ -1568,21 +1689,23 @@ func encodeOpenApiSpecificationResponse(response OpenApiSpecificationOKDefault, 
 	if _, err := io.Copy(writer, response); err != nil {
 		return errors.Wrap(err, "write")
 	}
+
 	return nil
 }
 
 func encodeReevaluateEntityResponse(response ReevaluateEntityRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzReevaluateResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ReevaluateEntityOKDefault:
@@ -1594,18 +1717,20 @@ func encodeReevaluateEntityResponse(response ReevaluateEntityRes, w http.Respons
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ReevaluateEntityApplicationJSONNotFound:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 		span.SetStatus(codes.Error, http.StatusText(404))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ReevaluateEntityNotFoundDefault:
@@ -1617,18 +1742,20 @@ func encodeReevaluateEntityResponse(response ReevaluateEntityRes, w http.Respons
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ReevaluateEntityApplicationJSONInternalServerError:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -1640,6 +1767,7 @@ func encodeReevaluateEntityResponse(response ReevaluateEntityRes, w http.Respons
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -1650,15 +1778,16 @@ func encodeReevaluateEntityResponse(response ReevaluateEntityRes, w http.Respons
 func encodeReevaluateRecordResponse(response ReevaluateRecordRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzReevaluateResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ReevaluateRecordOKDefault:
@@ -1670,18 +1799,20 @@ func encodeReevaluateRecordResponse(response ReevaluateRecordRes, w http.Respons
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ReevaluateRecordApplicationJSONNotFound:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 		span.SetStatus(codes.Error, http.StatusText(404))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ReevaluateRecordNotFoundDefault:
@@ -1693,18 +1824,20 @@ func encodeReevaluateRecordResponse(response ReevaluateRecordRes, w http.Respons
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ReevaluateRecordApplicationJSONInternalServerError:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -1716,6 +1849,7 @@ func encodeReevaluateRecordResponse(response ReevaluateRecordRes, w http.Respons
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -1724,30 +1858,32 @@ func encodeReevaluateRecordResponse(response ReevaluateRecordRes, w http.Respons
 }
 
 func encodeRootResponse(response *SzBaseResponse, w http.ResponseWriter, span trace.Span) error {
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(200)
 	span.SetStatus(codes.Ok, http.StatusText(200))
 
-	e := jx.GetEncoder()
+	e := new(jx.Encoder)
 	response.Encode(e)
 	if _, err := e.WriteTo(w); err != nil {
 		return errors.Wrap(err, "write")
 	}
+
 	return nil
 }
 
 func encodeSearchEntitiesByGetResponse(response SearchEntitiesByGetRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzAttributeSearchResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *SearchEntitiesByGetOKDefault:
@@ -1759,18 +1895,20 @@ func encodeSearchEntitiesByGetResponse(response SearchEntitiesByGetRes, w http.R
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *SearchEntitiesByGetApplicationJSONBadRequest:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 		span.SetStatus(codes.Error, http.StatusText(400))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *SearchEntitiesByGetBadRequestDefault:
@@ -1782,18 +1920,20 @@ func encodeSearchEntitiesByGetResponse(response SearchEntitiesByGetRes, w http.R
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *SearchEntitiesByGetApplicationJSONInternalServerError:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -1805,6 +1945,7 @@ func encodeSearchEntitiesByGetResponse(response SearchEntitiesByGetRes, w http.R
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -1815,15 +1956,16 @@ func encodeSearchEntitiesByGetResponse(response SearchEntitiesByGetRes, w http.R
 func encodeSearchEntitiesByPostResponse(response SearchEntitiesByPostRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzAttributeSearchResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *SearchEntitiesByPostOKDefault:
@@ -1835,18 +1977,20 @@ func encodeSearchEntitiesByPostResponse(response SearchEntitiesByPostRes, w http
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *SearchEntitiesByPostApplicationJSONBadRequest:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 		span.SetStatus(codes.Error, http.StatusText(400))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *SearchEntitiesByPostBadRequestDefault:
@@ -1858,18 +2002,20 @@ func encodeSearchEntitiesByPostResponse(response SearchEntitiesByPostRes, w http
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *SearchEntitiesByPostApplicationJSONInternalServerError:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -1881,6 +2027,7 @@ func encodeSearchEntitiesByPostResponse(response SearchEntitiesByPostRes, w http
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -1891,15 +2038,16 @@ func encodeSearchEntitiesByPostResponse(response SearchEntitiesByPostRes, w http
 func encodeVersionResponse(response VersionRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzVersionResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *VersionOKDefault:
@@ -1911,6 +2059,7 @@ func encodeVersionResponse(response VersionRes, w http.ResponseWriter, span trac
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -1921,15 +2070,16 @@ func encodeVersionResponse(response VersionRes, w http.ResponseWriter, span trac
 func encodeWhyEntitiesResponse(response WhyEntitiesRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzWhyEntitiesResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *WhyEntitiesOKDefault:
@@ -1941,18 +2091,20 @@ func encodeWhyEntitiesResponse(response WhyEntitiesRes, w http.ResponseWriter, s
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *WhyEntitiesApplicationJSONNotFound:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 		span.SetStatus(codes.Error, http.StatusText(404))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *WhyEntitiesNotFoundDefault:
@@ -1964,18 +2116,20 @@ func encodeWhyEntitiesResponse(response WhyEntitiesRes, w http.ResponseWriter, s
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *WhyEntitiesApplicationJSONInternalServerError:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -1987,6 +2141,7 @@ func encodeWhyEntitiesResponse(response WhyEntitiesRes, w http.ResponseWriter, s
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -1997,15 +2152,16 @@ func encodeWhyEntitiesResponse(response WhyEntitiesRes, w http.ResponseWriter, s
 func encodeWhyEntityByEntityIDResponse(response WhyEntityByEntityIDRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzWhyEntityResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *WhyEntityByEntityIDOKDefault:
@@ -2017,18 +2173,20 @@ func encodeWhyEntityByEntityIDResponse(response WhyEntityByEntityIDRes, w http.R
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *WhyEntityByEntityIDApplicationJSONNotFound:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 		span.SetStatus(codes.Error, http.StatusText(404))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *WhyEntityByEntityIDNotFoundDefault:
@@ -2040,18 +2198,20 @@ func encodeWhyEntityByEntityIDResponse(response WhyEntityByEntityIDRes, w http.R
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *WhyEntityByEntityIDApplicationJSONInternalServerError:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -2063,6 +2223,7 @@ func encodeWhyEntityByEntityIDResponse(response WhyEntityByEntityIDRes, w http.R
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -2073,15 +2234,16 @@ func encodeWhyEntityByEntityIDResponse(response WhyEntityByEntityIDRes, w http.R
 func encodeWhyEntityByRecordIDResponse(response WhyEntityByRecordIDRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzWhyEntityResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *WhyEntityByRecordIDOKDefault:
@@ -2093,18 +2255,20 @@ func encodeWhyEntityByRecordIDResponse(response WhyEntityByRecordIDRes, w http.R
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *WhyEntityByRecordIDApplicationJSONNotFound:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 		span.SetStatus(codes.Error, http.StatusText(404))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *WhyEntityByRecordIDNotFoundDefault:
@@ -2116,18 +2280,20 @@ func encodeWhyEntityByRecordIDResponse(response WhyEntityByRecordIDRes, w http.R
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *WhyEntityByRecordIDApplicationJSONInternalServerError:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -2139,6 +2305,7 @@ func encodeWhyEntityByRecordIDResponse(response WhyEntityByRecordIDRes, w http.R
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:
@@ -2149,15 +2316,16 @@ func encodeWhyEntityByRecordIDResponse(response WhyEntityByRecordIDRes, w http.R
 func encodeWhyRecordsResponse(response WhyRecordsRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SzWhyRecordsResponse:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *WhyRecordsOKDefault:
@@ -2169,18 +2337,20 @@ func encodeWhyRecordsResponse(response WhyRecordsRes, w http.ResponseWriter, spa
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *WhyRecordsApplicationJSONNotFound:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 		span.SetStatus(codes.Error, http.StatusText(404))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *WhyRecordsNotFoundDefault:
@@ -2192,18 +2362,20 @@ func encodeWhyRecordsResponse(response WhyRecordsRes, w http.ResponseWriter, spa
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *WhyRecordsApplicationJSONInternalServerError:
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
 
-		e := jx.GetEncoder()
+		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	case *ServerErrorDefault:
@@ -2215,6 +2387,7 @@ func encodeWhyRecordsResponse(response WhyRecordsRes, w http.ResponseWriter, spa
 		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
+
 		return nil
 
 	default:

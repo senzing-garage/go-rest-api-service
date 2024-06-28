@@ -21,9 +21,18 @@ build-osarch-specific: darwin/amd64
 
 .PHONY: clean-osarch-specific
 clean-osarch-specific:
-	@rm -rf $(TARGET_DIRECTORY) || true
-	@rm -f $(GOPATH)/bin/$(PROGRAM_NAME) || true
+	@rm -f  $(GOPATH)/bin/$(PROGRAM_NAME) || true
+	@rm -f  $(MAKEFILE_DIRECTORY)/coverage.html || true
+	@rm -f  $(MAKEFILE_DIRECTORY)/coverage.out || true
+	@rm -fr $(TARGET_DIRECTORY) || true
 	@rm -rf /tmp/sqlite || true
+
+
+.PHONY: coverage-osarch-specific
+coverage-osarch-specific:
+	@go test -v -coverprofile=coverage.out -p 1 ./...
+	@go tool cover -html="coverage.out" -o coverage.html
+	@open file://$(MAKEFILE_DIRECTORY)/coverage.html
 
 
 .PHONY: hello-world-osarch-specific

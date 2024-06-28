@@ -3,7 +3,6 @@ package senzingrestservice
 import (
 	"bytes"
 	"context"
-	_ "embed"
 	"fmt"
 	"net/http"
 	"sync"
@@ -11,10 +10,10 @@ import (
 
 	"github.com/senzing-garage/go-logging/logging"
 	"github.com/senzing-garage/go-observing/observer"
-	api "github.com/senzing-garage/go-rest-api-service/senzingrestapi"
+	"github.com/senzing-garage/go-rest-api-service/senzingrestapi"
 	"github.com/senzing-garage/go-sdk-abstract-factory/szfactorycreator"
+	"github.com/senzing-garage/sz-sdk-go/response"
 	"github.com/senzing-garage/sz-sdk-go/senzing"
-	"github.com/senzing-garage/sz-sdk-go/sz"
 	"github.com/senzing-garage/sz-sdk-json-type-definition/go/typedef"
 	"google.golang.org/grpc"
 )
@@ -23,42 +22,276 @@ import (
 // Types
 // ----------------------------------------------------------------------------
 
-// SenzingRestServiceImpl is...
-type SenzingRestServiceImpl struct {
-	abstractFactory         sz.SzAbstractFactory
+// BasicSenzingRestService is...
+type BasicSenzingRestService struct {
+	abstractFactory         senzing.SzAbstractFactory
 	abstractFactorySyncOnce sync.Once
-	api.UnimplementedHandler
-	GrpcDialOptions                []grpc.DialOption
-	GrpcTarget                     string
-	isTrace                        bool
-	logger                         logging.LoggingInterface
-	LogLevelName                   string
-	ObserverOrigin                 string
-	Observers                      []observer.Observer
-	OpenApiSpecificationSpec       []byte
-	Port                           int
-	SenzingEngineConfigurationJson string
-	SenzingModuleName              string
-	SenzingVerboseLogging          int64
-	szConfigManagerSingleton       sz.SzConfigManager
-	szConfigManagerSyncOnce        sync.Once
-	szConfigSingleton              sz.SzConfig
-	szConfigSyncOnce               sync.Once
-	szProductSingleton             sz.SzProduct
-	szProductSyncOnce              sync.Once
-	UrlRoutePrefix                 string
+	senzingrestapi.UnimplementedHandler
+	GrpcDialOptions          []grpc.DialOption
+	GrpcTarget               string
+	isTrace                  bool
+	logger                   logging.Logging
+	LogLevelName             string
+	ObserverOrigin           string
+	Observers                []observer.Observer
+	OpenAPISpecificationSpec []byte
+	Port                     int
+	Settings                 string
+	SenzingInstanceName      string
+	SenzingVerboseLogging    int64
+	szConfigManagerSingleton senzing.SzConfigManager
+	szConfigManagerSyncOnce  sync.Once
+	szConfigSingleton        senzing.SzConfig
+	szConfigSyncOnce         sync.Once
+	szProductSingleton       senzing.SzProduct
+	szProductSyncOnce        sync.Once
+	URLRoutePrefix           string
 }
 
 // ----------------------------------------------------------------------------
-// Variables
+// Interface methods
+// See https://github.com/senzing-garage/go-rest-api-service/blob/main/senzingrestpapi/oas_unimplemented_gen.go
 // ----------------------------------------------------------------------------
 
-var debugOptions []interface{} = []interface{}{
-	&logging.OptionCallerSkip{Value: 5},
+func (restApiService *BasicSenzingRestService) AddDataSources(ctx context.Context, req senzingrestapi.AddDataSourcesReq, params senzingrestapi.AddDataSourcesParams) (r senzingrestapi.AddDataSourcesRes, _ error) {
+	var err error
+	_ = ctx
+	_ = req
+	if restApiService.isTrace {
+		entryTime := time.Now()
+		restApiService.traceEntry(99)
+		defer func() { restApiService.traceExit(99, err, time.Since(entryTime)) }()
+	}
+
+	// URL parameters.
+
+	dataSources := params.DataSource
+	withRaw := params.WithRaw
+
+	// Get Senzing resources.
+
+	szConfig := restApiService.getSzConfig(ctx)
+
+	// Get current configuration from database into memory.
+
+	configurationHandle, err := restApiService.getConfigurationHandle(ctx)
+	if err != nil {
+		restApiService.log(9999, dataSources, withRaw, err)
+	}
+
+	// Add DataSouces to in-memory version of Senzing Configuration.
+
+	sdkResponses := []string{}
+	for _, dataSource := range params.DataSource {
+		sdkResponse, err := szConfig.AddDataSource(ctx, configurationHandle, dataSource)
+		if err != nil {
+			return r, err
+		}
+		sdkResponses = append(sdkResponses, sdkResponse)
+	}
+
+	// Persist in-memory Senzing Configuration to Senzing database SYS_CFG table.
+
+	err = restApiService.persistConfiguration(ctx, configurationHandle)
+	if err != nil {
+		restApiService.log(9999, dataSources, withRaw, err)
+	}
+
+	// Construct response.
+
+	// Retrieve all DataSources
+
+	// rawData, err := g2Config.ListDataSources(ctx, configurationHandle)
+	// if err != nil {
+	// 	return r, err
+	// }
+
+	// fmt.Printf(">>>>>> ListDataSources: %s\n", rawData)
+
+	err = szConfig.CloseConfig(ctx, configurationHandle)
+
+	fmt.Println(sdkResponses)
+
+	// type SzDataSource struct {
+	// 	// The data source code.
+	// 	DataSourceCode OptString `json:"dataSourceCode"`
+	// 	// The data source ID. The value can be null when used for input in creating a data source to
+	// 	// indicate that the data source ID should be auto-generated.
+	// 	DataSourceId OptNilInt32 `json:"dataSourceId"`
+	// }
+
+	szDataSource := &senzingrestapi.SzDataSource{
+		DataSourceCode: senzingrestapi.NewOptString("DataSourceCodeBob"),
+		DataSourceId:   senzingrestapi.NewOptNilInt32(1),
+	}
+
+	// type SzDataSourcesResponseDataDataSourceDetails map[string]SzDataSource
+
+	szDataSourcesResponseDataDataSourceDetails := &senzingrestapi.SzDataSourcesResponseDataDataSourceDetails{
+		"xxxBob": *szDataSource,
+	}
+
+	// type OptSzDataSourcesResponseDataDataSourceDetails struct {
+	// 	Value SzDataSourcesResponseDataDataSourceDetails
+	// 	Set   bool
+	// }
+
+	optSzDataSourcesResponseDataDataSourceDetails := &senzingrestapi.OptSzDataSourcesResponseDataDataSourceDetails{
+		Value: *szDataSourcesResponseDataDataSourceDetails,
+		Set:   true,
+	}
+
+	// type SzDataSourcesResponseData struct {
+	// 	// The list of data source codes for the configured data sources.
+	// 	DataSources []string `json:"dataSources"`
+	// 	// The list of `SzDataSource` instances describing the data sources that are configured.
+	// 	DataSourceDetails OptSzDataSourcesResponseDataDataSourceDetails `json:"dataSourceDetails"`
+	// }
+
+	szDataSourcesResponseData := &senzingrestapi.SzDataSourcesResponseData{
+		DataSources:       []string{"Bobber"},
+		DataSourceDetails: *optSzDataSourcesResponseDataDataSourceDetails,
+	}
+
+	// type OptSzDataSourcesResponseData struct {
+	// 	Value SzDataSourcesResponseData
+	// 	Set   bool
+	// }
+
+	optSzDataSourcesResponseData := &senzingrestapi.OptSzDataSourcesResponseData{
+		Value: *szDataSourcesResponseData,
+		Set:   true,
+	}
+
+	// type SzDataSourcesResponse struct {
+	// 	Data OptSzDataSourcesResponseData `json:"data"`
+	// }
+
+	r = &senzingrestapi.SzDataSourcesResponse{
+		Data: *optSzDataSourcesResponseData,
+	}
+
+	// Condensed version of "r"
+
+	r = &senzingrestapi.SzDataSourcesResponse{
+		Links: restApiService.getOptSzLinks(ctx, "data-sources"),
+		Meta:  restApiService.getOptSzMeta(ctx, senzingrestapi.SzHttpMethodGET, http.StatusOK),
+		Data: senzingrestapi.OptSzDataSourcesResponseData{
+			Set: true,
+			Value: senzingrestapi.SzDataSourcesResponseData{
+				DataSources: []string{"Bobber"},
+				DataSourceDetails: senzingrestapi.OptSzDataSourcesResponseDataDataSourceDetails{
+					Set: true,
+					Value: senzingrestapi.SzDataSourcesResponseDataDataSourceDetails{
+						"xxxBob": senzingrestapi.SzDataSource{
+							DataSourceCode: senzingrestapi.NewOptString("BOBBER5"),
+							DataSourceId:   senzingrestapi.NewOptNilInt32(1),
+						},
+					},
+				},
+			},
+		},
+	}
+
+	return r, err
 }
 
-var traceOptions []interface{} = []interface{}{
-	&logging.OptionCallerSkip{Value: 5},
+func (restApiService *BasicSenzingRestService) Heartbeat(ctx context.Context) (r *senzingrestapi.SzBaseResponse, _ error) {
+	var err error
+	r = &senzingrestapi.SzBaseResponse{
+		Links: restApiService.getOptSzLinks(ctx, "heartbeat"),
+		Meta:  restApiService.getOptSzMeta(ctx, senzingrestapi.SzHttpMethodGET, http.StatusOK),
+	}
+	return r, err
+}
+
+func (restApiService *BasicSenzingRestService) License(ctx context.Context, params senzingrestapi.LicenseParams) (r senzingrestapi.LicenseRes, _ error) {
+	_ = params
+	aresponse, err := restApiService.getG2product(ctx).GetLicense(ctx)
+	if err != nil {
+		return nil, err
+	}
+	parsedResponse, err := response.SzProductGetLicense(ctx, aresponse)
+	if err != nil {
+		return nil, err
+	}
+	issueDate, err := time.Parse("2006-01-02", parsedResponse.IssueDate)
+	panicOnError(err)
+	expireDate, err := time.Parse("2006-01-02", parsedResponse.ExpireDate)
+	panicOnError(err)
+	r = &senzingrestapi.SzLicenseResponse{
+		Links:   restApiService.getOptSzLinks(ctx, "license"),
+		Meta:    restApiService.getOptSzMeta(ctx, senzingrestapi.SzHttpMethodGET, http.StatusOK),
+		RawData: senzingrestapi.OptNilSzLicenseResponseRawData{},
+		Data: senzingrestapi.OptSzLicenseResponseData{
+			Set: true,
+			Value: senzingrestapi.SzLicenseResponseData{
+				License: senzingrestapi.OptSzLicenseInfo{
+					Set: true,
+					Value: senzingrestapi.SzLicenseInfo{
+						Customer:       senzingrestapi.NewOptString(parsedResponse.Customer),
+						Contract:       senzingrestapi.NewOptString(parsedResponse.Contract),
+						LicenseType:    senzingrestapi.NewOptString(parsedResponse.LicenseType),
+						LicenseLevel:   senzingrestapi.NewOptString(parsedResponse.LicenseLevel),
+						Billing:        senzingrestapi.NewOptString(parsedResponse.Billing),
+						IssuanceDate:   senzingrestapi.NewOptDateTime(issueDate),
+						ExpirationDate: senzingrestapi.NewOptDateTime(expireDate),
+						RecordLimit:    senzingrestapi.NewOptInt64(parsedResponse.RecordLimit),
+					},
+				},
+			},
+		},
+	}
+	return r, err
+}
+
+func (restApiService *BasicSenzingRestService) OpenAPISpecification(ctx context.Context) (r senzingrestapi.OpenAPISpecificationOKDefault, _ error) {
+	var err error
+	_ = ctx
+	r = senzingrestapi.OpenAPISpecificationOKDefault{
+		// Links: restApiService.getOptSzLinks(ctx, "specifications/open-api"),
+		// Meta:  restApiService.getOptSzMeta(ctx, api.SzHttpMethodGET, http.StatusOK),
+		Data: bytes.NewReader(restApiService.OpenAPISpecificationSpec),
+	}
+	return r, err
+}
+
+func (restApiService *BasicSenzingRestService) Version(ctx context.Context, params senzingrestapi.VersionParams) (r senzingrestapi.VersionRes, _ error) {
+	_ = params
+	parsedResponse, err := restApiService.getSenzingVersion(ctx)
+	panicOnError(err)
+	nativeAPIBuildDate, err := time.Parse("2006-01-02", parsedResponse.BuildDate)
+	r = &senzingrestapi.SzVersionResponse{
+		Links: restApiService.getOptSzLinks(ctx, "version"),
+		Meta:  restApiService.getOptSzMeta(ctx, senzingrestapi.SzHttpMethodGET, http.StatusOK),
+		Data: senzingrestapi.OptSzVersionInfo{
+			Set: true,
+			Value: senzingrestapi.SzVersionInfo{
+				ApiServerVersion:           senzingrestapi.NewOptString("0.0.0"),
+				RestApiVersion:             senzingrestapi.NewOptString("3.4.1"),
+				NativeApiVersion:           senzingrestapi.NewOptString(parsedResponse.Version),
+				NativeApiBuildVersion:      senzingrestapi.NewOptString(parsedResponse.BuildVersion),
+				NativeApiBuildNumber:       senzingrestapi.NewOptString(parsedResponse.BuildVersion),
+				NativeApiBuildDate:         senzingrestapi.NewOptDateTime(nativeAPIBuildDate),
+				ConfigCompatibilityVersion: senzingrestapi.NewOptString(parsedResponse.CompatibilityVersion.ConfigVersion),
+			},
+		},
+	}
+	return r, err
+}
+
+// ----------------------------------------------------------------------------
+// Public non-interface methods
+// ----------------------------------------------------------------------------
+
+func (restApiService *BasicSenzingRestService) SetLogLevel(ctx context.Context, logLevelName string) error {
+	var err error
+	_ = ctx
+	restApiService.LogLevelName = logLevelName
+	if logLevelName == "TRACE" {
+		restApiService.isTrace = true
+	}
+	return err
 }
 
 // ----------------------------------------------------------------------------
@@ -68,67 +301,48 @@ var traceOptions []interface{} = []interface{}{
 // --- Logging ----------------------------------------------------------------
 
 // Get the Logger singleton.
-func (restApiService *SenzingRestServiceImpl) getLogger() logging.LoggingInterface {
-	var err error = nil
+func (restApiService *BasicSenzingRestService) getLogger() logging.Logging {
+	var err error
 	if restApiService.logger == nil {
 		loggerOptions := []interface{}{
-			&logging.OptionCallerSkip{Value: 3},
+			logging.OptionCallerSkip{Value: 3},
+			logging.OptionLogLevel{Value: restApiService.LogLevelName},
 		}
-		restApiService.logger, err = logging.NewSenzingToolsLogger(ComponentId, IdMessages, loggerOptions...)
-		if err != nil {
-			panic(err)
-		}
+		restApiService.logger, err = logging.NewSenzingLogger(ComponentID, IDMessages, loggerOptions...)
+		panicOnError(err)
 	}
 	return restApiService.logger
 }
 
 // Log message.
-func (restApiService *SenzingRestServiceImpl) log(messageNumber int, details ...interface{}) {
-	restApiService.getLogger().Log(messageNumber, details...)
-}
-
-// Debug.
-func (restApiService *SenzingRestServiceImpl) debug(messageNumber int, details ...interface{}) {
-	details = append(details, debugOptions...)
+func (restApiService *BasicSenzingRestService) log(messageNumber int, details ...interface{}) {
 	restApiService.getLogger().Log(messageNumber, details...)
 }
 
 // Trace method entry.
-func (restApiService *SenzingRestServiceImpl) traceEntry(messageNumber int, details ...interface{}) {
+func (restApiService *BasicSenzingRestService) traceEntry(messageNumber int, details ...interface{}) {
 	restApiService.getLogger().Log(messageNumber, details...)
 }
 
 // Trace method exit.
-func (restApiService *SenzingRestServiceImpl) traceExit(messageNumber int, details ...interface{}) {
+func (restApiService *BasicSenzingRestService) traceExit(messageNumber int, details ...interface{}) {
 	restApiService.getLogger().Log(messageNumber, details...)
-}
-
-// --- Errors -----------------------------------------------------------------
-
-// Create error.
-func (restApiService *SenzingRestServiceImpl) error(messageNumber int, details ...interface{}) error {
-	return restApiService.getLogger().NewError(messageNumber, details...)
 }
 
 // --- Services ---------------------------------------------------------------
 
-func (restApiService *SenzingRestServiceImpl) getAbstractFactory(ctx context.Context) sz.SzAbstractFactory {
-	var err error = nil
+func (restApiService *BasicSenzingRestService) getAbstractFactory(ctx context.Context) senzing.SzAbstractFactory {
+	var err error
+	_ = ctx
 	restApiService.abstractFactorySyncOnce.Do(func() {
 		if len(restApiService.GrpcTarget) == 0 {
-			restApiService.abstractFactory, err = szfactorycreator.CreateCoreAbstractFactory(restApiService.SenzingModuleName, restApiService.SenzingEngineConfigurationJson, restApiService.SenzingVerboseLogging, sz.SZ_INITIALIZE_WITH_DEFAULT_CONFIGURATION)
-			if err != nil {
-				panic(err)
-			}
+			restApiService.abstractFactory, err = szfactorycreator.CreateCoreAbstractFactory(restApiService.SenzingInstanceName, restApiService.Settings, restApiService.SenzingVerboseLogging, senzing.SzInitializeWithDefaultConfiguration)
+			panicOnError(err)
 		} else {
-			grpcConnection, err := grpc.DialContext(ctx, restApiService.GrpcTarget, restApiService.GrpcDialOptions...)
-			if err != nil {
-				panic(err)
-			}
+			grpcConnection, err := grpc.NewClient(restApiService.GrpcTarget, restApiService.GrpcDialOptions...)
+			panicOnError(err)
 			restApiService.abstractFactory, err = szfactorycreator.CreateGrpcAbstractFactory(grpcConnection)
-			if err != nil {
-				panic(err)
-			}
+			panicOnError(err)
 		}
 	})
 	return restApiService.abstractFactory
@@ -136,103 +350,90 @@ func (restApiService *SenzingRestServiceImpl) getAbstractFactory(ctx context.Con
 
 // Singleton pattern for g2config.
 // See https://medium.com/golang-issue/how-singleton-pattern-works-with-golang-2fdd61cd5a7f
-func (restApiService *SenzingRestServiceImpl) getG2config(ctx context.Context) sz.SzConfig {
-	var err error = nil
+func (restApiService *BasicSenzingRestService) getSzConfig(ctx context.Context) senzing.SzConfig {
+	var err error
 	restApiService.szConfigSyncOnce.Do(func() {
 		restApiService.szConfigSingleton, err = restApiService.getAbstractFactory(ctx).CreateSzConfig(ctx)
-		if err != nil {
-			panic(err)
-		}
+		panicOnError(err)
 	})
 	return restApiService.szConfigSingleton
 }
 
 // Singleton pattern for g2config.
 // See https://medium.com/golang-issue/how-singleton-pattern-works-with-golang-2fdd61cd5a7f
-func (restApiService *SenzingRestServiceImpl) getG2configmgr(ctx context.Context) sz.SzConfigManager {
-	var err error = nil
+func (restApiService *BasicSenzingRestService) getSzConfigmgr(ctx context.Context) senzing.SzConfigManager {
+	var err error
 	restApiService.szConfigManagerSyncOnce.Do(func() {
 		restApiService.szConfigManagerSingleton, err = restApiService.getAbstractFactory(ctx).CreateSzConfigManager(ctx)
-		if err != nil {
-			panic(err)
-		}
+		panicOnError(err)
 	})
 	return restApiService.szConfigManagerSingleton
 }
 
 // Singleton pattern for g2product.
 // See https://medium.com/golang-issue/how-singleton-pattern-works-with-golang-2fdd61cd5a7f
-func (restApiService *SenzingRestServiceImpl) getG2product(ctx context.Context) sz.SzProduct {
-	var err error = nil
+func (restApiService *BasicSenzingRestService) getG2product(ctx context.Context) senzing.SzProduct {
+	var err error
 	restApiService.szProductSyncOnce.Do(func() {
 		restApiService.szProductSingleton, err = restApiService.getAbstractFactory(ctx).CreateSzProduct(ctx)
-		if err != nil {
-			panic(err)
-		}
+		panicOnError(err)
 	})
 	return restApiService.szProductSingleton
 }
 
 // --- Misc -------------------------------------------------------------------
 
-func (restApiService *SenzingRestServiceImpl) getOptSzLinks(ctx context.Context, uriPath string) api.OptSzLinks {
-	var result api.OptSzLinks
-	szLinks := api.SzLinks{
-		Self:                 api.NewOptString(fmt.Sprintf("http://%s/%s/%s", getHostname(ctx), restApiService.UrlRoutePrefix, uriPath)),
-		OpenApiSpecification: api.NewOptString(fmt.Sprintf("http://%s/%s/swagger_spec", getHostname(ctx), restApiService.UrlRoutePrefix)),
+func (restApiService *BasicSenzingRestService) getOptSzLinks(ctx context.Context, uriPath string) senzingrestapi.OptSzLinks {
+	var result senzingrestapi.OptSzLinks
+	szLinks := senzingrestapi.SzLinks{
+		Self:                 senzingrestapi.NewOptString(fmt.Sprintf("http://%s/%s/%s", getHostname(ctx), restApiService.URLRoutePrefix, uriPath)),
+		OpenApiSpecification: senzingrestapi.NewOptString(fmt.Sprintf("http://%s/%s/swagger_spec", getHostname(ctx), restApiService.URLRoutePrefix)),
 	}
-	result = api.NewOptSzLinks(szLinks)
+	result = senzingrestapi.NewOptSzLinks(szLinks)
 	return result
 }
 
-func (restApiService *SenzingRestServiceImpl) getOptSzMeta(ctx context.Context, httpMethod api.SzHttpMethod, httpStatusCode int16) api.OptSzMeta {
-	var result api.OptSzMeta
-
+func (restApiService *BasicSenzingRestService) getOptSzMeta(ctx context.Context, httpMethod senzingrestapi.SzHttpMethod, httpStatusCode int16) senzingrestapi.OptSzMeta {
+	var result senzingrestapi.OptSzMeta
 	senzingVersion, err := restApiService.getSenzingVersion(ctx)
-	if err != nil {
-		panic(err)
+	panicOnError(err)
+	nativeAPIBuildDate, err := time.Parse("2006-01-02", senzingVersion.BuildDate)
+	panicOnError(err)
+	szMeta := senzingrestapi.SzMeta{
+		Server:                     senzingrestapi.NewOptString("Senzing REST API Server - go"),
+		HttpMethod:                 senzingrestapi.NewOptSzHttpMethod(httpMethod),
+		HttpStatusCode:             senzingrestapi.NewOptInt16(httpStatusCode),
+		Timestamp:                  senzingrestapi.NewOptDateTime(time.Now().UTC()),
+		Version:                    senzingrestapi.NewOptString("0.0.0"),
+		RestApiVersion:             senzingrestapi.NewOptString("3.4.1"),
+		NativeApiVersion:           senzingrestapi.NewOptString(senzingVersion.Version),
+		NativeApiBuildVersion:      senzingrestapi.NewOptString(senzingVersion.BuildVersion),
+		NativeApiBuildNumber:       senzingrestapi.NewOptString(senzingVersion.BuildNumber),
+		NativeApiBuildDate:         senzingrestapi.NewOptDateTime(nativeAPIBuildDate),
+		ConfigCompatibilityVersion: senzingrestapi.NewOptString(senzingVersion.CompatibilityVersion.ConfigVersion),
+		Timings:                    senzingrestapi.NewOptNilSzMetaTimings(map[string]int64{}),
 	}
-
-	nativeApiBuildDate, err := time.Parse("2006-01-02", senzingVersion.BuildDate)
-	if err != nil {
-		panic(err)
-	}
-
-	szMeta := api.SzMeta{
-		Server:                     api.NewOptString("Senzing REST API Server - go"),
-		HttpMethod:                 api.NewOptSzHttpMethod(httpMethod),
-		HttpStatusCode:             api.NewOptInt16(httpStatusCode),
-		Timestamp:                  api.NewOptDateTime(time.Now().UTC()),
-		Version:                    api.NewOptString("0.0.0"),
-		RestApiVersion:             api.NewOptString("3.4.1"),
-		NativeApiVersion:           api.NewOptString(senzingVersion.Version),
-		NativeApiBuildVersion:      api.NewOptString(senzingVersion.BuildVersion),
-		NativeApiBuildNumber:       api.NewOptString(senzingVersion.BuildNumber),
-		NativeApiBuildDate:         api.NewOptDateTime(nativeApiBuildDate),
-		ConfigCompatibilityVersion: api.NewOptString(senzingVersion.CompatibilityVersion.ConfigVersion),
-		Timings:                    api.NewOptNilSzMetaTimings(map[string]int64{}),
-	}
-	result = api.NewOptSzMeta(szMeta)
+	result = senzingrestapi.NewOptSzMeta(szMeta)
 	return result
 }
 
 // --- Senzing convenience ----------------------------------------------------
 
 // Pull the Senzing Configuration from the database into an in-memory copy.
-func (restApiService *SenzingRestServiceImpl) getConfigurationHandle(ctx context.Context) (uintptr, error) {
-	var err error = nil
+func (restApiService *BasicSenzingRestService) getConfigurationHandle(ctx context.Context) (uintptr, error) {
+	var err error
 	var result uintptr
 	var configurationString string
-	szConfig := restApiService.getG2config(ctx)
-	szConfigManager := restApiService.getG2configmgr(ctx)
-	configId, err := szConfigManager.GetDefaultConfigId(ctx)
+	szConfig := restApiService.getSzConfig(ctx)
+	szConfigManager := restApiService.getSzConfigmgr(ctx)
+	configID, err := szConfigManager.GetDefaultConfigID(ctx)
 	if err != nil {
 		return result, err
 	}
-	if configId == 0 {
+	if configID == 0 {
 		return szConfig.CreateConfig(ctx)
 	}
-	configurationString, err = szConfigManager.GetConfig(ctx, configId)
+	configurationString, err = szConfigManager.GetConfig(ctx, configID)
 	if err != nil {
 		return result, err
 	}
@@ -244,31 +445,31 @@ func (restApiService *SenzingRestServiceImpl) getConfigurationHandle(ctx context
 }
 
 // Persist in-memory Senzing Configuration to Senzing database SYS_CFG table.
-func (restApiService *SenzingRestServiceImpl) persistConfiguration(ctx context.Context, configurationHandle uintptr) error {
-	var err error = nil
-	szConfig := restApiService.getG2config(ctx)
-	szConfigManager := restApiService.getG2configmgr(ctx)
+func (restApiService *BasicSenzingRestService) persistConfiguration(ctx context.Context, configurationHandle uintptr) error {
+	var err error
+	szConfig := restApiService.getSzConfig(ctx)
+	szConfigManager := restApiService.getSzConfigmgr(ctx)
 	newConfigurationString, err := szConfig.ExportConfig(ctx, configurationHandle)
 	if err != nil {
 		return err
 	}
-	newConfigId, err := szConfigManager.AddConfig(ctx, newConfigurationString, "FIXME: description")
+	newConfigID, err := szConfigManager.AddConfig(ctx, newConfigurationString, "FIXME: description")
 	if err != nil {
 		return err
 	}
-	err = szConfigManager.SetDefaultConfigId(ctx, newConfigId)
+	err = szConfigManager.SetDefaultConfigID(ctx, newConfigID)
 	if err != nil {
 		return err
 	}
 	return err
 }
 
-func (restApiService *SenzingRestServiceImpl) getSenzingVersion(ctx context.Context) (*typedef.SzProductGetVersionResponse, error) {
-	response, err := restApiService.getG2product(ctx).GetVersion(ctx)
+func (restApiService *BasicSenzingRestService) getSenzingVersion(ctx context.Context) (*typedef.SzProductGetVersionResponse, error) {
+	aresponse, err := restApiService.getG2product(ctx).GetVersion(ctx)
 	if err != nil {
 		return nil, err
 	}
-	return senzing.UnmarshalSzProductGetVersionResponse(ctx, response)
+	return response.SzProductGetVersion(ctx, aresponse)
 }
 
 // --- Debug ------------------------------------------------------------------
@@ -320,242 +521,13 @@ func (restApiService *SenzingRestServiceImpl) getSenzingVersion(ctx context.Cont
 // }
 
 func getHostname(ctx context.Context) string {
+	_ = ctx
 	result := "localhost:9999"
 	return result
 }
 
-// ----------------------------------------------------------------------------
-// Interface methods
-// See https://github.com/senzing-garage/go-rest-api-service/blob/main/senzingrestpapi/oas_unimplemented_gen.go
-// ----------------------------------------------------------------------------
-
-func (restApiService *SenzingRestServiceImpl) AddDataSources(ctx context.Context, req api.AddDataSourcesReq, params api.AddDataSourcesParams) (r api.AddDataSourcesRes, _ error) {
-	var err error = nil
-	if restApiService.isTrace {
-		entryTime := time.Now()
-		restApiService.traceEntry(99)
-		defer func() { restApiService.traceExit(99, err, time.Since(entryTime)) }()
-	}
-
-	// URL parameters.
-
-	dataSources := params.DataSource
-	withRaw := params.WithRaw
-
-	// Get Senzing resources.
-
-	szConfig := restApiService.getG2config(ctx)
-
-	// Get current configuration from database into memory.
-
-	configurationHandle, err := restApiService.getConfigurationHandle(ctx)
-	if err != nil {
-		restApiService.log(9999, dataSources, withRaw, err)
-	}
-
-	// Add DataSouces to in-memory version of Senzing Configuration.
-
-	sdkResponses := []string{}
-	for _, dataSource := range params.DataSource {
-		sdkResponse, err := szConfig.AddDataSource(ctx, configurationHandle, dataSource)
-		if err != nil {
-			return r, err
-		}
-		sdkResponses = append(sdkResponses, sdkResponse)
-	}
-
-	// Persist in-memory Senzing Configuration to Senzing database SYS_CFG table.
-
-	err = restApiService.persistConfiguration(ctx, configurationHandle)
-	if err != nil {
-		restApiService.log(9999, dataSources, withRaw, err)
-	}
-
-	// Construct response.
-
-	// Retrieve all DataSources
-
-	// rawData, err := g2Config.ListDataSources(ctx, configurationHandle)
-	// if err != nil {
-	// 	return r, err
-	// }
-
-	// fmt.Printf(">>>>>> ListDataSources: %s\n", rawData)
-
-	err = szConfig.CloseConfig(ctx, configurationHandle)
-
-	fmt.Println(sdkResponses)
-
-	// type SzDataSource struct {
-	// 	// The data source code.
-	// 	DataSourceCode OptString `json:"dataSourceCode"`
-	// 	// The data source ID. The value can be null when used for input in creating a data source to
-	// 	// indicate that the data source ID should be auto-generated.
-	// 	DataSourceId OptNilInt32 `json:"dataSourceId"`
-	// }
-
-	szDataSource := &api.SzDataSource{
-		DataSourceCode: api.NewOptString("DataSourceCodeBob"),
-		DataSourceId:   api.NewOptNilInt32(1),
-	}
-
-	// type SzDataSourcesResponseDataDataSourceDetails map[string]SzDataSource
-
-	szDataSourcesResponseDataDataSourceDetails := &api.SzDataSourcesResponseDataDataSourceDetails{
-		"xxxBob": *szDataSource,
-	}
-
-	// type OptSzDataSourcesResponseDataDataSourceDetails struct {
-	// 	Value SzDataSourcesResponseDataDataSourceDetails
-	// 	Set   bool
-	// }
-
-	optSzDataSourcesResponseDataDataSourceDetails := &api.OptSzDataSourcesResponseDataDataSourceDetails{
-		Value: *szDataSourcesResponseDataDataSourceDetails,
-		Set:   true,
-	}
-
-	// type SzDataSourcesResponseData struct {
-	// 	// The list of data source codes for the configured data sources.
-	// 	DataSources []string `json:"dataSources"`
-	// 	// The list of `SzDataSource` instances describing the data sources that are configured.
-	// 	DataSourceDetails OptSzDataSourcesResponseDataDataSourceDetails `json:"dataSourceDetails"`
-	// }
-
-	szDataSourcesResponseData := &api.SzDataSourcesResponseData{
-		DataSources:       []string{"Bobber"},
-		DataSourceDetails: *optSzDataSourcesResponseDataDataSourceDetails,
-	}
-
-	// type OptSzDataSourcesResponseData struct {
-	// 	Value SzDataSourcesResponseData
-	// 	Set   bool
-	// }
-
-	optSzDataSourcesResponseData := &api.OptSzDataSourcesResponseData{
-		Value: *szDataSourcesResponseData,
-		Set:   true,
-	}
-
-	// type SzDataSourcesResponse struct {
-	// 	Data OptSzDataSourcesResponseData `json:"data"`
-	// }
-
-	r = &api.SzDataSourcesResponse{
-		Data: *optSzDataSourcesResponseData,
-	}
-
-	// Condensed version of "r"
-
-	r = &api.SzDataSourcesResponse{
-		Links: restApiService.getOptSzLinks(ctx, "data-sources"),
-		Meta:  restApiService.getOptSzMeta(ctx, api.SzHttpMethodGET, http.StatusOK),
-		Data: api.OptSzDataSourcesResponseData{
-			Set: true,
-			Value: api.SzDataSourcesResponseData{
-				DataSources: []string{"Bobber"},
-				DataSourceDetails: api.OptSzDataSourcesResponseDataDataSourceDetails{
-					Set: true,
-					Value: api.SzDataSourcesResponseDataDataSourceDetails{
-						"xxxBob": api.SzDataSource{
-							DataSourceCode: api.NewOptString("BOBBER5"),
-							DataSourceId:   api.NewOptNilInt32(1),
-						},
-					},
-				},
-			},
-		},
-	}
-
-	return r, err
-}
-
-func (restApiService *SenzingRestServiceImpl) Heartbeat(ctx context.Context) (r *api.SzBaseResponse, _ error) {
-	var err error = nil
-	r = &api.SzBaseResponse{
-		Links: restApiService.getOptSzLinks(ctx, "heartbeat"),
-		Meta:  restApiService.getOptSzMeta(ctx, api.SzHttpMethodGET, http.StatusOK),
-	}
-	return r, err
-}
-
-func (restApiService *SenzingRestServiceImpl) License(ctx context.Context, params api.LicenseParams) (r api.LicenseRes, _ error) {
-	response, err := restApiService.getG2product(ctx).GetLicense(ctx)
-	if err != nil {
-		return nil, err
-	}
-	parsedResponse, err := senzing.UnmarshalSzProductGetLicenseResponse(ctx, response)
-	if err != nil {
-		return nil, err
-	}
-	issueDate, err := time.Parse("2006-01-02", parsedResponse.IssueDate)
+func panicOnError(err error) {
 	if err != nil {
 		panic(err)
 	}
-	expireDate, err := time.Parse("2006-01-02", parsedResponse.ExpireDate)
-	if err != nil {
-		panic(err)
-	}
-	r = &api.SzLicenseResponse{
-		Links:   restApiService.getOptSzLinks(ctx, "license"),
-		Meta:    restApiService.getOptSzMeta(ctx, api.SzHttpMethodGET, http.StatusOK),
-		RawData: api.OptNilSzLicenseResponseRawData{},
-		Data: api.OptSzLicenseResponseData{
-			Set: true,
-			Value: api.SzLicenseResponseData{
-				License: api.OptSzLicenseInfo{
-					Set: true,
-					Value: api.SzLicenseInfo{
-						Customer:       api.NewOptString(parsedResponse.Customer),
-						Contract:       api.NewOptString(parsedResponse.Contract),
-						LicenseType:    api.NewOptString(parsedResponse.LicenseType),
-						LicenseLevel:   api.NewOptString(parsedResponse.LicenseLevel),
-						Billing:        api.NewOptString(parsedResponse.Billing),
-						IssuanceDate:   api.NewOptDateTime(issueDate),
-						ExpirationDate: api.NewOptDateTime(expireDate),
-						RecordLimit:    api.NewOptInt64(parsedResponse.RecordLimit),
-					},
-				},
-			},
-		},
-	}
-	return r, err
-}
-
-func (restApiService *SenzingRestServiceImpl) OpenApiSpecification(ctx context.Context) (r api.OpenApiSpecificationOKDefault, _ error) {
-	var err error = nil
-	r = api.OpenApiSpecificationOKDefault{
-		// Links: restApiService.getOptSzLinks(ctx, "specifications/open-api"),
-		// Meta:  restApiService.getOptSzMeta(ctx, api.SzHttpMethodGET, http.StatusOK),
-		Data: bytes.NewReader(restApiService.OpenApiSpecificationSpec),
-	}
-	return r, err
-}
-
-func (restApiService *SenzingRestServiceImpl) Version(ctx context.Context, params api.VersionParams) (r api.VersionRes, _ error) {
-	parsedResponse, err := restApiService.getSenzingVersion(ctx)
-	if err != nil {
-		panic(err)
-	}
-	nativeApiBuildDate, err := time.Parse("2006-01-02", parsedResponse.BuildDate)
-	if err != nil {
-		panic(err)
-	}
-	r = &api.SzVersionResponse{
-		Links: restApiService.getOptSzLinks(ctx, "version"),
-		Meta:  restApiService.getOptSzMeta(ctx, api.SzHttpMethodGET, http.StatusOK),
-		Data: api.OptSzVersionInfo{
-			Set: true,
-			Value: api.SzVersionInfo{
-				ApiServerVersion:           api.NewOptString("0.0.0"),
-				RestApiVersion:             api.NewOptString("3.4.1"),
-				NativeApiVersion:           api.NewOptString(parsedResponse.Version),
-				NativeApiBuildVersion:      api.NewOptString(parsedResponse.BuildVersion),
-				NativeApiBuildNumber:       api.NewOptString(parsedResponse.BuildVersion),
-				NativeApiBuildDate:         api.NewOptDateTime(nativeApiBuildDate),
-				ConfigCompatibilityVersion: api.NewOptString(parsedResponse.CompatibilityVersion.ConfigVersion),
-			},
-		},
-	}
-	return r, err
 }

@@ -6,6 +6,6 @@ package senzingrestservice
 // Examples for godoc documentation
 // ----------------------------------------------------------------------------
 
-func ExampleSenzingRestServiceImpl_Heartbeat() {
+func ExampleBasicSenzingRestService_Heartbeat() {
 
 }

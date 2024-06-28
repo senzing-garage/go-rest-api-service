@@ -419,7 +419,7 @@ func (UnimplementedHandler) LoadBulkRecords(ctx context.Context, req LoadBulkRec
 	return r, ht.ErrNotImplemented
 }
 
-// OpenApiSpecification implements openApiSpecification operation.
+// OpenAPISpecification implements openAPISpecification operation.
 //
 // This operation can be used to obtain the Open API specification in JSON
 // format.  The specification can either be the `data` field of a standard
@@ -428,7 +428,7 @@ func (UnimplementedHandler) LoadBulkRecords(ctx context.Context, req LoadBulkRec
 // JSON.
 //
 // GET /specifications/open-api
-func (UnimplementedHandler) OpenApiSpecification(ctx context.Context) (r OpenApiSpecificationOKDefault, _ error) {
+func (UnimplementedHandler) OpenAPISpecification(ctx context.Context) (r OpenAPISpecificationOKDefault, _ error) {
 	return r, ht.ErrNotImplemented
 }
 

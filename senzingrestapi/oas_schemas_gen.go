@@ -1112,14 +1112,14 @@ func (*LoadBulkRecordsReqTextPlain) loadBulkRecordsReq() {}
 // This represents the possible return type for an Open API specification which can be an instance of
 // `SzOpenApiSpecResponse` or raw JSON of the Open API specification.
 // Ref: #/components/schemas/SzOpenApiSpecResponseOrRawJson
-type OpenApiSpecificationOKDefault struct {
+type OpenAPISpecificationOKDefault struct {
 	Data io.Reader
 }
 
 // Read reads data from the Data reader.
 //
 // Kept to satisfy the io.Reader interface.
-func (s OpenApiSpecificationOKDefault) Read(p []byte) (n int, err error) {
+func (s OpenAPISpecificationOKDefault) Read(p []byte) (n int, err error) {
 	if s.Data == nil {
 		return 0, io.EOF
 	}
@@ -2009,6 +2009,69 @@ func (o OptNilSzAttributeTypesResponseRawData) Get() (v SzAttributeTypesResponse
 
 // Or returns value if set, or given parameter if does not.
 func (o OptNilSzAttributeTypesResponseRawData) Or(d SzAttributeTypesResponseRawData) SzAttributeTypesResponseRawData {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptNilSzConfigResponseRawData returns new OptNilSzConfigResponseRawData with value set to v.
+func NewOptNilSzConfigResponseRawData(v SzConfigResponseRawData) OptNilSzConfigResponseRawData {
+	return OptNilSzConfigResponseRawData{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptNilSzConfigResponseRawData is optional nullable SzConfigResponseRawData.
+type OptNilSzConfigResponseRawData struct {
+	Value SzConfigResponseRawData
+	Set   bool
+	Null  bool
+}
+
+// IsSet returns true if OptNilSzConfigResponseRawData was set.
+func (o OptNilSzConfigResponseRawData) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptNilSzConfigResponseRawData) Reset() {
+	var v SzConfigResponseRawData
+	o.Value = v
+	o.Set = false
+	o.Null = false
+}
+
+// SetTo sets value to v.
+func (o *OptNilSzConfigResponseRawData) SetTo(v SzConfigResponseRawData) {
+	o.Set = true
+	o.Null = false
+	o.Value = v
+}
+
+// IsSet returns true if value is Null.
+func (o OptNilSzConfigResponseRawData) IsNull() bool { return o.Null }
+
+// SetNull sets value to null.
+func (o *OptNilSzConfigResponseRawData) SetToNull() {
+	o.Set = true
+	o.Null = true
+	var v SzConfigResponseRawData
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptNilSzConfigResponseRawData) Get() (v SzConfigResponseRawData, ok bool) {
+	if o.Null {
+		return v, false
+	}
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptNilSzConfigResponseRawData) Or(d SzConfigResponseRawData) SzConfigResponseRawData {
 	if v, ok := o.Get(); ok {
 		return v
 	}
@@ -2954,69 +3017,6 @@ func (o OptNilSzReevaluateResponseRawData) Get() (v SzReevaluateResponseRawData,
 
 // Or returns value if set, or given parameter if does not.
 func (o OptNilSzReevaluateResponseRawData) Or(d SzReevaluateResponseRawData) SzReevaluateResponseRawData {
-	if v, ok := o.Get(); ok {
-		return v
-	}
-	return d
-}
-
-// NewOptNilSzResponseWithRawDataRawData returns new OptNilSzResponseWithRawDataRawData with value set to v.
-func NewOptNilSzResponseWithRawDataRawData(v SzResponseWithRawDataRawData) OptNilSzResponseWithRawDataRawData {
-	return OptNilSzResponseWithRawDataRawData{
-		Value: v,
-		Set:   true,
-	}
-}
-
-// OptNilSzResponseWithRawDataRawData is optional nullable SzResponseWithRawDataRawData.
-type OptNilSzResponseWithRawDataRawData struct {
-	Value SzResponseWithRawDataRawData
-	Set   bool
-	Null  bool
-}
-
-// IsSet returns true if OptNilSzResponseWithRawDataRawData was set.
-func (o OptNilSzResponseWithRawDataRawData) IsSet() bool { return o.Set }
-
-// Reset unsets value.
-func (o *OptNilSzResponseWithRawDataRawData) Reset() {
-	var v SzResponseWithRawDataRawData
-	o.Value = v
-	o.Set = false
-	o.Null = false
-}
-
-// SetTo sets value to v.
-func (o *OptNilSzResponseWithRawDataRawData) SetTo(v SzResponseWithRawDataRawData) {
-	o.Set = true
-	o.Null = false
-	o.Value = v
-}
-
-// IsSet returns true if value is Null.
-func (o OptNilSzResponseWithRawDataRawData) IsNull() bool { return o.Null }
-
-// SetNull sets value to null.
-func (o *OptNilSzResponseWithRawDataRawData) SetToNull() {
-	o.Set = true
-	o.Null = true
-	var v SzResponseWithRawDataRawData
-	o.Value = v
-}
-
-// Get returns value and boolean that denotes whether value was set.
-func (o OptNilSzResponseWithRawDataRawData) Get() (v SzResponseWithRawDataRawData, ok bool) {
-	if o.Null {
-		return v, false
-	}
-	if !o.Set {
-		return v, false
-	}
-	return o.Value, true
-}
-
-// Or returns value if set, or given parameter if does not.
-func (o OptNilSzResponseWithRawDataRawData) Or(d SzResponseWithRawDataRawData) SzResponseWithRawDataRawData {
 	if v, ok := o.Get(); ok {
 		return v
 	}
@@ -6583,6 +6583,20 @@ const (
 	SzAttributeClassOTHER          SzAttributeClass = "OTHER"
 )
 
+// AllValues returns all SzAttributeClass values.
+func (SzAttributeClass) AllValues() []SzAttributeClass {
+	return []SzAttributeClass{
+		SzAttributeClassADDRESS,
+		SzAttributeClassCHARACTERISTIC,
+		SzAttributeClassIDENTIFIER,
+		SzAttributeClassNAME,
+		SzAttributeClassOBSERVATION,
+		SzAttributeClassPHONE,
+		SzAttributeClassRELATIONSHIP,
+		SzAttributeClassOTHER,
+	}
+}
+
 // MarshalText implements encoding.TextMarshaler.
 func (s SzAttributeClass) MarshalText() ([]byte, error) {
 	switch s {
@@ -6666,6 +6680,16 @@ const (
 	SzAttributeNecessityPREFERRED  SzAttributeNecessity = "PREFERRED"
 	SzAttributeNecessityOPTIONAL   SzAttributeNecessity = "OPTIONAL"
 )
+
+// AllValues returns all SzAttributeNecessity values.
+func (SzAttributeNecessity) AllValues() []SzAttributeNecessity {
+	return []SzAttributeNecessity{
+		SzAttributeNecessityREQUIRED,
+		SzAttributeNecessitySUFFICIENT,
+		SzAttributeNecessityPREFERRED,
+		SzAttributeNecessityOPTIONAL,
+	}
+}
 
 // MarshalText implements encoding.TextMarshaler.
 func (s SzAttributeNecessity) MarshalText() ([]byte, error) {
@@ -7124,6 +7148,16 @@ const (
 	SzAttributeSearchResultTypePOSSIBLERELATION SzAttributeSearchResultType = "POSSIBLE_RELATION"
 	SzAttributeSearchResultTypeNAMEONLYMATCH    SzAttributeSearchResultType = "NAME_ONLY_MATCH"
 )
+
+// AllValues returns all SzAttributeSearchResultType values.
+func (SzAttributeSearchResultType) AllValues() []SzAttributeSearchResultType {
+	return []SzAttributeSearchResultType{
+		SzAttributeSearchResultTypeMATCH,
+		SzAttributeSearchResultTypePOSSIBLEMATCH,
+		SzAttributeSearchResultTypePOSSIBLERELATION,
+		SzAttributeSearchResultTypeNAMEONLYMATCH,
+	}
+}
 
 // MarshalText implements encoding.TextMarshaler.
 func (s SzAttributeSearchResultType) MarshalText() ([]byte, error) {
@@ -7595,6 +7629,16 @@ const (
 	SzBulkDataStatusCOMPLETED  SzBulkDataStatus = "COMPLETED"
 )
 
+// AllValues returns all SzBulkDataStatus values.
+func (SzBulkDataStatus) AllValues() []SzBulkDataStatus {
+	return []SzBulkDataStatus{
+		SzBulkDataStatusNOTSTARTED,
+		SzBulkDataStatusINPROGRESS,
+		SzBulkDataStatusABORTED,
+		SzBulkDataStatusCOMPLETED,
+	}
+}
+
 // MarshalText implements encoding.TextMarshaler.
 func (s SzBulkDataStatus) MarshalText() ([]byte, error) {
 	switch s {
@@ -7869,6 +7913,60 @@ func (s *SzCandidateKey) SetFeatureType(val OptString) {
 // SetFeatureValue sets the value of FeatureValue.
 func (s *SzCandidateKey) SetFeatureValue(val OptString) {
 	s.FeatureValue = val
+}
+
+// Merged schema.
+// Ref: #/components/schemas/SzConfigResponse
+type SzConfigResponse struct {
+	Meta  OptSzMeta  `json:"meta"`
+	Links OptSzLinks `json:"links"`
+	// The RAW result from the underlying native API function.
+	RawData OptNilSzConfigResponseRawData `json:"rawData"`
+}
+
+// GetMeta returns the value of Meta.
+func (s *SzConfigResponse) GetMeta() OptSzMeta {
+	return s.Meta
+}
+
+// GetLinks returns the value of Links.
+func (s *SzConfigResponse) GetLinks() OptSzLinks {
+	return s.Links
+}
+
+// GetRawData returns the value of RawData.
+func (s *SzConfigResponse) GetRawData() OptNilSzConfigResponseRawData {
+	return s.RawData
+}
+
+// SetMeta sets the value of Meta.
+func (s *SzConfigResponse) SetMeta(val OptSzMeta) {
+	s.Meta = val
+}
+
+// SetLinks sets the value of Links.
+func (s *SzConfigResponse) SetLinks(val OptSzLinks) {
+	s.Links = val
+}
+
+// SetRawData sets the value of RawData.
+func (s *SzConfigResponse) SetRawData(val OptNilSzConfigResponseRawData) {
+	s.RawData = val
+}
+
+func (*SzConfigResponse) getActiveConfigRes()   {}
+func (*SzConfigResponse) getTemplateConfigRes() {}
+
+// The RAW result from the underlying native API function.
+type SzConfigResponseRawData map[string]jx.Raw
+
+func (s *SzConfigResponseRawData) init() SzConfigResponseRawData {
+	m := *s
+	if m == nil {
+		m = map[string]jx.Raw{}
+		*s = m
+	}
+	return m
 }
 
 // Describes a data source.
@@ -8456,6 +8554,18 @@ const (
 	SzDetailLevelSUMMARY        SzDetailLevel = "SUMMARY"
 	SzDetailLevelVERBOSE        SzDetailLevel = "VERBOSE"
 )
+
+// AllValues returns all SzDetailLevel values.
+func (SzDetailLevel) AllValues() []SzDetailLevel {
+	return []SzDetailLevel{
+		SzDetailLevelBAREMINIMAL,
+		SzDetailLevelNETWORKMINIMAL,
+		SzDetailLevelMINIMAL,
+		SzDetailLevelBRIEF,
+		SzDetailLevelSUMMARY,
+		SzDetailLevelVERBOSE,
+	}
+}
 
 // MarshalText implements encoding.TextMarshaler.
 func (s SzDetailLevel) MarshalText() ([]byte, error) {
@@ -9463,6 +9573,17 @@ const (
 	SzFeatureModeATTRIBUTED     SzFeatureMode = "ATTRIBUTED"
 )
 
+// AllValues returns all SzFeatureMode values.
+func (SzFeatureMode) AllValues() []SzFeatureMode {
+	return []SzFeatureMode{
+		SzFeatureModeNONE,
+		SzFeatureModeENTITYNAMEONLY,
+		SzFeatureModeREPRESENTATIVE,
+		SzFeatureModeWITHDUPLICATES,
+		SzFeatureModeATTRIBUTED,
+	}
+}
+
 // MarshalText implements encoding.TextMarshaler.
 func (s SzFeatureMode) MarshalText() ([]byte, error) {
 	switch s {
@@ -9916,6 +10037,17 @@ const (
 	SzHttpMethodDELETE SzHttpMethod = "DELETE"
 )
 
+// AllValues returns all SzHttpMethod values.
+func (SzHttpMethod) AllValues() []SzHttpMethod {
+	return []SzHttpMethod{
+		SzHttpMethodGET,
+		SzHttpMethodPOST,
+		SzHttpMethodPUT,
+		SzHttpMethodPATCH,
+		SzHttpMethodDELETE,
+	}
+}
+
 // MarshalText implements encoding.TextMarshaler.
 func (s SzHttpMethod) MarshalText() ([]byte, error) {
 	switch s {
@@ -10281,6 +10413,18 @@ const (
 	SzMatchLevelNAMEONLY        SzMatchLevel = "NAME_ONLY"
 	SzMatchLevelDISCLOSED       SzMatchLevel = "DISCLOSED"
 )
+
+// AllValues returns all SzMatchLevel values.
+func (SzMatchLevel) AllValues() []SzMatchLevel {
+	return []SzMatchLevel{
+		SzMatchLevelNOMATCH,
+		SzMatchLevelRESOLVED,
+		SzMatchLevelPOSSIBLYSAME,
+		SzMatchLevelPOSSIBLYRELATED,
+		SzMatchLevelNAMEONLY,
+		SzMatchLevelDISCLOSED,
+	}
+}
 
 // MarshalText implements encoding.TextMarshaler.
 func (s SzMatchLevel) MarshalText() ([]byte, error) {
@@ -11368,6 +11512,15 @@ const (
 	SzRelationDirectionBIDIRECTIONAL SzRelationDirection = "BIDIRECTIONAL"
 )
 
+// AllValues returns all SzRelationDirection values.
+func (SzRelationDirection) AllValues() []SzRelationDirection {
+	return []SzRelationDirection{
+		SzRelationDirectionINBOUND,
+		SzRelationDirectionOUTBOUND,
+		SzRelationDirectionBIDIRECTIONAL,
+	}
+}
+
 // MarshalText implements encoding.TextMarshaler.
 func (s SzRelationDirection) MarshalText() ([]byte, error) {
 	switch s {
@@ -11426,6 +11579,15 @@ const (
 	SzRelationshipModeFULL    SzRelationshipMode = "FULL"
 )
 
+// AllValues returns all SzRelationshipMode values.
+func (SzRelationshipMode) AllValues() []SzRelationshipMode {
+	return []SzRelationshipMode{
+		SzRelationshipModeNONE,
+		SzRelationshipModePARTIAL,
+		SzRelationshipModeFULL,
+	}
+}
+
 // MarshalText implements encoding.TextMarshaler.
 func (s SzRelationshipMode) MarshalText() ([]byte, error) {
 	switch s {
@@ -11467,6 +11629,15 @@ const (
 	SzRelationshipTypePOSSIBLERELATION  SzRelationshipType = "POSSIBLE_RELATION"
 	SzRelationshipTypeDISCLOSEDRELATION SzRelationshipType = "DISCLOSED_RELATION"
 )
+
+// AllValues returns all SzRelationshipType values.
+func (SzRelationshipType) AllValues() []SzRelationshipType {
+	return []SzRelationshipType{
+		SzRelationshipTypePOSSIBLEMATCH,
+		SzRelationshipTypePOSSIBLERELATION,
+		SzRelationshipTypeDISCLOSEDRELATION,
+	}
+}
 
 // MarshalText implements encoding.TextMarshaler.
 func (s SzRelationshipType) MarshalText() ([]byte, error) {
@@ -11842,60 +12013,6 @@ func (s *SzResolvedEntityFeatures) init() SzResolvedEntityFeatures {
 	return m
 }
 
-// Merged schema.
-// Ref: #/components/schemas/SzResponseWithRawData
-type SzResponseWithRawData struct {
-	Meta  OptSzMeta  `json:"meta"`
-	Links OptSzLinks `json:"links"`
-	// The RAW result from the underlying native API function.
-	RawData OptNilSzResponseWithRawDataRawData `json:"rawData"`
-}
-
-// GetMeta returns the value of Meta.
-func (s *SzResponseWithRawData) GetMeta() OptSzMeta {
-	return s.Meta
-}
-
-// GetLinks returns the value of Links.
-func (s *SzResponseWithRawData) GetLinks() OptSzLinks {
-	return s.Links
-}
-
-// GetRawData returns the value of RawData.
-func (s *SzResponseWithRawData) GetRawData() OptNilSzResponseWithRawDataRawData {
-	return s.RawData
-}
-
-// SetMeta sets the value of Meta.
-func (s *SzResponseWithRawData) SetMeta(val OptSzMeta) {
-	s.Meta = val
-}
-
-// SetLinks sets the value of Links.
-func (s *SzResponseWithRawData) SetLinks(val OptSzLinks) {
-	s.Links = val
-}
-
-// SetRawData sets the value of RawData.
-func (s *SzResponseWithRawData) SetRawData(val OptNilSzResponseWithRawDataRawData) {
-	s.RawData = val
-}
-
-func (*SzResponseWithRawData) getActiveConfigRes()   {}
-func (*SzResponseWithRawData) getTemplateConfigRes() {}
-
-// The RAW result from the underlying native API function.
-type SzResponseWithRawDataRawData map[string]jx.Raw
-
-func (s *SzResponseWithRawDataRawData) init() SzResponseWithRawDataRawData {
-	m := *s
-	if m == nil {
-		m = map[string]jx.Raw{}
-		*s = m
-	}
-	return m
-}
-
 // A description of a feature that has been scored against another feature.
 // Ref: #/components/schemas/SzScoredFeature
 type SzScoredFeature struct {
@@ -12037,6 +12154,19 @@ const (
 	SzScoringBucketNOCHANCE  SzScoringBucket = "NO_CHANCE"
 )
 
+// AllValues returns all SzScoringBucket values.
+func (SzScoringBucket) AllValues() []SzScoringBucket {
+	return []SzScoringBucket{
+		SzScoringBucketNOTSCORED,
+		SzScoringBucketSAME,
+		SzScoringBucketCLOSE,
+		SzScoringBucketLIKELY,
+		SzScoringBucketPLAUSIBLE,
+		SzScoringBucketUNLIKELY,
+		SzScoringBucketNOCHANCE,
+	}
+}
+
 // MarshalText implements encoding.TextMarshaler.
 func (s SzScoringBucket) MarshalText() ([]byte, error) {
 	switch s {
@@ -12115,6 +12245,18 @@ const (
 	SzScoringFrequencyVERYMANY  SzScoringFrequency = "VERY_MANY"
 	SzScoringFrequencyNAME      SzScoringFrequency = "NAME"
 )
+
+// AllValues returns all SzScoringFrequency values.
+func (SzScoringFrequency) AllValues() []SzScoringFrequency {
+	return []SzScoringFrequency{
+		SzScoringFrequencyALWAYSONE,
+		SzScoringFrequencyONE,
+		SzScoringFrequencyFEW,
+		SzScoringFrequencyMANY,
+		SzScoringFrequencyVERYMANY,
+		SzScoringFrequencyNAME,
+	}
+}
 
 // MarshalText implements encoding.TextMarshaler.
 func (s SzScoringFrequency) MarshalText() ([]byte, error) {

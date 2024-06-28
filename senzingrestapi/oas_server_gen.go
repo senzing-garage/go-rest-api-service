@@ -345,7 +345,7 @@ type Handler interface {
 	//
 	// POST /bulk-data/load
 	LoadBulkRecords(ctx context.Context, req LoadBulkRecordsReq, params LoadBulkRecordsParams) (LoadBulkRecordsRes, error)
-	// OpenApiSpecification implements openApiSpecification operation.
+	// OpenAPISpecification implements openAPISpecification operation.
 	//
 	// This operation can be used to obtain the Open API specification in JSON
 	// format.  The specification can either be the `data` field of a standard
@@ -354,7 +354,7 @@ type Handler interface {
 	// JSON.
 	//
 	// GET /specifications/open-api
-	OpenApiSpecification(ctx context.Context) (OpenApiSpecificationOKDefault, error)
+	OpenAPISpecification(ctx context.Context) (OpenAPISpecificationOKDefault, error)
 	// ReevaluateEntity implements reevaluateEntity operation.
 	//
 	// Reevaluates an entity identified by the entity ID specified via the
