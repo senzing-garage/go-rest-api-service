@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed in 0.9.4
 
 - Updated dependencies
+- Updated generated files with github.com/ogen-go/ogen v1.2.2
 
 ## [0.9.3] - 2024-05-09
 

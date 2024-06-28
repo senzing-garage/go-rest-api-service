@@ -46,23 +46,23 @@ threshold:
 
 exclude:
   paths:
-    - senzingrestapis/oas_cfg_gen.go
-    - senzingrestapis/oas_client_gen.go
-    - senzingrestapis/oas_handlers_gen.go
-    - senzingrestapis/oas_interfaces_gen.go
-    - senzingrestapis/oas_json_gen.go
-    - senzingrestapis/oas_labeler_gen.go
-    - senzingrestapis/oas_middleware_gen.go
-    - senzingrestapis/oas_parameters_gen.go
-    - senzingrestapis/oas_request_decoders_gen.go
-    - senzingrestapis/oas_request_encoders_gen.go
-    - senzingrestapis/oas_response_decoders_gen.go
-    - senzingrestapis/oas_response_encoders_gen.go
-    - senzingrestapis/oas_router_gen.go
-    - senzingrestapis/oas_schemas_gen.go
-    - senzingrestapis/oas_server_gen.go
-    - senzingrestapis/oas_unimplemented_gen.go
-    - senzingrestapis/oas_validators_gen.go
+    - senzingrestapi/oas_cfg_gen.go
+    - senzingrestapi/oas_client_gen.go
+    - senzingrestapi/oas_handlers_gen.go
+    - senzingrestapi/oas_interfaces_gen.go
+    - senzingrestapi/oas_json_gen.go
+    - senzingrestapi/oas_labeler_gen.go
+    - senzingrestapi/oas_middleware_gen.go
+    - senzingrestapi/oas_parameters_gen.go
+    - senzingrestapi/oas_request_decoders_gen.go
+    - senzingrestapi/oas_request_encoders_gen.go
+    - senzingrestapi/oas_response_decoders_gen.go
+    - senzingrestapi/oas_response_encoders_gen.go
+    - senzingrestapi/oas_router_gen.go
+    - senzingrestapi/oas_schemas_gen.go
+    - senzingrestapi/oas_server_gen.go
+    - senzingrestapi/oas_unimplemented_gen.go
+    - senzingrestapi/oas_validators_gen.go
 # NOTES:
 # - symbol `/` in all path regexps will be replaced by current OS file path separator
 #   to properly work on Windows
