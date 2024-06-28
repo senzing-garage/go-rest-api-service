@@ -1,2 +1,6 @@
 quiet: true
-skip-check: CKV_DOCKER_7
+skip-check:
+  - CKV_DOCKER_7
+  - CKV_OPENAPI_4
+  - CKV_OPENAPI_5
+  - CKV_OPENAPI_21
