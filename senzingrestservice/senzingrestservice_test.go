@@ -10,11 +10,12 @@ import (
 	"github.com/senzing-garage/go-helpers/settings"
 	api "github.com/senzing-garage/go-rest-api-service/senzingrestapi"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 var (
 	senzingRestServiceSingleton SenzingRestService
-	debug                       bool = false
+	debug                       bool
 )
 
 // ----------------------------------------------------------------------------
@@ -24,25 +25,17 @@ var (
 func getTestObject(ctx context.Context, test *testing.T) SenzingRestService {
 	_ = ctx
 	if senzingRestServiceSingleton == nil {
-		senzingEngineConfigurationJson, err := settings.BuildSimpleSettingsUsingEnvVars()
+		settings, err := settings.BuildSimpleSettingsUsingEnvVars()
 		if err != nil {
 			test.Errorf("Error: %s", err)
 		}
-		senzingRestServiceSingleton = &SenzingRestServiceImpl{
-			SenzingEngineConfigurationJson: senzingEngineConfigurationJson,
-			SenzingModuleName:              "go-rest-api-service-test",
-			SenzingVerboseLogging:          int64(0),
+		senzingRestServiceSingleton = &BasicSenzingRestService{
+			Settings:              settings,
+			SenzingInstanceName:   "go-rest-api-service-test",
+			SenzingVerboseLogging: int64(0),
 		}
 	}
 	return senzingRestServiceSingleton
-}
-
-func testError(test *testing.T, ctx context.Context, err error) {
-	_ = ctx
-	if err != nil {
-		test.Log("Error:", err.Error())
-		assert.FailNow(test, err.Error())
-	}
 }
 
 // ----------------------------------------------------------------------------
@@ -58,7 +51,7 @@ func TestSenzingRestServiceImpl_AddDataSources(test *testing.T) {
 		DataSource: []string{dataSourceName},
 	}
 	response, err := testObject.AddDataSources(ctx, request, params)
-	testError(test, ctx, err)
+	require.NoError(test, err)
 	switch responseTyped := response.(type) {
 	case *api.SzDataSourcesResponse:
 		if debug {
@@ -78,6 +71,7 @@ func TestSenzingRestServiceImpl_AddDataSources(test *testing.T) {
 				test.Logf(">>>>> %d: %-60s %+v\n", index, reflect.TypeOf(value), value)
 			}
 		}
+	default:
 	}
 }
 
@@ -85,9 +79,9 @@ func TestSenzingRestServiceImpl_Heartbeat(test *testing.T) {
 	ctx := context.TODO()
 	testObject := getTestObject(ctx, test)
 	response, err := testObject.Heartbeat(ctx)
-	testError(test, ctx, err)
+	require.NoError(test, err)
 	httpMethod, err := response.Meta.Value.HttpMethod.Value.MarshalText()
-	testError(test, ctx, err)
+	require.NoError(test, err)
 	assert.Equal(test, "GET", string(httpMethod))
 }
 
@@ -98,23 +92,24 @@ func TestSenzingRestServiceImpl_License(test *testing.T) {
 		WithRaw: api.NewOptBool(false),
 	}
 	response, err := testObject.License(ctx, params)
-	testError(test, ctx, err)
+	require.NoError(test, err)
 	switch responseTyped := response.(type) {
 	case *api.SzLicenseResponse:
 		recordLimit, _ := responseTyped.Data.Value.License.Value.RecordLimit.Get()
 		assert.Equal(test, int64(50000), recordLimit)
+	default:
 	}
 }
 
 func TestSenzingRestServiceImpl_OpenApiSpecification(test *testing.T) {
 	ctx := context.TODO()
 	testObject := getTestObject(ctx, test)
-	var openApiSpecificationBytes []byte
+	var openAPISpecificationBytes []byte
 	response, err := testObject.OpenApiSpecification(ctx)
-	testError(test, ctx, err)
-	numBytes, _ := response.Data.Read(openApiSpecificationBytes)
+	require.NoError(test, err)
+	numBytes, _ := response.Data.Read(openAPISpecificationBytes)
 	// testError(test, ctx, err)
-	test.Logf(">>>>> %d;  %v\n", numBytes, openApiSpecificationBytes)
+	test.Logf(">>>>> %d;  %v\n", numBytes, openAPISpecificationBytes)
 }
 
 func TestSenzingRestServiceImpl_Version(test *testing.T) {
@@ -124,10 +119,11 @@ func TestSenzingRestServiceImpl_Version(test *testing.T) {
 		WithRaw: api.NewOptBool(false),
 	}
 	response, err := testObject.Version(ctx, params)
-	testError(test, ctx, err)
+	require.NoError(test, err)
 	switch responseTyped := response.(type) {
 	case *api.SzVersionResponse:
 		apiServerVersion, _ := responseTyped.Data.Value.ApiServerVersion.Get()
 		assert.Equal(test, "0.0.0", apiServerVersion)
+	default:
 	}
 }

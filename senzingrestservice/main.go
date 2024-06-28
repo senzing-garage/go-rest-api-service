@@ -20,7 +20,7 @@ type SenzingRestService interface {
 // ----------------------------------------------------------------------------
 
 // Identfier of the  package found messages having the format "senzing-6503xxxx".
-const ComponentId = 9999
+const ComponentID = 9999
 
 // Log message prefix.
 const Prefix = "go-rest-api-service.senzingrestservice."
@@ -30,15 +30,15 @@ const Prefix = "go-rest-api-service.senzingrestservice."
 // ----------------------------------------------------------------------------
 
 // Message templates for g2config implementations.
-var IdMessages = map[int]string{
+var IDMessages = map[int]string{
 	10: "Enter " + Prefix + "InitializeSenzing().",
 }
 
 // Status strings for specific messages.
-var IdStatuses = map[int]string{}
+var IDStatuses = map[int]string{}
 
 //go:embed openapi.json
-var OpenApiSpecificationJson []byte
+var OpenAPISpecificationJSON []byte
 
 //go:embed openapi.yaml
-var OpenApiSpecificationYaml []byte
+var OpenAPISpecificationYaml []byte
