@@ -8,7 +8,7 @@ require (
 	github.com/go-faster/errors v0.7.1
 	github.com/go-faster/jx v1.1.0
 	github.com/ogen-go/ogen v1.2.2
-	github.com/senzing-garage/go-helpers v0.5.2
+	github.com/senzing-garage/go-helpers v0.6.0
 	github.com/senzing-garage/go-logging v1.5.0
 	github.com/senzing-garage/go-observing v0.3.2
 	github.com/senzing-garage/go-sdk-abstract-factory v0.8.1
@@ -40,9 +40,9 @@ require (
 	github.com/senzing-garage/sz-sdk-go-grpc v0.7.2 // indirect
 	github.com/senzing-garage/sz-sdk-proto v0.7.6 // indirect
 	go.uber.org/zap v1.27.0 // indirect
-	golang.org/x/exp v0.0.0-20240719175910-8a7402abbf56 // indirect
+	golang.org/x/exp v0.0.0-20240808152545-0cdaa3abc0fa // indirect
 	golang.org/x/net v0.27.0 // indirect
-	golang.org/x/sync v0.7.0 // indirect
+	golang.org/x/sync v0.8.0 // indirect
 	golang.org/x/sys v0.22.0 // indirect
 	golang.org/x/text v0.16.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240730163845-b1a4ccb954bf // indirect
