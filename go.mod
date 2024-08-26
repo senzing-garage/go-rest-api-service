@@ -16,9 +16,9 @@ require (
 	github.com/senzing-garage/sz-sdk-go-core v0.7.5
 	github.com/senzing-garage/sz-sdk-json-type-definition v0.2.6
 	github.com/stretchr/testify v1.9.0
-	go.opentelemetry.io/otel v1.28.0
-	go.opentelemetry.io/otel/metric v1.28.0
-	go.opentelemetry.io/otel/trace v1.28.0
+	go.opentelemetry.io/otel v1.29.0
+	go.opentelemetry.io/otel/metric v1.29.0
+	go.opentelemetry.io/otel/trace v1.29.0
 	go.uber.org/multierr v1.11.0
 	google.golang.org/grpc v1.65.0
 )
