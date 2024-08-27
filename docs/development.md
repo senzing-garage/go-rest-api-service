@@ -9,8 +9,8 @@
 Since the Senzing library is a prerequisite, it must be installed first.
 
 1. Verify Senzing C shared objects, configuration, and SDK header files are installed.
-    1. `/opt/senzing/g2/lib`
-    1. `/opt/senzing/g2/sdk/c`
+    1. `/opt/senzing/er/lib`
+    1. `/opt/senzing/er/sdk/c`
     1. `/etc/opt/senzing`
 
 1. If not installed, see
@@ -40,7 +40,7 @@ Since the Senzing library is a prerequisite, it must be installed first.
    Example:
 
     ```console
-    export LD_LIBRARY_PATH=/opt/senzing/g2/lib/
+    export LD_LIBRARY_PATH=/opt/senzing/er/lib/
     senzing-tools init-database --database-url sqlite3://na:na@/tmp/sqlite/G2C.db
     ```
 

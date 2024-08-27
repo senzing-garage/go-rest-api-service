@@ -29,7 +29,7 @@ const Prefix = "go-rest-api-service.senzingrestservice."
 // Variables
 // ----------------------------------------------------------------------------
 
-// Message templates for g2config implementations.
+// Message templates for szconfig implementations.
 var IDMessages = map[int]string{
 	10: "Enter " + Prefix + "InitializeSenzing().",
 }
