@@ -277,42 +277,18 @@ Example:
 
 ## Speciality
 
-### Make a test database
+### Generate senzingrestapi
 
-1. Install
-   [senzing-tools](https://github.com/senzing-garage/senzing-tools#install).
-1. Create database.
-   **Note:** The database location in the following example matches what's in the `Makefile`.
-   Example:
+Instructions are at [Ogen QuickStart].
 
-    ```console
-    export LD_LIBRARY_PATH=/opt/senzing/er/lib/
-    senzing-tools init-database --database-url sqlite3://na:na@/tmp/sqlite/G2C.db
-    ```
-
-### Development cycle
-
-Instructions are at
-[Ogen QuickStart](https://ogen.dev/docs/intro/).
-
-1. Get latest version of `ogen`
-
-    ```console
-    cd ${GIT_REPOSITORY_DIR}
-    go get -d github.com/ogen-go/ogen
-    ```
-
-1. View version.
+1. View version of [ogen].
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
     go list -m github.com/ogen-go/ogen
     ```
 
-1. Down latest version of
-   [senzing-rest-api.yaml](https://raw.githubusercontent.com/senzing-garage/senzing-rest-api-specification/main/senzing-rest-api.yaml)
-   to
-   [restapiservice/openapi.yaml](https://github.com/senzing-garage/go-rest-api-service/blob/main/restapiservice/openapi.yaml).
+1. Down latest version of [senzing-rest-api.yaml] to [restapiservice/openapi.yaml].
 
 1. Create `generate.go`
 
@@ -331,4 +307,7 @@ Instructions are at
 [How to Install Senzing for Go Development]: https://github.com/senzing-garage/knowledge-base/blob/main/HOWTO/install-senzing-for-go-development.md
 [localhost:6060]: http://localhost:6060/pkg/github.com/senzing-garage/go-rest-api-service/
 [make]: https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/make.md
+[Ogen QuickStart]: https://ogen.dev/docs/intro/
+[restapiservice/openapi.yaml]: https://github.com/senzing-garage/go-rest-api-service/blob/main/restapiservice/openapi.yaml
+[senzing-rest-api.yaml]: https://raw.githubusercontent.com/senzing-garage/senzing-rest-api-specification/main/senzing-rest-api.yaml
 [testcoverage.yaml]: ../.github/coverage/testcoverage.yaml
