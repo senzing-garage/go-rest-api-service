@@ -308,6 +308,7 @@ Instructions are at [Ogen QuickStart].
 [localhost:6060]: http://localhost:6060/pkg/github.com/senzing-garage/go-rest-api-service/
 [make]: https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/make.md
 [Ogen QuickStart]: https://ogen.dev/docs/intro/
+[ogen]: https://ogen.dev
 [restapiservice/openapi.yaml]: https://github.com/senzing-garage/go-rest-api-service/blob/main/restapiservice/openapi.yaml
 [senzing-rest-api.yaml]: https://raw.githubusercontent.com/senzing-garage/senzing-rest-api-specification/main/senzing-rest-api.yaml
 [testcoverage.yaml]: ../.github/coverage/testcoverage.yaml
