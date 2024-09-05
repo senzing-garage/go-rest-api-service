@@ -9,7 +9,7 @@ require (
 	github.com/go-faster/jx v1.1.0
 	github.com/ogen-go/ogen v1.3.0
 	github.com/senzing-garage/go-helpers v0.6.0
-	github.com/senzing-garage/go-logging v1.5.0
+	github.com/senzing-garage/go-logging v1.5.1
 	github.com/senzing-garage/go-observing v0.3.3
 	github.com/senzing-garage/go-sdk-abstract-factory v0.9.1
 	github.com/senzing-garage/sz-sdk-go v0.14.0
@@ -36,7 +36,7 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/segmentio/asm v1.2.0 // indirect
-	github.com/senzing-garage/go-messaging v1.5.1 // indirect
+	github.com/senzing-garage/go-messaging v1.5.2 // indirect
 	github.com/senzing-garage/sz-sdk-go-grpc v0.8.1 // indirect
 	github.com/senzing-garage/sz-sdk-go-mock v0.8.0 // indirect
 	github.com/senzing-garage/sz-sdk-proto v0.7.6 // indirect
