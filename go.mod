@@ -14,7 +14,7 @@ require (
 	github.com/senzing-garage/go-sdk-abstract-factory v0.9.1
 	github.com/senzing-garage/sz-sdk-go v0.14.0
 	github.com/senzing-garage/sz-sdk-go-core v0.8.1
-	github.com/senzing-garage/sz-sdk-json-type-definition v0.2.6
+	github.com/senzing-garage/sz-sdk-json-type-definition v0.2.7
 	github.com/stretchr/testify v1.9.0
 	go.opentelemetry.io/otel v1.29.0
 	go.opentelemetry.io/otel/metric v1.29.0
