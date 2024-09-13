@@ -1,8 +1,7 @@
 module github.com/senzing-garage/go-rest-api-service
 
 go 1.21.0
-
-toolchain go1.22.0
+toolchain go1.22.5
 
 require (
 	github.com/go-faster/errors v0.7.1
@@ -13,7 +12,7 @@ require (
 	github.com/senzing-garage/go-observing v0.3.3
 	github.com/senzing-garage/go-sdk-abstract-factory v0.9.1
 	github.com/senzing-garage/sz-sdk-go v0.14.1
-	github.com/senzing-garage/sz-sdk-go-core v0.8.1
+	github.com/senzing-garage/sz-sdk-go-core v0.8.2
 	github.com/senzing-garage/sz-sdk-json-type-definition v0.2.7
 	github.com/stretchr/testify v1.9.0
 	go.opentelemetry.io/otel v1.29.0
@@ -41,12 +40,12 @@ require (
 	github.com/senzing-garage/sz-sdk-go-mock v0.8.0 // indirect
 	github.com/senzing-garage/sz-sdk-proto v0.7.6 // indirect
 	go.uber.org/zap v1.27.0 // indirect
-	golang.org/x/exp v0.0.0-20240904232852-e7e105dedf7e // indirect
-	golang.org/x/net v0.28.0 // indirect
+	golang.org/x/exp v0.0.0-20240909161429-701f63a606c0 // indirect
+	golang.org/x/net v0.29.0 // indirect
 	golang.org/x/sync v0.8.0 // indirect
-	golang.org/x/sys v0.24.0 // indirect
+	golang.org/x/sys v0.25.0 // indirect
 	golang.org/x/text v0.18.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240827150818-7e3bb234dfed // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240903143218-8af14fe29dc1 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
