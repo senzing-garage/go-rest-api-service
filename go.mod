@@ -1,8 +1,7 @@
 module github.com/senzing-garage/go-rest-api-service
 
 go 1.21.0
-
-toolchain go1.22.0
+toolchain go1.22.5
 
 require (
 	github.com/go-faster/errors v0.7.1
@@ -16,9 +15,9 @@ require (
 	github.com/senzing-garage/sz-sdk-go-core v0.8.1
 	github.com/senzing-garage/sz-sdk-json-type-definition v0.2.7
 	github.com/stretchr/testify v1.9.0
-	go.opentelemetry.io/otel v1.29.0
-	go.opentelemetry.io/otel/metric v1.29.0
-	go.opentelemetry.io/otel/trace v1.29.0
+	go.opentelemetry.io/otel v1.30.0
+	go.opentelemetry.io/otel/metric v1.30.0
+	go.opentelemetry.io/otel/trace v1.30.0
 	go.uber.org/multierr v1.11.0
 	google.golang.org/grpc v1.66.2
 )
