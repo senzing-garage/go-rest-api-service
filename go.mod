@@ -1,7 +1,6 @@
 module github.com/senzing-garage/go-rest-api-service
 
 go 1.22.0
-
 toolchain go1.23.1
 
 require (
@@ -20,7 +19,7 @@ require (
 	go.opentelemetry.io/otel/metric v1.31.0
 	go.opentelemetry.io/otel/trace v1.31.0
 	go.uber.org/multierr v1.11.0
-	google.golang.org/grpc v1.67.1
+	google.golang.org/grpc v1.68.0
 )
 
 require (
