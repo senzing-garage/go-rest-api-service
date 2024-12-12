@@ -30,6 +30,9 @@ go.work
 
 # Makefile
 target/
+
 .coverage
+cover.out
 coverage.html
 rest-api-service-RFC8927-pretty.json
+coverage.out

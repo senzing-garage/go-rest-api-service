@@ -104,7 +104,7 @@ func (restApiService *BasicSenzingRestService) AddDataSources(ctx context.Contex
 
 	// Retrieve all DataSources
 
-	// rawData, err := g2Config.ListDataSources(ctx, configurationHandle)
+	// rawData, err := szConfig.ListDataSources(ctx, configurationHandle)
 	// if err != nil {
 	// 	return r, err
 	// }
@@ -220,7 +220,7 @@ func (restApiService *BasicSenzingRestService) Heartbeat(ctx context.Context) (r
 
 func (restApiService *BasicSenzingRestService) License(ctx context.Context, params senzingrestapi.LicenseParams) (r senzingrestapi.LicenseRes, _ error) {
 	_ = params
-	aresponse, err := restApiService.getG2product(ctx).GetLicense(ctx)
+	aresponse, err := restApiService.getSzproduct(ctx).GetLicense(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -373,23 +373,23 @@ func (restApiService *BasicSenzingRestService) getAbstractFactory(ctx context.Co
 	return restApiService.abstractFactory
 }
 
-// Singleton pattern for g2config.
+// Singleton pattern for szconfig.
 // See https://medium.com/golang-issue/how-singleton-pattern-works-with-golang-2fdd61cd5a7f
 func (restApiService *BasicSenzingRestService) getSzConfig(ctx context.Context) senzing.SzConfig {
 	var err error
 	restApiService.szConfigSyncOnce.Do(func() {
-		restApiService.szConfigSingleton, err = restApiService.getAbstractFactory(ctx).CreateSzConfig(ctx)
+		restApiService.szConfigSingleton, err = restApiService.getAbstractFactory(ctx).CreateConfig(ctx)
 		panicOnError(err)
 	})
 	return restApiService.szConfigSingleton
 }
 
-// Singleton pattern for g2config.
+// Singleton pattern for szconfigmanager.
 // See https://medium.com/golang-issue/how-singleton-pattern-works-with-golang-2fdd61cd5a7f
 func (restApiService *BasicSenzingRestService) getSzConfigmgr(ctx context.Context) senzing.SzConfigManager {
 	var err error
 	restApiService.szConfigManagerSyncOnce.Do(func() {
-		restApiService.szConfigManagerSingleton, err = restApiService.getAbstractFactory(ctx).CreateSzConfigManager(ctx)
+		restApiService.szConfigManagerSingleton, err = restApiService.getAbstractFactory(ctx).CreateConfigManager(ctx)
 		panicOnError(err)
 	})
 	return restApiService.szConfigManagerSingleton
@@ -400,18 +400,19 @@ func (restApiService *BasicSenzingRestService) getSzConfigmgr(ctx context.Contex
 func (restApiService *BasicSenzingRestService) getG2engine(ctx context.Context) senzing.SzEngine {
 	var err error
 	restApiService.g2engineSyncOnce.Do(func() {
-		restApiService.g2engineSingleton, err = restApiService.getAbstractFactory(ctx).CreateSzEngine(ctx)
+		restApiService.g2engineSingleton, err = restApiService.getAbstractFactory(ctx).CreateEngine(ctx)
 		panicOnError(err)
 	})
 	return restApiService.g2engineSingleton
 }
 
 // Singleton pattern for g2product.
+
 // See https://medium.com/golang-issue/how-singleton-pattern-works-with-golang-2fdd61cd5a7f
-func (restApiService *BasicSenzingRestService) getG2product(ctx context.Context) senzing.SzProduct {
+func (restApiService *BasicSenzingRestService) getSzproduct(ctx context.Context) senzing.SzProduct {
 	var err error
 	restApiService.szProductSyncOnce.Do(func() {
-		restApiService.szProductSingleton, err = restApiService.getAbstractFactory(ctx).CreateSzProduct(ctx)
+		restApiService.szProductSingleton, err = restApiService.getAbstractFactory(ctx).CreateProduct(ctx)
 		panicOnError(err)
 	})
 	return restApiService.szProductSingleton
@@ -495,7 +496,7 @@ func (restApiService *BasicSenzingRestService) persistConfiguration(ctx context.
 }
 
 func (restApiService *BasicSenzingRestService) getSenzingVersion(ctx context.Context) (*typedef.SzProductGetVersionResponse, error) {
-	aresponse, err := restApiService.getG2product(ctx).GetVersion(ctx)
+	aresponse, err := restApiService.getSzproduct(ctx).GetVersion(ctx)
 	if err != nil {
 		return nil, err
 	}
