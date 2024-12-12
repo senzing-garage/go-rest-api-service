@@ -353,7 +353,7 @@ func (restApiService *BasicSenzingRestService) getAbstractFactory(ctx context.Co
 func (restApiService *BasicSenzingRestService) getSzConfig(ctx context.Context) senzing.SzConfig {
 	var err error
 	restApiService.szConfigSyncOnce.Do(func() {
-		restApiService.szConfigSingleton, err = restApiService.getAbstractFactory(ctx).CreateSzConfig(ctx)
+		restApiService.szConfigSingleton, err = restApiService.getAbstractFactory(ctx).CreateConfig(ctx)
 		panicOnError(err)
 	})
 	return restApiService.szConfigSingleton
@@ -364,7 +364,7 @@ func (restApiService *BasicSenzingRestService) getSzConfig(ctx context.Context) 
 func (restApiService *BasicSenzingRestService) getSzConfigmgr(ctx context.Context) senzing.SzConfigManager {
 	var err error
 	restApiService.szConfigManagerSyncOnce.Do(func() {
-		restApiService.szConfigManagerSingleton, err = restApiService.getAbstractFactory(ctx).CreateSzConfigManager(ctx)
+		restApiService.szConfigManagerSingleton, err = restApiService.getAbstractFactory(ctx).CreateConfigManager(ctx)
 		panicOnError(err)
 	})
 	return restApiService.szConfigManagerSingleton
@@ -375,7 +375,7 @@ func (restApiService *BasicSenzingRestService) getSzConfigmgr(ctx context.Contex
 func (restApiService *BasicSenzingRestService) getSzproduct(ctx context.Context) senzing.SzProduct {
 	var err error
 	restApiService.szProductSyncOnce.Do(func() {
-		restApiService.szProductSingleton, err = restApiService.getAbstractFactory(ctx).CreateSzProduct(ctx)
+		restApiService.szProductSingleton, err = restApiService.getAbstractFactory(ctx).CreateProduct(ctx)
 		panicOnError(err)
 	})
 	return restApiService.szProductSingleton
