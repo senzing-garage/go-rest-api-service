@@ -7,7 +7,7 @@ toolchain go1.23.2
 require (
 	github.com/go-faster/errors v0.7.1
 	github.com/go-faster/jx v1.1.0
-	github.com/ogen-go/ogen v1.10.0
+	github.com/ogen-go/ogen v1.10.1
 	github.com/senzing-garage/go-helpers v0.6.7
 	github.com/senzing-garage/go-logging v1.5.1
 	github.com/senzing-garage/go-observing v0.3.3
@@ -43,10 +43,10 @@ require (
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
 	golang.org/x/exp v0.0.0-20250228200357-dead58393ab7 // indirect
-	golang.org/x/net v0.35.0 // indirect
-	golang.org/x/sync v0.11.0 // indirect
-	golang.org/x/sys v0.30.0 // indirect
-	golang.org/x/text v0.22.0 // indirect
+	golang.org/x/net v0.37.0 // indirect
+	golang.org/x/sync v0.12.0 // indirect
+	golang.org/x/sys v0.31.0 // indirect
+	golang.org/x/text v0.23.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250303144028-a0af3efb3deb // indirect
 	google.golang.org/protobuf v1.36.5 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
