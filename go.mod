@@ -1,8 +1,6 @@
 module github.com/senzing-garage/go-rest-api-service
 
-go 1.23.0
-
-toolchain go1.23.2
+go 1.24
 
 require (
 	github.com/go-faster/errors v0.7.1
@@ -37,7 +35,7 @@ require (
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/segmentio/asm v1.2.0 // indirect
 	github.com/senzing-garage/go-messaging v1.5.2 // indirect
-	github.com/senzing-garage/sz-sdk-go-grpc v0.9.0 // indirect
+	github.com/senzing-garage/sz-sdk-go-grpc v0.9.2 // indirect
 	github.com/senzing-garage/sz-sdk-go-mock v0.8.4 // indirect
 	github.com/senzing-garage/sz-sdk-proto v0.8.0 // indirect
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
@@ -47,8 +45,8 @@ require (
 	golang.org/x/sync v0.12.0 // indirect
 	golang.org/x/sys v0.31.0 // indirect
 	golang.org/x/text v0.23.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250303144028-a0af3efb3deb // indirect
-	google.golang.org/protobuf v1.36.5 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250324211829-b45e905df463 // indirect
+	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
