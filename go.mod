@@ -11,7 +11,6 @@ require (
 	github.com/senzing-garage/go-observing v0.3.3
 	github.com/senzing-garage/go-sdk-abstract-factory v0.9.7
 	github.com/senzing-garage/sz-sdk-go v0.15.1
-	github.com/senzing-garage/sz-sdk-go-core v0.9.2
 	github.com/senzing-garage/sz-sdk-json-type-definition v0.2.7
 	github.com/stretchr/testify v1.10.0
 	go.opentelemetry.io/otel v1.35.0
@@ -35,6 +34,7 @@ require (
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/segmentio/asm v1.2.0 // indirect
 	github.com/senzing-garage/go-messaging v1.5.2 // indirect
+	github.com/senzing-garage/sz-sdk-go-core v0.9.2 // indirect
 	github.com/senzing-garage/sz-sdk-go-grpc v0.9.4 // indirect
 	github.com/senzing-garage/sz-sdk-go-mock v0.8.6 // indirect
 	github.com/senzing-garage/sz-sdk-proto v0.8.2 // indirect

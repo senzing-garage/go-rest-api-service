@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/senzing-garage/go-helpers/env"
 	"github.com/senzing-garage/go-helpers/settings"
 	"github.com/senzing-garage/go-rest-api-service/senzingrestapi"
-	"github.com/senzing-garage/sz-sdk-go-core/helper"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -17,7 +17,7 @@ import (
 var (
 	senzingRestServiceSingleton *BasicSenzingRestService
 	debug                       bool
-	logLevel                    = helper.GetEnv("SENZING_LOG_LEVEL", "INFO")
+	logLevel                    = env.GetEnv("SENZING_LOG_LEVEL", "INFO")
 )
 
 // ----------------------------------------------------------------------------
