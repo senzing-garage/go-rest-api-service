@@ -35,7 +35,7 @@ require (
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/segmentio/asm v1.2.0 // indirect
 	github.com/senzing-garage/go-messaging v1.5.2 // indirect
-	github.com/senzing-garage/sz-sdk-go-grpc v0.9.4-0.20250415141700-941ea9092bdd // indirect
+	github.com/senzing-garage/sz-sdk-go-grpc v0.9.4 // indirect
 	github.com/senzing-garage/sz-sdk-go-mock v0.8.6 // indirect
 	github.com/senzing-garage/sz-sdk-proto v0.8.2 // indirect
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
