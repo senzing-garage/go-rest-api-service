@@ -41,8 +41,6 @@ type BasicSenzingRestService struct {
 	SenzingVerboseLogging    int64
 	szConfigManagerSingleton senzing.SzConfigManager
 	szConfigManagerSyncOnce  sync.Once
-	szConfigSingleton        senzing.SzConfig
-	szConfigSyncOnce         sync.Once
 	szProductSingleton       senzing.SzProduct
 	szProductSyncOnce        sync.Once
 	URLRoutePrefix           string
@@ -72,18 +70,11 @@ func (restApiService *BasicSenzingRestService) AddDataSources(ctx context.Contex
 
 	szConfig := restApiService.getSzConfig(ctx)
 
-	// Get current configuration from database into memory.
-
-	configurationHandle, err := restApiService.getConfigurationHandle(ctx)
-	if err != nil {
-		restApiService.log(9999, dataSources, withRaw, err)
-	}
-
 	// Add DataSouces to in-memory version of Senzing Configuration.
 
 	sdkResponses := []string{}
 	for _, dataSource := range params.DataSource {
-		sdkResponse, err := szConfig.AddDataSource(ctx, configurationHandle, dataSource)
+		sdkResponse, err := szConfig.AddDataSource(ctx, dataSource)
 		if err != nil {
 			return r, err
 		}
@@ -92,9 +83,9 @@ func (restApiService *BasicSenzingRestService) AddDataSources(ctx context.Contex
 
 	// Persist in-memory Senzing Configuration to Senzing database SYS_CFG table.
 
-	err = restApiService.persistConfiguration(ctx, configurationHandle)
+	err = restApiService.persistConfiguration(ctx, szConfig)
 	if err != nil {
-		restApiService.log(9999, dataSources, withRaw, err)
+		restApiService.log(9998, dataSources, withRaw, err)
 	}
 
 	// Construct response.
@@ -107,8 +98,6 @@ func (restApiService *BasicSenzingRestService) AddDataSources(ctx context.Contex
 	// }
 
 	// fmt.Printf(">>>>>> ListDataSources: %s\n", rawData)
-
-	err = szConfig.CloseConfig(ctx, configurationHandle)
 
 	fmt.Println(sdkResponses)
 
@@ -351,12 +340,12 @@ func (restApiService *BasicSenzingRestService) getAbstractFactory(ctx context.Co
 // Singleton pattern for szconfig.
 // See https://medium.com/golang-issue/how-singleton-pattern-works-with-golang-2fdd61cd5a7f
 func (restApiService *BasicSenzingRestService) getSzConfig(ctx context.Context) senzing.SzConfig {
-	var err error
-	restApiService.szConfigSyncOnce.Do(func() {
-		restApiService.szConfigSingleton, err = restApiService.getAbstractFactory(ctx).CreateConfig(ctx)
-		panicOnError(err)
-	})
-	return restApiService.szConfigSingleton
+	szConfigManager := restApiService.getSzConfigmgr(ctx)
+	configID, err := szConfigManager.GetDefaultConfigID(ctx)
+	panicOnError(err)
+	szConfig, err := szConfigManager.CreateConfigFromConfigID(ctx, configID)
+	panicOnError(err)
+	return szConfig
 }
 
 // Singleton pattern for szconfigmanager.
@@ -419,48 +408,26 @@ func (restApiService *BasicSenzingRestService) getOptSzMeta(ctx context.Context,
 
 // --- Senzing convenience ----------------------------------------------------
 
-// Pull the Senzing Configuration from the database into an in-memory copy.
-func (restApiService *BasicSenzingRestService) getConfigurationHandle(ctx context.Context) (uintptr, error) {
-	var err error
-	var result uintptr
-	var configurationString string
-	szConfig := restApiService.getSzConfig(ctx)
-	szConfigManager := restApiService.getSzConfigmgr(ctx)
-	configID, err := szConfigManager.GetDefaultConfigID(ctx)
-	if err != nil {
-		return result, err
-	}
-	if configID == 0 {
-		return szConfig.CreateConfig(ctx)
-	}
-	configurationString, err = szConfigManager.GetConfig(ctx, configID)
-	if err != nil {
-		return result, err
-	}
-	result, err = szConfig.ImportConfig(ctx, configurationString)
-	if err != nil {
-		return result, err
-	}
-	return result, err
-}
-
 // Persist in-memory Senzing Configuration to Senzing database SYS_CFG table.
-func (restApiService *BasicSenzingRestService) persistConfiguration(ctx context.Context, configurationHandle uintptr) error {
+func (restApiService *BasicSenzingRestService) persistConfiguration(ctx context.Context, szConfig senzing.SzConfig) error {
 	var err error
-	szConfig := restApiService.getSzConfig(ctx)
+
 	szConfigManager := restApiService.getSzConfigmgr(ctx)
-	newConfigurationString, err := szConfig.ExportConfig(ctx, configurationHandle)
+	newConfigurationString, err := szConfig.Export(ctx)
 	if err != nil {
 		return err
 	}
-	newConfigID, err := szConfigManager.AddConfig(ctx, newConfigurationString, "FIXME: description")
+
+	newConfigID, err := szConfigManager.RegisterConfig(ctx, newConfigurationString, "FIXME: description")
 	if err != nil {
 		return err
 	}
+
 	err = szConfigManager.SetDefaultConfigID(ctx, newConfigID)
 	if err != nil {
 		return err
 	}
+
 	return err
 }
 

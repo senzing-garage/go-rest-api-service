@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/senzing-garage/go-helpers/env"
 	"github.com/senzing-garage/go-helpers/settings"
 	"github.com/senzing-garage/go-rest-api-service/senzingrestapi"
-	"github.com/senzing-garage/sz-sdk-go-core/helper"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -17,7 +17,7 @@ import (
 var (
 	senzingRestServiceSingleton *BasicSenzingRestService
 	debug                       bool
-	logLevel                    = helper.GetEnv("SENZING_LOG_LEVEL", "INFO")
+	logLevel                    = env.GetEnv("SENZING_LOG_LEVEL", "INFO")
 )
 
 // ----------------------------------------------------------------------------
@@ -50,7 +50,7 @@ func TestSenzingRestServiceImpl_AddDataSources(test *testing.T) {
 			}
 
 			for index, value := range drillDown {
-				test.Logf(">>>>> %d: %-60s %+v\n", index, reflect.TypeOf(value), value)
+				test.Logf(">>>>> AddDataSources %d: ; %-60s %+v\n", index, reflect.TypeOf(value), value)
 			}
 		}
 	default:
@@ -89,11 +89,8 @@ func TestSenzingRestServiceImpl_OpenAPISpecification(test *testing.T) {
 	var openAPISpecificationBytes []byte
 	response, err := testObject.OpenAPISpecification(ctx)
 	require.NoError(test, err)
-	numBytes, _ := response.Data.Read(openAPISpecificationBytes)
-	require.NoError(test, err)
-
-	// testError(test, ctx, err)
-	test.Logf(">>>>> %d;  %v\n", numBytes, openAPISpecificationBytes)
+	_, err = response.Data.Read(openAPISpecificationBytes)
+	require.Error(test, err) // An EOF error.
 }
 
 func TestSenzingRestServiceImpl_Version(test *testing.T) {
