@@ -1,26 +1,23 @@
 module github.com/senzing-garage/go-rest-api-service
 
-go 1.23.0
-
-toolchain go1.23.2
+go 1.24
 
 require (
 	github.com/go-faster/errors v0.7.1
 	github.com/go-faster/jx v1.1.0
-	github.com/ogen-go/ogen v1.10.0
-	github.com/senzing-garage/go-helpers v0.6.6
+	github.com/ogen-go/ogen v1.10.1
+	github.com/senzing-garage/go-helpers v0.6.10
 	github.com/senzing-garage/go-logging v1.5.1
 	github.com/senzing-garage/go-observing v0.3.3
-	github.com/senzing-garage/go-sdk-abstract-factory v0.9.5
-	github.com/senzing-garage/sz-sdk-go v0.14.5
-	github.com/senzing-garage/sz-sdk-go-core v0.9.0
+	github.com/senzing-garage/go-sdk-abstract-factory v0.9.7
+	github.com/senzing-garage/sz-sdk-go v0.15.1
 	github.com/senzing-garage/sz-sdk-json-type-definition v0.2.7
 	github.com/stretchr/testify v1.10.0
-	go.opentelemetry.io/otel v1.34.0
-	go.opentelemetry.io/otel/metric v1.34.0
-	go.opentelemetry.io/otel/trace v1.34.0
+	go.opentelemetry.io/otel v1.35.0
+	go.opentelemetry.io/otel/metric v1.35.0
+	go.opentelemetry.io/otel/trace v1.35.0
 	go.uber.org/multierr v1.11.0
-	google.golang.org/grpc v1.70.0
+	google.golang.org/grpc v1.71.1
 )
 
 require (
@@ -37,18 +34,19 @@ require (
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/segmentio/asm v1.2.0 // indirect
 	github.com/senzing-garage/go-messaging v1.5.2 // indirect
-	github.com/senzing-garage/sz-sdk-go-grpc v0.9.0 // indirect
-	github.com/senzing-garage/sz-sdk-go-mock v0.8.4 // indirect
-	github.com/senzing-garage/sz-sdk-proto v0.8.0 // indirect
+	github.com/senzing-garage/sz-sdk-go-core v0.9.2 // indirect
+	github.com/senzing-garage/sz-sdk-go-grpc v0.9.4 // indirect
+	github.com/senzing-garage/sz-sdk-go-mock v0.8.6 // indirect
+	github.com/senzing-garage/sz-sdk-proto v0.8.2 // indirect
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
-	golang.org/x/exp v0.0.0-20250218142911-aa4b98e5adaa // indirect
-	golang.org/x/net v0.35.0 // indirect
-	golang.org/x/sync v0.11.0 // indirect
-	golang.org/x/sys v0.30.0 // indirect
-	golang.org/x/text v0.22.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250224174004-546df14abb99 // indirect
-	google.golang.org/protobuf v1.36.5 // indirect
+	golang.org/x/exp v0.0.0-20250408133849-7e4ce0ab07d0 // indirect
+	golang.org/x/net v0.39.0 // indirect
+	golang.org/x/sync v0.13.0 // indirect
+	golang.org/x/sys v0.32.0 // indirect
+	golang.org/x/text v0.24.0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250414145226-207652e42e2e // indirect
+	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
