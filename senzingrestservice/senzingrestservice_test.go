@@ -89,11 +89,8 @@ func TestSenzingRestServiceImpl_OpenAPISpecification(test *testing.T) {
 	var openAPISpecificationBytes []byte
 	response, err := testObject.OpenAPISpecification(ctx)
 	require.NoError(test, err)
-	numBytes, _ := response.Data.Read(openAPISpecificationBytes)
-	require.NoError(test, err)
-
-	// testError(test, ctx, err)
-	test.Logf(">>>>> %d;  %v\n", numBytes, openAPISpecificationBytes)
+	_, err = response.Data.Read(openAPISpecificationBytes)
+	require.Error(test, err) // An EOF error.
 }
 
 func TestSenzingRestServiceImpl_Version(test *testing.T) {

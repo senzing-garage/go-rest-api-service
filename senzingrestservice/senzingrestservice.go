@@ -61,7 +61,6 @@ func (restApiService *BasicSenzingRestService) AddDataSources(ctx context.Contex
 		defer func() { restApiService.traceExit(99, err, time.Since(entryTime)) }()
 	}
 
-	fmt.Printf(">>>>>> AddDataSources\n")
 	// URL parameters.
 
 	dataSources := params.DataSource
@@ -413,29 +412,21 @@ func (restApiService *BasicSenzingRestService) getOptSzMeta(ctx context.Context,
 func (restApiService *BasicSenzingRestService) persistConfiguration(ctx context.Context, szConfig senzing.SzConfig) error {
 	var err error
 
-	fmt.Printf(">>>>>>> persistConfiguration 1\n")
-
 	szConfigManager := restApiService.getSzConfigmgr(ctx)
 	newConfigurationString, err := szConfig.Export(ctx)
 	if err != nil {
 		return err
 	}
 
-	fmt.Printf(">>>>>>> persistConfiguration 2\n")
-
 	newConfigID, err := szConfigManager.RegisterConfig(ctx, newConfigurationString, "FIXME: description")
 	if err != nil {
 		return err
 	}
 
-	fmt.Printf(">>>>>>> persistConfiguration 3; NewConfigID: %d\n")
-
 	err = szConfigManager.SetDefaultConfigID(ctx, newConfigID)
 	if err != nil {
 		return err
 	}
-
-	fmt.Printf(">>>>>>> persistConfiguration 3\n")
 
 	return err
 }
