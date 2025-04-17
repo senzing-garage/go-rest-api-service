@@ -50,7 +50,7 @@ func TestSenzingRestServiceImpl_AddDataSources(test *testing.T) {
 			}
 
 			for index, value := range drillDown {
-				test.Logf(">>>>> %d: %-60s %+v\n", index, reflect.TypeOf(value), value)
+				test.Logf(">>>>> AddDataSources %d: ; %-60s %+v\n", index, reflect.TypeOf(value), value)
 			}
 		}
 	default:
