@@ -10,7 +10,7 @@ require (
 	github.com/senzing-garage/go-logging v1.5.2
 	github.com/senzing-garage/go-observing v0.3.4
 	github.com/senzing-garage/go-sdk-abstract-factory v0.9.8
-	github.com/senzing-garage/sz-sdk-go v0.15.1
+	github.com/senzing-garage/sz-sdk-go v0.15.2
 	github.com/senzing-garage/sz-sdk-json-type-definition v0.2.8
 	github.com/stretchr/testify v1.10.0
 	go.opentelemetry.io/otel v1.35.0
