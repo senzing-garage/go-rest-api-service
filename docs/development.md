@@ -183,7 +183,7 @@ Example:
 
     ```
 
-## Speciality
+## Specialty
 
 ### Generate senzingrestapi
 
