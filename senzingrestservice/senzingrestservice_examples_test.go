@@ -1,11 +1,11 @@
 //go:build linux
 
-package senzingrestservice
+package senzingrestservice_test
 
 // ----------------------------------------------------------------------------
 // Examples for godoc documentation
 // ----------------------------------------------------------------------------
 
 func ExampleBasicSenzingRestService_Heartbeat() {
-
+	// Output:
 }
