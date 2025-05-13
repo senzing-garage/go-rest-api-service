@@ -51,7 +51,11 @@ type BasicSenzingRestService struct {
 // See https://github.com/senzing-garage/go-rest-api-service/blob/main/senzingrestpapi/oas_unimplemented_gen.go
 // ----------------------------------------------------------------------------
 
-func (restApiService *BasicSenzingRestService) AddDataSources(ctx context.Context, req senzingrestapi.AddDataSourcesReq, params senzingrestapi.AddDataSourcesParams) (r senzingrestapi.AddDataSourcesRes, _ error) {
+func (restApiService *BasicSenzingRestService) AddDataSources(
+	ctx context.Context,
+	req senzingrestapi.AddDataSourcesReq,
+	params senzingrestapi.AddDataSourcesParams,
+) (r senzingrestapi.AddDataSourcesRes, _ error) {
 	var err error
 	_ = ctx
 	_ = req
@@ -99,7 +103,7 @@ func (restApiService *BasicSenzingRestService) AddDataSources(ctx context.Contex
 
 	// fmt.Printf(">>>>>> ListDataSources: %s\n", rawData)
 
-	fmt.Println(sdkResponses)
+	fmt.Println(sdkResponses) //nolint
 
 	// type SzDataSource struct {
 	// 	// The data source code.
@@ -185,7 +189,9 @@ func (restApiService *BasicSenzingRestService) AddDataSources(ctx context.Contex
 	return r, err
 }
 
-func (restApiService *BasicSenzingRestService) Heartbeat(ctx context.Context) (r *senzingrestapi.SzBaseResponse, _ error) {
+func (restApiService *BasicSenzingRestService) Heartbeat(
+	ctx context.Context,
+) (r *senzingrestapi.SzBaseResponse, _ error) {
 	var err error
 	r = &senzingrestapi.SzBaseResponse{
 		Links: restApiService.getOptSzLinks(ctx, "heartbeat"),
@@ -194,7 +200,10 @@ func (restApiService *BasicSenzingRestService) Heartbeat(ctx context.Context) (r
 	return r, err
 }
 
-func (restApiService *BasicSenzingRestService) License(ctx context.Context, params senzingrestapi.LicenseParams) (r senzingrestapi.LicenseRes, _ error) {
+func (restApiService *BasicSenzingRestService) License(
+	ctx context.Context,
+	params senzingrestapi.LicenseParams,
+) (r senzingrestapi.LicenseRes, _ error) {
 	_ = params
 	aresponse, err := restApiService.getSzproduct(ctx).GetLicense(ctx)
 	if err != nil {
@@ -234,7 +243,9 @@ func (restApiService *BasicSenzingRestService) License(ctx context.Context, para
 	return r, err
 }
 
-func (restApiService *BasicSenzingRestService) OpenAPISpecification(ctx context.Context) (r senzingrestapi.OpenAPISpecificationOKDefault, _ error) {
+func (restApiService *BasicSenzingRestService) OpenAPISpecification(
+	ctx context.Context,
+) (r senzingrestapi.OpenAPISpecificationOKDefault, _ error) {
 	var err error
 	_ = ctx
 	r = senzingrestapi.OpenAPISpecificationOKDefault{
@@ -245,7 +256,10 @@ func (restApiService *BasicSenzingRestService) OpenAPISpecification(ctx context.
 	return r, err
 }
 
-func (restApiService *BasicSenzingRestService) Version(ctx context.Context, params senzingrestapi.VersionParams) (r senzingrestapi.VersionRes, _ error) {
+func (restApiService *BasicSenzingRestService) Version(
+	ctx context.Context,
+	params senzingrestapi.VersionParams,
+) (r senzingrestapi.VersionRes, _ error) {
 	_ = params
 	parsedResponse, err := restApiService.getSenzingVersion(ctx)
 	panicOnError(err)
@@ -256,13 +270,15 @@ func (restApiService *BasicSenzingRestService) Version(ctx context.Context, para
 		Data: senzingrestapi.OptSzVersionInfo{
 			Set: true,
 			Value: senzingrestapi.SzVersionInfo{
-				ApiServerVersion:           senzingrestapi.NewOptString("0.0.0"),
-				RestApiVersion:             senzingrestapi.NewOptString("3.4.1"),
-				NativeApiVersion:           senzingrestapi.NewOptString(parsedResponse.Version),
-				NativeApiBuildVersion:      senzingrestapi.NewOptString(parsedResponse.BuildVersion),
-				NativeApiBuildNumber:       senzingrestapi.NewOptString(parsedResponse.BuildVersion),
-				NativeApiBuildDate:         senzingrestapi.NewOptDateTime(nativeAPIBuildDate),
-				ConfigCompatibilityVersion: senzingrestapi.NewOptString(parsedResponse.CompatibilityVersion.ConfigVersion),
+				ApiServerVersion:      senzingrestapi.NewOptString("0.0.0"),
+				RestApiVersion:        senzingrestapi.NewOptString("3.4.1"),
+				NativeApiVersion:      senzingrestapi.NewOptString(parsedResponse.Version),
+				NativeApiBuildVersion: senzingrestapi.NewOptString(parsedResponse.BuildVersion),
+				NativeApiBuildNumber:  senzingrestapi.NewOptString(parsedResponse.BuildVersion),
+				NativeApiBuildDate:    senzingrestapi.NewOptDateTime(nativeAPIBuildDate),
+				ConfigCompatibilityVersion: senzingrestapi.NewOptString(
+					parsedResponse.CompatibilityVersion.ConfigVersion,
+				),
 			},
 		},
 	}
@@ -325,7 +341,12 @@ func (restApiService *BasicSenzingRestService) getAbstractFactory(ctx context.Co
 	_ = ctx
 	restApiService.abstractFactorySyncOnce.Do(func() {
 		if len(restApiService.GrpcTarget) == 0 {
-			restApiService.abstractFactory, err = szfactorycreator.CreateCoreAbstractFactory(restApiService.SenzingInstanceName, restApiService.Settings, restApiService.SenzingVerboseLogging, senzing.SzInitializeWithDefaultConfiguration)
+			restApiService.abstractFactory, err = szfactorycreator.CreateCoreAbstractFactory(
+				restApiService.SenzingInstanceName,
+				restApiService.Settings,
+				restApiService.SenzingVerboseLogging,
+				senzing.SzInitializeWithDefaultConfiguration,
+			)
 			panicOnError(err)
 		} else {
 			grpcConnection, err := grpc.NewClient(restApiService.GrpcTarget, restApiService.GrpcDialOptions...)
@@ -372,17 +393,28 @@ func (restApiService *BasicSenzingRestService) getSzproduct(ctx context.Context)
 
 // --- Misc -------------------------------------------------------------------
 
-func (restApiService *BasicSenzingRestService) getOptSzLinks(ctx context.Context, uriPath string) senzingrestapi.OptSzLinks {
+func (restApiService *BasicSenzingRestService) getOptSzLinks(
+	ctx context.Context,
+	uriPath string,
+) senzingrestapi.OptSzLinks {
 	var result senzingrestapi.OptSzLinks
 	szLinks := senzingrestapi.SzLinks{
-		Self:                 senzingrestapi.NewOptString(fmt.Sprintf("http://%s/%s/%s", getHostname(ctx), restApiService.URLRoutePrefix, uriPath)),
-		OpenApiSpecification: senzingrestapi.NewOptString(fmt.Sprintf("http://%s/%s/swagger_spec", getHostname(ctx), restApiService.URLRoutePrefix)),
+		Self: senzingrestapi.NewOptString(
+			fmt.Sprintf("http://%s/%s/%s", getHostname(ctx), restApiService.URLRoutePrefix, uriPath),
+		),
+		OpenApiSpecification: senzingrestapi.NewOptString(
+			fmt.Sprintf("http://%s/%s/swagger_spec", getHostname(ctx), restApiService.URLRoutePrefix),
+		),
 	}
 	result = senzingrestapi.NewOptSzLinks(szLinks)
 	return result
 }
 
-func (restApiService *BasicSenzingRestService) getOptSzMeta(ctx context.Context, httpMethod senzingrestapi.SzHttpMethod, httpStatusCode int16) senzingrestapi.OptSzMeta {
+func (restApiService *BasicSenzingRestService) getOptSzMeta(
+	ctx context.Context,
+	httpMethod senzingrestapi.SzHttpMethod,
+	httpStatusCode int16,
+) senzingrestapi.OptSzMeta {
 	var result senzingrestapi.OptSzMeta
 	senzingVersion, err := restApiService.getSenzingVersion(ctx)
 	panicOnError(err)
@@ -409,7 +441,10 @@ func (restApiService *BasicSenzingRestService) getOptSzMeta(ctx context.Context,
 // --- Senzing convenience ----------------------------------------------------
 
 // Persist in-memory Senzing Configuration to Senzing database SYS_CFG table.
-func (restApiService *BasicSenzingRestService) persistConfiguration(ctx context.Context, szConfig senzing.SzConfig) error {
+func (restApiService *BasicSenzingRestService) persistConfiguration(
+	ctx context.Context,
+	szConfig senzing.SzConfig,
+) error {
 	var err error
 
 	szConfigManager := restApiService.getSzConfigmgr(ctx)
@@ -431,7 +466,9 @@ func (restApiService *BasicSenzingRestService) persistConfiguration(ctx context.
 	return err
 }
 
-func (restApiService *BasicSenzingRestService) getSenzingVersion(ctx context.Context) (*typedef.SzProductGetVersionResponse, error) {
+func (restApiService *BasicSenzingRestService) getSenzingVersion(
+	ctx context.Context,
+) (*typedef.SzProductGetVersionResponse, error) {
 	aresponse, err := restApiService.getSzproduct(ctx).GetVersion(ctx)
 	if err != nil {
 		return nil, err
