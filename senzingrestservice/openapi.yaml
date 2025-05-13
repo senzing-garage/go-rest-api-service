@@ -409,7 +409,7 @@ paths:
           1. The server does not have administrative functions enabled.
           2. The server is running in "read-only" mode.
           3. The server is started with a file-based configuration specified
-             by `G2CONFIGFILE` property in the initialziation parameters.
+             by `G2CONFIGFILE` property in the initialization parameters.
           4. The server is started with a specific configuration ID and
              therefore cannot modify the configuration and change to a new
              configuration.
@@ -772,7 +772,7 @@ paths:
         - $ref: "#/components/parameters/withRawQueryParam"
       responses:
         "200":
-          description: Successul response
+          description: Successful response
           content:
             application/json; charset=UTF-8:
               schema:
@@ -1073,7 +1073,7 @@ paths:
         Returns an analysis of why the entity for the record with the
         respective data source code and record ID resolved.
       description: |
-        This operation provides an anlysis of why the records in an entity
+        This operation provides an analysis of why the records in an entity
         resolved.  The subject entity is the one containing the record
         identified by the data source code and record ID in the request path.
       operationId: whyEntityByRecordID
@@ -1089,7 +1089,7 @@ paths:
         - $ref: "#/components/parameters/withRawQueryParam"
       responses:
         "200":
-          description: Successul response
+          description: Successful response
           content:
             application/json; charset=UTF-8:
               schema:
@@ -1122,7 +1122,7 @@ paths:
         Returns an analysis of how the entity for the record with the
         respective data source code and record ID resolved.
       description: |
-        This operation provides an anlysis of how the records in an entity
+        This operation provides an analysis of how the records in an entity
         resolved.  The subject entity is the one containing the record
         identified by the data source code and record ID in the request path.
       operationId: howEntityByRecordID
@@ -1132,7 +1132,7 @@ paths:
         - $ref: "#/components/parameters/withRawQueryParam"
       responses:
         "200":
-          description: Successul response
+          description: Successful response
           content:
             application/json; charset=UTF-8:
               schema:
@@ -1485,7 +1485,7 @@ paths:
         Returns an analysis of why the entity for the respective
         entity ID resolved.
       description: |
-        This operation provides an anlysis of why the records in an entity
+        This operation provides an analysis of why the records in an entity
         resolved.  The subject entity is identified by the entity ID in the
         request path.
 
@@ -1513,7 +1513,7 @@ paths:
         - $ref: "#/components/parameters/withRawQueryParam"
       responses:
         "200":
-          description: Successul response
+          description: Successful response
           content:
             application/json; charset=UTF-8:
               schema:
@@ -1546,7 +1546,7 @@ paths:
         Returns an analysis of how the entity for the respective
         entity ID resolved.
       description: |
-        This operation provides an anlysis of how the records in an entity
+        This operation provides an analysis of how the records in an entity
         resolved.  The subject entity is identified by the entity ID in the
         request path.
 
@@ -1569,7 +1569,7 @@ paths:
         - $ref: "#/components/parameters/withRawQueryParam"
       responses:
         "200":
-          description: Successul response
+          description: Successful response
           content:
             application/json; charset=UTF-8:
               schema:
@@ -1602,8 +1602,8 @@ paths:
         Returns an analysis of why the records identified by the data source
         and record ID's in the query parameters resolved or did not resolve.
       description: |
-        This operation provides an anlysis of two records identified by data
-        source code and record ID in respective qeury parameters resolved or
+        This operation provides an analysis of two records identified by data
+        source code and record ID in respective query parameters resolved or
         did not resolve.
       operationId: whyRecords
       parameters:
@@ -1644,7 +1644,7 @@ paths:
         - $ref: "#/components/parameters/withRawQueryParam"
       responses:
         "200":
-          description: Successul response
+          description: Successful response
           content:
             application/json; charset=UTF-8:
               schema:
@@ -1677,7 +1677,7 @@ paths:
         Returns an analysis of why the two entities related, did not relate, or
         did not resolve.
       description: |
-        This operation provides an anlysis of why two entities related, did not
+        This operation provides an analysis of why two entities related, did not
         relate or did not resolve.  The entities are identified either by
         entity ID's or by data source code and record ID pairs for constituent
         records of those entities.
@@ -1733,7 +1733,7 @@ paths:
         - $ref: "#/components/parameters/withRawQueryParam"
       responses:
         "200":
-          description: Successul response
+          description: Successful response
           content:
             application/json; charset=UTF-8:
               schema:
@@ -1834,13 +1834,13 @@ paths:
         - name: r
           description: >-
             Repeating query parameter containing encoded `SzRecordId`
-            definitions that identify records to be inclued in the resultant
+            definitions that identify records to be include in the resultant
             virtual entity.  At least one record identifier is required.  If
             both this parameter and the `records` parameter are specified then
             the values are merged.
             **NOTE**: An encoded `SzRecordId` can EITHER be encoded as JSON or
             as a delimited string where the first character is the delimiter and
-            the remainer is parsed as a data source prefix (up to the second
+            the remainder is parsed as a data source prefix (up to the second
             occurrence of the delimiter) and a record ID suffix (all characters
             after the second occurrence of the delimiter).  For example:
             `{"src":"PEOPLE","id":"12345ABC"}` or `:PEOPLE:12345ABC`.
@@ -1868,13 +1868,13 @@ paths:
         - name: records
           description: >-
             Singular query parameter containing multiple encoded `SzRecordId`
-            definitions that identify records to be inclued in the resultant
+            definitions that identify records to be include in the resultant
             virtual entity as a JSON array or a simple comma-separated array.
             At least one record identifier is required.  If both this parameter
             and the `r` parameter are specified then the values are merged.
             **NOTE**: An encoded `SzRecordId` can EITHER be encoded as JSON or
             as a delimited string where the first character is the delimiter and
-            the remainer is parsed as a data source prefix (up to the second
+            the remainder is parsed as a data source prefix (up to the second
             occurrence of the delimiter) and a record ID suffix (all characters
             after the second occurrence of the delimiter).  For example:
             `{"src":"PEOPLE","id":"12345ABC"}` or `:PEOPLE:12345ABC`.
@@ -1941,7 +1941,7 @@ paths:
         This operation finds the path between two entities and returns a
         description of that entity path (if any) or a response indicating that
         there is no path between the entities.  The subject entities are either
-        identfieid by entity ID or by data source code and record ID pairs for
+        identified by entity ID or by data source code and record ID pairs for
         constituent records of those entities.
 
         **NOTE:** If the first entity is identified by entity ID then the second
@@ -1974,7 +1974,7 @@ paths:
               summary: A numeric entity ID
               value: 1234567
             encodedRecordIdExample:
-              summary: A record ID encoded as a deliminted string.
+              summary: A record ID encoded as a delimited string.
               value: ":CUSTOMERS:ABC123"
             jsonRecordIdExample:
               summary: A record ID encoded as JSON
@@ -2000,7 +2000,7 @@ paths:
               summary: A numeric entity ID
               value: 7654321
             encodedRecordIdExample:
-              summary: A record ID encoded as a deliminted string.
+              summary: A record ID encoded as a delimited string.
               value: ":EMPLOYEES:DEF456"
             jsonRecordIdExample:
               summary: A record ID encoded as JSON
@@ -2184,7 +2184,7 @@ paths:
         **NOTE:** If the first entity is identified by entity ID then the
         subsequent entities must also be identified entity ID.  Similarly, if
         the first entity is identified by the data source code and record ID
-        of a consistuent record then the subsequent entities must also be
+        of a constituent record then the subsequent entities must also be
         identified by the data source code and record ID of constituent records.
 
         **ALSO NOTE:** Bear in mind that entity ID's are transient and may be
@@ -2573,7 +2573,7 @@ paths:
           description: |
             A URL-encoded JSON object whose properties are interpreted as
             data source codes to map from and whose corresponding values are
-            interpretted as data source codes to map to.  For example,
+            interpreted as data source codes to map to.  For example,
             `{"EMPL": "EMPLOYEES"}` (url-encoded of course) would map all
             records with inbound data source `EMPL` to `EMPLOYEES`.  To map
             only inbound records with no data source to a specific data source
@@ -3616,7 +3616,7 @@ components:
           format: date-time
         configCompatibilityVersion:
           description: >-
-            The config compatilibility version of the underlying native Senzing
+            The config compatibility version of the underlying native Senzing
             API product.
           type: string
         timings:
@@ -4101,7 +4101,7 @@ components:
           * `IDENTIFIER` - Attributes pertaining to identifiers such as
                           drivers license number, passport number, or email
                           address.
-          * `NAME` - Attributes pertaing to names such as "NAME_FIRST" or
+          * `NAME` - Attributes pertaining to names such as "NAME_FIRST" or
                      "NAME_LAST"
           * `OBSERVATION` - Attributes pertaining to meta-data about the
                             observation (record) such as "RECORD_ID" or

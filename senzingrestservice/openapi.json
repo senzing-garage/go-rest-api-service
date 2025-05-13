@@ -516,7 +516,7 @@
           "Config"
         ],
         "summary": "Adds one or more new data sources to the current default configuration and reinitializes with the newly modified configuration.",
-        "description": "Obtains the current default configuration, adds the specified data\nsources and sets the modified configuration as the new default\nconfiguration -- returning the set of all configured data sources.\n\n**NOTE:** This operation may not be allowed.  Some conditions that\nmight cause this operation to be forbidden are:\n  1. The server does not have administrative functions enabled.\n  2. The server is running in \"read-only\" mode.\n  3. The server is started with a file-based configuration specified\n     by `G2CONFIGFILE` property in the initialziation parameters.\n  4. The server is started with a specific configuration ID and\n     therefore cannot modify the configuration and change to a new\n     configuration.\n",
+        "description": "Obtains the current default configuration, adds the specified data\nsources and sets the modified configuration as the new default\nconfiguration -- returning the set of all configured data sources.\n\n**NOTE:** This operation may not be allowed.  Some conditions that\nmight cause this operation to be forbidden are:\n  1. The server does not have administrative functions enabled.\n  2. The server is running in \"read-only\" mode.\n  3. The server is started with a file-based configuration specified\n     by `G2CONFIGFILE` property in the initialization parameters.\n  4. The server is started with a specific configuration ID and\n     therefore cannot modify the configuration and change to a new\n     configuration.\n",
         "operationId": "addDataSources",
         "parameters": [
           {
@@ -1026,7 +1026,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successul response",
+            "description": "Successful response",
             "content": {
               "application/json; charset=UTF-8": {
                 "schema": {
@@ -1456,7 +1456,7 @@
           "Entity Data"
         ],
         "summary": "Returns an analysis of why the entity for the record with the respective data source code and record ID resolved.",
-        "description": "This operation provides an anlysis of why the records in an entity\nresolved.  The subject entity is the one containing the record\nidentified by the data source code and record ID in the request path.\n",
+        "description": "This operation provides an analysis of why the records in an entity\nresolved.  The subject entity is the one containing the record\nidentified by the data source code and record ID in the request path.\n",
         "operationId": "whyEntityByRecordID",
         "parameters": [
           {
@@ -1489,7 +1489,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successul response",
+            "description": "Successful response",
             "content": {
               "application/json; charset=UTF-8": {
                 "schema": {
@@ -1540,7 +1540,7 @@
           "Entity Data"
         ],
         "summary": "Returns an analysis of how the entity for the record with the respective data source code and record ID resolved.",
-        "description": "This operation provides an anlysis of how the records in an entity\nresolved.  The subject entity is the one containing the record\nidentified by the data source code and record ID in the request path.\n",
+        "description": "This operation provides an analysis of how the records in an entity\nresolved.  The subject entity is the one containing the record\nidentified by the data source code and record ID in the request path.\n",
         "operationId": "howEntityByRecordID",
         "parameters": [
           {
@@ -1555,7 +1555,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successul response",
+            "description": "Successful response",
             "content": {
               "application/json; charset=UTF-8": {
                 "schema": {
@@ -1970,7 +1970,7 @@
           "Entity Data"
         ],
         "summary": "Returns an analysis of why the entity for the respective entity ID resolved.",
-        "description": "This operation provides an anlysis of why the records in an entity\nresolved.  The subject entity is identified by the entity ID in the\nrequest path.\n\n**NOTE:** Bear in mind that entity ID's are transient and may be\nrecycled or repurposed as new records are loaded and entities resolve,\nunresolve and re-resolve.  An alternative way to identify an entity is\nby one of its constituent records using\n`GET /data-sources/{dataSourceCode}/records/{recordId}/entity/why`.\n",
+        "description": "This operation provides an analysis of why the records in an entity\nresolved.  The subject entity is identified by the entity ID in the\nrequest path.\n\n**NOTE:** Bear in mind that entity ID's are transient and may be\nrecycled or repurposed as new records are loaded and entities resolve,\nunresolve and re-resolve.  An alternative way to identify an entity is\nby one of its constituent records using\n`GET /data-sources/{dataSourceCode}/records/{recordId}/entity/why`.\n",
         "operationId": "whyEntityByEntityID",
         "parameters": [
           {
@@ -2007,7 +2007,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successul response",
+            "description": "Successful response",
             "content": {
               "application/json; charset=UTF-8": {
                 "schema": {
@@ -2058,7 +2058,7 @@
           "Entity Data"
         ],
         "summary": "Returns an analysis of how the entity for the respective entity ID resolved.",
-        "description": "This operation provides an anlysis of how the records in an entity\nresolved.  The subject entity is identified by the entity ID in the\nrequest path.\n\n**NOTE:** Bear in mind that entity ID's are transient and may be\nrecycled or repurposed as new records are loaded and entities resolve,\nunresolve and re-resolve.  An alternative way to identify an entity is\nby one of its constituent records using\n`GET /data-sources/{dataSourceCode}/records/{recordId}/entity/how`.\n",
+        "description": "This operation provides an analysis of how the records in an entity\nresolved.  The subject entity is identified by the entity ID in the\nrequest path.\n\n**NOTE:** Bear in mind that entity ID's are transient and may be\nrecycled or repurposed as new records are loaded and entities resolve,\nunresolve and re-resolve.  An alternative way to identify an entity is\nby one of its constituent records using\n`GET /data-sources/{dataSourceCode}/records/{recordId}/entity/how`.\n",
         "operationId": "howEntityByEntityID",
         "parameters": [
           {
@@ -2077,7 +2077,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successul response",
+            "description": "Successful response",
             "content": {
               "application/json; charset=UTF-8": {
                 "schema": {
@@ -2128,7 +2128,7 @@
           "Entity Data"
         ],
         "summary": "Returns an analysis of why the records identified by the data source and record ID's in the query parameters resolved or did not resolve.",
-        "description": "This operation provides an anlysis of two records identified by data\nsource code and record ID in respective qeury parameters resolved or\ndid not resolve.\n",
+        "description": "This operation provides an analysis of two records identified by data\nsource code and record ID in respective query parameters resolved or\ndid not resolve.\n",
         "operationId": "whyRecords",
         "parameters": [
           {
@@ -2191,7 +2191,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successul response",
+            "description": "Successful response",
             "content": {
               "application/json; charset=UTF-8": {
                 "schema": {
@@ -2242,7 +2242,7 @@
           "Entity Data"
         ],
         "summary": "Returns an analysis of why the two entities related, did not relate, or did not resolve.",
-        "description": "This operation provides an anlysis of why two entities related, did not\nrelate or did not resolve.  The entities are identified either by\nentity ID's or by data source code and record ID pairs for constituent\nrecords of those entities.\n\n**NOTE:** If the first entity is identified by entity ID then the second\nmust also be identified an entity ID.  Similarly, if the first entity is\nidentified by data source code and record ID then the second must also\nbe identified by data source code and record ID.\n\n**ALSO NOTE:** Bear in mind that entity ID's are transient and may be\nrecycled or repurposed as new records are loaded and entities resolve,\nunresolve and re-resolve.\n",
+        "description": "This operation provides an analysis of why two entities related, did not\nrelate or did not resolve.  The entities are identified either by\nentity ID's or by data source code and record ID pairs for constituent\nrecords of those entities.\n\n**NOTE:** If the first entity is identified by entity ID then the second\nmust also be identified an entity ID.  Similarly, if the first entity is\nidentified by data source code and record ID then the second must also\nbe identified by data source code and record ID.\n\n**ALSO NOTE:** Bear in mind that entity ID's are transient and may be\nrecycled or repurposed as new records are loaded and entities resolve,\nunresolve and re-resolve.\n",
         "operationId": "whyEntities",
         "parameters": [
           {
@@ -2287,7 +2287,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successul response",
+            "description": "Successful response",
             "content": {
               "application/json; charset=UTF-8": {
                 "schema": {
@@ -2416,7 +2416,7 @@
         "parameters": [
           {
             "name": "r",
-            "description": "Repeating query parameter containing encoded `SzRecordId` definitions that identify records to be inclued in the resultant virtual entity.  At least one record identifier is required.  If both this parameter and the `records` parameter are specified then the values are merged. **NOTE**: An encoded `SzRecordId` can EITHER be encoded as JSON or as a delimited string where the first character is the delimiter and the remainer is parsed as a data source prefix (up to the second occurrence of the delimiter) and a record ID suffix (all characters after the second occurrence of the delimiter).  For example: `{\"src\":\"PEOPLE\",\"id\":\"12345ABC\"}` or `:PEOPLE:12345ABC`.",
+            "description": "Repeating query parameter containing encoded `SzRecordId` definitions that identify records to be include in the resultant virtual entity.  At least one record identifier is required.  If both this parameter and the `records` parameter are specified then the values are merged. **NOTE**: An encoded `SzRecordId` can EITHER be encoded as JSON or as a delimited string where the first character is the delimiter and the remainder is parsed as a data source prefix (up to the second occurrence of the delimiter) and a record ID suffix (all characters after the second occurrence of the delimiter).  For example: `{\"src\":\"PEOPLE\",\"id\":\"12345ABC\"}` or `:PEOPLE:12345ABC`.",
             "in": "query",
             "required": false,
             "style": "form",
@@ -2450,7 +2450,7 @@
           },
           {
             "name": "records",
-            "description": "Singular query parameter containing multiple encoded `SzRecordId` definitions that identify records to be inclued in the resultant virtual entity as a JSON array or a simple comma-separated array. At least one record identifier is required.  If both this parameter and the `r` parameter are specified then the values are merged. **NOTE**: An encoded `SzRecordId` can EITHER be encoded as JSON or as a delimited string where the first character is the delimiter and the remainer is parsed as a data source prefix (up to the second occurrence of the delimiter) and a record ID suffix (all characters after the second occurrence of the delimiter).  For example: `{\"src\":\"PEOPLE\",\"id\":\"12345ABC\"}` or `:PEOPLE:12345ABC`.",
+            "description": "Singular query parameter containing multiple encoded `SzRecordId` definitions that identify records to be include in the resultant virtual entity as a JSON array or a simple comma-separated array. At least one record identifier is required.  If both this parameter and the `r` parameter are specified then the values are merged. **NOTE**: An encoded `SzRecordId` can EITHER be encoded as JSON or as a delimited string where the first character is the delimiter and the remainder is parsed as a data source prefix (up to the second occurrence of the delimiter) and a record ID suffix (all characters after the second occurrence of the delimiter).  For example: `{\"src\":\"PEOPLE\",\"id\":\"12345ABC\"}` or `:PEOPLE:12345ABC`.",
             "in": "query",
             "required": false,
             "schema": {
@@ -2549,7 +2549,7 @@
           "Entity Graph"
         ],
         "summary": "Finds a path between two entities identified by entity ID or by data sources and record IDs of constituent records.",
-        "description": "This operation finds the path between two entities and returns a\ndescription of that entity path (if any) or a response indicating that\nthere is no path between the entities.  The subject entities are either\nidentfieid by entity ID or by data source code and record ID pairs for\nconstituent records of those entities.\n\n**NOTE:** If the first entity is identified by entity ID then the second\nmust also be identified an entity ID.  Similarly, if the first entity is\nidentified by data source code and record ID then the second must also\nbe identified by data source code and record ID.\n\n**ALSO NOTE:** Bear in mind that entity ID's are transient and may be\nrecycled or repurposed as new records are loaded and entities resolve,\nunresolve and re-resolve.\n",
+        "description": "This operation finds the path between two entities and returns a\ndescription of that entity path (if any) or a response indicating that\nthere is no path between the entities.  The subject entities are either\n identified by entity ID or by data source code and record ID pairs for\nconstituent records of those entities.\n\n**NOTE:** If the first entity is identified by entity ID then the second\nmust also be identified an entity ID.  Similarly, if the first entity is\nidentified by data source code and record ID then the second must also\nbe identified by data source code and record ID.\n\n**ALSO NOTE:** Bear in mind that entity ID's are transient and may be\nrecycled or repurposed as new records are loaded and entities resolve,\nunresolve and re-resolve.\n",
         "operationId": "findEntityPath",
         "parameters": [
           {
@@ -2566,7 +2566,7 @@
                 "value": 1234567
               },
               "encodedRecordIdExample": {
-                "summary": "A record ID encoded as a deliminted string.",
+                "summary": "A record ID encoded as a delimited string.",
                 "value": ":CUSTOMERS:ABC123"
               },
               "jsonRecordIdExample": {
@@ -2592,7 +2592,7 @@
                 "value": 7654321
               },
               "encodedRecordIdExample": {
-                "summary": "A record ID encoded as a deliminted string.",
+                "summary": "A record ID encoded as a delimited string.",
                 "value": ":EMPLOYEES:DEF456"
               },
               "jsonRecordIdExample": {
@@ -2806,7 +2806,7 @@
           "Entity Graph"
         ],
         "summary": "Finds the entity network around one or more entities.",
-        "description": "This operation finds the entity network around one or more entities.\nThis attempts to find paths between the specified entities.  If no\npaths exist, then island networks are returned with each island network\ncontaining up to a specified number of related entities.  The entities\nare identified by their entity IDs or by data source code and record ID\npairs for constituent records of those entities.\n\n**NOTE:** If the first entity is identified by entity ID then the\nsubsequent entities must also be identified entity ID.  Similarly, if\nthe first entity is identified by the data source code and record ID\nof a consistuent record then the subsequent entities must also be\nidentified by the data source code and record ID of constituent records.\n\n**ALSO NOTE:** Bear in mind that entity ID's are transient and may be\nrecycled or repurposed as new records are loaded and entities resolve,\nunresolve and re-resolve.\n",
+        "description": "This operation finds the entity network around one or more entities.\nThis attempts to find paths between the specified entities.  If no\npaths exist, then island networks are returned with each island network\ncontaining up to a specified number of related entities.  The entities\nare identified by their entity IDs or by data source code and record ID\npairs for constituent records of those entities.\n\n**NOTE:** If the first entity is identified by entity ID then the\nsubsequent entities must also be identified entity ID.  Similarly, if\nthe first entity is identified by the data source code and record ID\nof a constituent record then the subsequent entities must also be\nidentified by the data source code and record ID of constituent records.\n\n**ALSO NOTE:** Bear in mind that entity ID's are transient and may be\nrecycled or repurposed as new records are loaded and entities resolve,\nunresolve and re-resolve.\n",
         "operationId": "findEntityNetwork",
         "parameters": [
           {
@@ -3179,7 +3179,7 @@
           },
           {
             "name": "mapDataSources",
-            "description": "A URL-encoded JSON object whose properties are interpreted as\ndata source codes to map from and whose corresponding values are\ninterpretted as data source codes to map to.  For example,\n`{\"EMPL\": \"EMPLOYEES\"}` (url-encoded of course) would map all\nrecords with inbound data source `EMPL` to `EMPLOYEES`.  To map\nonly inbound records with no data source to a specific data source\nyou would use an empty JSON property (e.g.: `{\"\": \"CUSTOMERS\"}`).\nIf the `dataSource` parameter is **not** provided and no specific\noverrides are provided for a record with this parameter or via\n`mapDataSource` then the data source specified in the inbound\nrecord is used directly.  If the record has no data source and no\noverriding or mapped data source is provided for an empty data\nsource then the record will fail to load.\n\n**NOTE**: If both this parameter and the `mapDataSource` parameter\nis provided then the mappings are merged with the more ad-hoc\n`mapDataSource` parameter taking precedence since it is likely being\nused for debugging and diagnostic purposes to avoid the URL\nencoding.\n\nHere are some examples of encoding this parameter:\n\n- **JavaScript Example**\n  ```javascript\n    var dataSourceMap = {\n      \"\": \"CUSTOMERS\",\n      \"EMPL\": \"EMPLOYEES\",\n      \"VEND\": \"VENDORS\"\n    };\n    var mapDataSources = JSON.stringify(dataSourceMap);\n    var urlPath = \"/bulk-data/load?mapDataSources=\"\n                + encodeURIComponent(mapDataSources);\n  ```\n\n- **Java Example**\n  ```java\n    JsonObjectBuilder builder = Json.createObjectBuilder();\n    builder.add(\"\", \"CUSTOMERS\");\n    builder.add(\"EMPL\", \"EMPLOYEES\");\n    builder.add(\"VEND\", \"VENDORS\");\n    JsonObject dataSourceMap = builder.build();\n\n    String mapDataSources = dataSourceMap.toString();\n    String encodedMap     = URLEncoder.encode(mapDataSources, \"UTF-8\");\n    String urlPath = \"/bulk-data/load?mapDataSources=\" + encodedMap;\n  ```\n\nIn both of the above examples the `urlPath` variable is set to:\n```json\n\n/bulk-data/load?mapDataSources=%7B%22%22%3A%22CUSTOMERS%22%2C%22EMPL%22%3A%22EMPLOYEES%22%2C%22VEND%22%3A%22VENDORS%22%7D\n\n```\n",
+            "description": "A URL-encoded JSON object whose properties are interpreted as\ndata source codes to map from and whose corresponding values are\n interpreted as data source codes to map to.  For example,\n`{\"EMPL\": \"EMPLOYEES\"}` (url-encoded of course) would map all\nrecords with inbound data source `EMPL` to `EMPLOYEES`.  To map\nonly inbound records with no data source to a specific data source\nyou would use an empty JSON property (e.g.: `{\"\": \"CUSTOMERS\"}`).\nIf the `dataSource` parameter is **not** provided and no specific\noverrides are provided for a record with this parameter or via\n`mapDataSource` then the data source specified in the inbound\nrecord is used directly.  If the record has no data source and no\noverriding or mapped data source is provided for an empty data\nsource then the record will fail to load.\n\n**NOTE**: If both this parameter and the `mapDataSource` parameter\nis provided then the mappings are merged with the more ad-hoc\n`mapDataSource` parameter taking precedence since it is likely being\nused for debugging and diagnostic purposes to avoid the URL\nencoding.\n\nHere are some examples of encoding this parameter:\n\n- **JavaScript Example**\n  ```javascript\n    var dataSourceMap = {\n      \"\": \"CUSTOMERS\",\n      \"EMPL\": \"EMPLOYEES\",\n      \"VEND\": \"VENDORS\"\n    };\n    var mapDataSources = JSON.stringify(dataSourceMap);\n    var urlPath = \"/bulk-data/load?mapDataSources=\"\n                + encodeURIComponent(mapDataSources);\n  ```\n\n- **Java Example**\n  ```java\n    JsonObjectBuilder builder = Json.createObjectBuilder();\n    builder.add(\"\", \"CUSTOMERS\");\n    builder.add(\"EMPL\", \"EMPLOYEES\");\n    builder.add(\"VEND\", \"VENDORS\");\n    JsonObject dataSourceMap = builder.build();\n\n    String mapDataSources = dataSourceMap.toString();\n    String encodedMap     = URLEncoder.encode(mapDataSources, \"UTF-8\");\n    String urlPath = \"/bulk-data/load?mapDataSources=\" + encodedMap;\n  ```\n\nIn both of the above examples the `urlPath` variable is set to:\n```json\n\n/bulk-data/load?mapDataSources=%7B%22%22%3A%22CUSTOMERS%22%2C%22EMPL%22%3A%22EMPLOYEES%22%2C%22VEND%22%3A%22VENDORS%22%7D\n\n```\n",
             "in": "query",
             "required": false,
             "schema": {
@@ -3959,7 +3959,7 @@
             "format": "date-time"
           },
           "configCompatibilityVersion": {
-            "description": "The config compatilibility version of the underlying native Senzing API product.",
+            "description": "The config compatibility version of the underlying native Senzing API product.",
             "type": "string"
           },
           "timings": {
@@ -4608,7 +4608,7 @@
         ]
       },
       "SzAttributeClass": {
-        "description": "Enumerates the various classes of attribute types (and features). This is a generalization over attribute type that is more general than feature type (NOTE: stand-alone attribute types such as \"DATA_SOURCE\" or \"RECORD_ID\" do not have a feature type, but do have an attribute class of \"OBSERVATION\").  Attribute class determines how attributes / features are grouped together (e.g.: \"nameData\" contains all name features and \"identifierData\" contains all identifier features).  The possible values are:\n  * `ADDRESS` - Attributes pertaining to an address such as \"POSTAL_CODE\"\n  * `CHARACTERISTIC` - Attributes pertaining to physical characteristics\n                       of an entity.  Such as \"BIRTH_DATE\"\n  * `IDENTIFIER` - Attributes pertaining to identifiers such as\n                  drivers license number, passport number, or email\n                  address.\n  * `NAME` - Attributes pertaing to names such as \"NAME_FIRST\" or\n             \"NAME_LAST\"\n  * `OBSERVATION` - Attributes pertaining to meta-data about the\n                    observation (record) such as \"RECORD_ID\" or\n                    \"DATA_SOURCE\"\n  * `PHONE` - Attributes pertaining to phone numbers such\n              \"PHONE_NUMBER\" or \"PHONE_EXTENSION\"\n  * `RELATIONSHIP` - Attributes pertaining to relationships such as\n                     \"RELATIONSHIP_TYPE\".\n  * `OTHER` - An attribute class for custom features or for attributes\n              that are loaded but not mapped.",
+        "description": "Enumerates the various classes of attribute types (and features). This is a generalization over attribute type that is more general than feature type (NOTE: stand-alone attribute types such as \"DATA_SOURCE\" or \"RECORD_ID\" do not have a feature type, but do have an attribute class of \"OBSERVATION\").  Attribute class determines how attributes / features are grouped together (e.g.: \"nameData\" contains all name features and \"identifierData\" contains all identifier features).  The possible values are:\n  * `ADDRESS` - Attributes pertaining to an address such as \"POSTAL_CODE\"\n  * `CHARACTERISTIC` - Attributes pertaining to physical characteristics\n                       of an entity.  Such as \"BIRTH_DATE\"\n  * `IDENTIFIER` - Attributes pertaining to identifiers such as\n                  drivers license number, passport number, or email\n                  address.\n  * `NAME` - Attributes pertaining to names such as \"NAME_FIRST\" or\n             \"NAME_LAST\"\n  * `OBSERVATION` - Attributes pertaining to meta-data about the\n                    observation (record) such as \"RECORD_ID\" or\n                    \"DATA_SOURCE\"\n  * `PHONE` - Attributes pertaining to phone numbers such\n              \"PHONE_NUMBER\" or \"PHONE_EXTENSION\"\n  * `RELATIONSHIP` - Attributes pertaining to relationships such as\n                     \"RELATIONSHIP_TYPE\".\n  * `OTHER` - An attribute class for custom features or for attributes\n              that are loaded but not mapped.",
         "type": "string",
         "enum": [
           "ADDRESS",
