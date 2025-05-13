@@ -26,6 +26,7 @@ var (
 // ----------------------------------------------------------------------------
 
 func TestSenzingRestServiceImpl_AddDataSources(test *testing.T) {
+	test.Parallel()
 	ctx := test.Context()
 	dataSourceName := fmt.Sprintf("DS-%d", time.Now().Unix())
 	testObject := getTestObject(ctx, test)
@@ -60,6 +61,7 @@ func TestSenzingRestServiceImpl_AddDataSources(test *testing.T) {
 }
 
 func TestSenzingRestServiceImpl_Heartbeat(test *testing.T) {
+	test.Parallel()
 	ctx := test.Context()
 	testObject := getTestObject(ctx, test)
 	response, err := testObject.Heartbeat(ctx)
@@ -70,6 +72,7 @@ func TestSenzingRestServiceImpl_Heartbeat(test *testing.T) {
 }
 
 func TestSenzingRestServiceImpl_License(test *testing.T) {
+	test.Parallel()
 	ctx := test.Context()
 	testObject := getTestObject(ctx, test)
 	params := senzingrestapi.LicenseParams{
@@ -87,6 +90,7 @@ func TestSenzingRestServiceImpl_License(test *testing.T) {
 }
 
 func TestSenzingRestServiceImpl_OpenAPISpecification(test *testing.T) {
+	test.Parallel()
 	ctx := test.Context()
 	testObject := getTestObject(ctx, test)
 
@@ -99,6 +103,7 @@ func TestSenzingRestServiceImpl_OpenAPISpecification(test *testing.T) {
 }
 
 func TestSenzingRestServiceImpl_Version(test *testing.T) {
+	test.Parallel()
 	ctx := test.Context()
 	testObject := getTestObject(ctx, test)
 	params := senzingrestapi.VersionParams{
