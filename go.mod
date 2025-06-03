@@ -7,7 +7,7 @@ require (
 	github.com/go-faster/jx v1.1.0
 	github.com/ogen-go/ogen v1.13.0
 	github.com/senzing-garage/go-helpers v0.6.13
-	github.com/senzing-garage/go-logging v1.5.2
+	github.com/senzing-garage/go-logging v1.5.3
 	github.com/senzing-garage/go-observing v0.3.5
 	github.com/senzing-garage/go-sdk-abstract-factory v0.9.9
 	github.com/senzing-garage/sz-sdk-go v0.15.4
