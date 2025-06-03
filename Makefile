@@ -186,7 +186,7 @@ update-pkg-cache:
 
 .PHONY: bearer
 bearer:
-	@bearer scan .
+	@bearer scan --config-file .github/linters/bearer.yml .
 
 
 .PHONY: cspell

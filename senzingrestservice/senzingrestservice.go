@@ -93,7 +93,7 @@ func (restApiService *BasicSenzingRestService) AddDataSources(
 	for _, dataSource := range params.DataSource {
 		sdkResponse, err := szConfig.AddDataSource(ctx, dataSource)
 		if err != nil {
-			return result, wraperror.Errorf(err, "restApiService.AddDataSources.AddDataSource error: %w", err)
+			return result, wraperror.Errorf(err, "AddDataSource")
 		}
 
 		sdkResponses = append(sdkResponses, sdkResponse)
@@ -200,7 +200,7 @@ func (restApiService *BasicSenzingRestService) AddDataSources(
 		},
 	}
 
-	return result, wraperror.Errorf(err, "senzingrestservice.AddDataSources error: %w", err)
+	return result, wraperror.Errorf(err, wraperror.NoMessage)
 }
 
 func (restApiService *BasicSenzingRestService) Heartbeat(
@@ -213,7 +213,7 @@ func (restApiService *BasicSenzingRestService) Heartbeat(
 		Meta:  restApiService.getOptSzMeta(ctx, senzingrestapi.SzHttpMethodGET, http.StatusOK),
 	}
 
-	return result, wraperror.Errorf(err, "senzingrestservice.Heartbeat error: %w", err)
+	return result, wraperror.Errorf(err, wraperror.NoMessage)
 }
 
 func (restApiService *BasicSenzingRestService) License(
@@ -224,12 +224,12 @@ func (restApiService *BasicSenzingRestService) License(
 
 	aresponse, err := restApiService.getSzproduct(ctx).GetLicense(ctx)
 	if err != nil {
-		return nil, wraperror.Errorf(err, "restApiService.License.GetLicense error: %w", err)
+		return nil, wraperror.Errorf(err, "GetLicense")
 	}
 
 	parsedResponse, err := response.SzProductGetLicense(ctx, aresponse)
 	if err != nil {
-		return nil, wraperror.Errorf(err, "restApiService.License.SzProductGetLicense error: %w", err)
+		return nil, wraperror.Errorf(err, "SzProductGetLicense")
 	}
 
 	issueDate, err := time.Parse("2006-01-02", parsedResponse.IssueDate)
@@ -261,7 +261,7 @@ func (restApiService *BasicSenzingRestService) License(
 		},
 	}
 
-	return result, wraperror.Errorf(err, "senzingrestservice.License error: %w", err)
+	return result, wraperror.Errorf(err, wraperror.NoMessage)
 }
 
 func (restApiService *BasicSenzingRestService) OpenAPISpecification(
@@ -276,7 +276,7 @@ func (restApiService *BasicSenzingRestService) OpenAPISpecification(
 		Data: bytes.NewReader(restApiService.OpenAPISpecificationSpec),
 	}
 
-	return result, wraperror.Errorf(err, "senzingrestservice.OpenAPISpecification error: %w", err)
+	return result, wraperror.Errorf(err, wraperror.NoMessage)
 }
 
 func (restApiService *BasicSenzingRestService) Version(
@@ -306,7 +306,7 @@ func (restApiService *BasicSenzingRestService) Version(
 		},
 	}
 
-	return result, wraperror.Errorf(err, "senzingrestservice.s error: %w", err)
+	return result, wraperror.Errorf(err, wraperror.NoMessage)
 }
 
 // ----------------------------------------------------------------------------
@@ -493,20 +493,20 @@ func (restApiService *BasicSenzingRestService) persistConfiguration(
 
 	newConfigurationString, err := szConfig.Export(ctx)
 	if err != nil {
-		return wraperror.Errorf(err, "restApiService.persistConfiguration.Export error: %w", err)
+		return wraperror.Errorf(err, "Export")
 	}
 
 	newConfigID, err := szConfigManager.RegisterConfig(ctx, newConfigurationString, "FIXME: description")
 	if err != nil {
-		return wraperror.Errorf(err, "restApiService.persistConfiguration.RegisterConfig error: %w", err)
+		return wraperror.Errorf(err, "RegisterConfig")
 	}
 
 	err = szConfigManager.SetDefaultConfigID(ctx, newConfigID)
 	if err != nil {
-		return wraperror.Errorf(err, "restApiService.persistConfiguration.SetDefaultConfigID error: %w", err)
+		return wraperror.Errorf(err, "SetDefaultConfigID")
 	}
 
-	return wraperror.Errorf(err, "restApiService.persistConfiguration error: %w", err)
+	return wraperror.Errorf(err, wraperror.NoMessage)
 }
 
 func (restApiService *BasicSenzingRestService) getSenzingVersion(
@@ -519,12 +519,12 @@ func (restApiService *BasicSenzingRestService) getSenzingVersion(
 
 	aresponse, err := restApiService.getSzproduct(ctx).GetVersion(ctx)
 	if err != nil {
-		return result, wraperror.Errorf(err, "restApiService.getSenzingVersion.getSzproduct error: %w", err)
+		return result, wraperror.Errorf(err, "getSzproduct")
 	}
 
 	result, err = response.SzProductGetVersion(ctx, aresponse)
 
-	return result, wraperror.Errorf(err, "restApiService.getSenzingVersion error: %w", err)
+	return result, wraperror.Errorf(err, wraperror.NoMessage)
 }
 
 // --- Debug ------------------------------------------------------------------
