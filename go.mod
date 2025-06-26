@@ -8,7 +8,7 @@ require (
 	github.com/ogen-go/ogen v1.14.0
 	github.com/senzing-garage/go-helpers v0.6.13
 	github.com/senzing-garage/go-logging v1.5.3
-	github.com/senzing-garage/go-observing v0.3.5
+	github.com/senzing-garage/go-observing v0.3.6
 	github.com/senzing-garage/go-sdk-abstract-factory v0.9.11
 	github.com/senzing-garage/sz-sdk-go v0.15.6
 	github.com/senzing-garage/sz-sdk-json-type-definition v0.2.9
