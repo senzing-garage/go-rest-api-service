@@ -91,9 +91,9 @@ func (restApiService *BasicSenzingRestService) AddDataSources(
 	sdkResponses := []string{}
 
 	for _, dataSource := range params.DataSource {
-		sdkResponse, err := szConfig.AddDataSource(ctx, dataSource)
+		sdkResponse, err := szConfig.RegisterDataSource(ctx, dataSource)
 		if err != nil {
-			return result, wraperror.Errorf(err, "AddDataSource")
+			return result, wraperror.Errorf(err, "RegisterDataSource")
 		}
 
 		sdkResponses = append(sdkResponses, sdkResponse)
